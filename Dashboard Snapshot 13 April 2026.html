@@ -1,0 +1,2344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ad Spend Watcher — Snapshot 13 April 2026</title>
+<style>
+  /* ── Design tokens ── */
+  :root {
+    --bg-primary:   #FFFFFF;
+    --bg-secondary: #F7F6F3;
+    --bg-tertiary:  #EEEDE9;
+    --border-primary:   #C8C7C2;
+    --border-secondary: #DDDCDA;
+    --border-tertiary:  #E8E7E4;
+    --text-primary:   #1A1A18;
+    --text-secondary: #696860;
+    --text-tertiary:  #9B9A95;
+    --text-success:   #085041;
+    --bg-success:     #E1F5EE;
+    --border-success: #A8D9C8;
+    --color-hot:     #1D9E75;
+    --color-warm:    #BA7517;
+    --color-watch:   #888780;
+    --radius-md: 6px;
+    --radius-lg: 10px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 14px;
+    color: var(--text-primary);
+    background: var(--bg-secondary);
+    min-height: 100vh;
+  }
+
+  /* ── App shell ── */
+  .app-header {
+    background: var(--bg-primary);
+    border-bottom: 0.5px solid var(--border-secondary);
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .app-title { font-size: 15px; font-weight: 600; color: var(--text-primary); }
+  .app-subtitle { font-size: 12px; color: var(--text-secondary); margin-top: 1px; }
+  .last-updated { font-size: 11px; color: var(--text-tertiary); }
+
+  .container { max-width: 960px; margin: 0 auto; padding: 20px 20px 60px; }
+
+  /* ── Metrics row ── */
+  .metrics {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+  .metric {
+    background: var(--bg-primary);
+    border-radius: var(--radius-md);
+    padding: 12px 14px;
+    border: 0.5px solid var(--border-tertiary);
+  }
+  .metric-label { font-size: 11px; color: var(--text-secondary); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.4px; }
+  .metric-val   { font-size: 22px; font-weight: 500; color: var(--text-primary); line-height: 1; }
+  .metric-sub   { font-size: 11px; color: var(--color-hot); margin-top: 3px; }
+
+  /* ── Sector tabs ── */
+  .sector-tabs { display: flex; gap: 6px; margin-bottom: 14px; flex-wrap: wrap; }
+  .tab {
+    font-size: 12px; padding: 5px 13px;
+    border-radius: 20px;
+    border: 0.5px solid var(--border-secondary);
+    background: var(--bg-primary);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all .12s;
+    white-space: nowrap;
+  }
+  .tab:hover { border-color: var(--border-primary); color: var(--text-primary); }
+  .tab.active { border-color: var(--border-primary); color: var(--text-primary); font-weight: 500; background: var(--bg-secondary); }
+
+  /* ── Filter bar ── */
+  .filter-bar { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; align-items: center; }
+  .filter-bar select {
+    font-size: 12px; padding: 6px 10px;
+    border-radius: var(--radius-md);
+    border: 0.5px solid var(--border-secondary);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    height: 32px;
+    cursor: pointer;
+    outline: none;
+  }
+  .filter-bar select:focus { border-color: var(--border-primary); }
+  .result-count { font-size: 12px; color: var(--text-tertiary); margin-left: auto; }
+
+  /* ── Company grid ── */
+  .company-grid { display: flex; flex-direction: column; gap: 10px; }
+
+  /* ── Company card ── */
+  .card {
+    background: var(--bg-primary);
+    border: 0.5px solid var(--border-tertiary);
+    border-radius: var(--radius-lg);
+    padding: 14px 16px;
+    transition: border-color .12s, box-shadow .12s;
+  }
+  .card:hover { border-color: var(--border-secondary); box-shadow: 0 1px 6px rgba(0,0,0,0.05); }
+  .card-hot {
+    border-left: 3px solid var(--color-hot);
+    border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+  }
+
+  /* Card header */
+  .card-top { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px; }
+  .avatar {
+    width: 40px; height: 40px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 600; font-size: 13px; flex-shrink: 0;
+    letter-spacing: 0.5px;
+  }
+  .card-meta { flex: 1; min-width: 0; }
+  .card-name {
+    font-size: 14px; font-weight: 500; color: var(--text-primary);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .card-sub { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+
+  /* Score badge */
+  .score-badge {
+    font-size: 12px; font-weight: 500;
+    padding: 3px 10px; border-radius: 20px;
+    flex-shrink: 0; white-space: nowrap;
+  }
+  .score-hot  { background: var(--bg-success); color: var(--text-success); }
+  .score-warm { background: #FAEEDA; color: #633806; }
+  .score-watch { background: #F1EFE8; color: #444441; }
+
+  /* IE badge */
+  .ie-badge {
+    font-size: 10px; padding: 1px 5px;
+    border-radius: 4px;
+    background: var(--bg-success); color: var(--text-success);
+    font-weight: 500; flex-shrink: 0;
+  }
+
+  /* Hot trigger tag */
+  .trigger-tag {
+    font-size: 10px; padding: 2px 7px;
+    border-radius: 20px;
+    background: #E6F1FB; color: #0C447C;
+    font-weight: 500; flex-shrink: 0; white-space: nowrap;
+  }
+
+  /* Card body — 3 column data */
+  .card-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .info-block { font-size: 12px; }
+  .info-label { color: var(--text-secondary); margin-bottom: 2px; font-size: 11px; }
+  .info-val   { color: var(--text-primary); font-weight: 500; }
+
+  /* Platform pills */
+  .platforms { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 12px; }
+  .platform-pill {
+    font-size: 11px; padding: 2px 9px;
+    border-radius: 20px;
+    border: 0.5px solid var(--border-tertiary);
+    color: var(--text-tertiary);
+    background: transparent;
+  }
+  .platform-pill.active { background: #E6F1FB; border-color: #85B7EB; color: #0C447C; }
+
+  /* Sparkline row */
+  .sparkline-row { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+  .sparkline-label { font-size: 11px; color: var(--text-tertiary); width: 54px; flex-shrink: 0; }
+  .sparkline-wrap { flex: 1; height: 28px; }
+  .sparkline-wrap svg { width: 100%; height: 28px; }
+  .sparkline-pct { font-size: 11px; color: var(--color-hot); font-weight: 500; width: 38px; text-align: right; flex-shrink: 0; }
+  .sparkline-pct.warm { color: var(--color-warm); }
+  .sparkline-pct.watch { color: var(--color-watch); }
+
+  /* Contact row */
+  .contact-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-top: 10px;
+    border-top: 0.5px solid var(--border-tertiary);
+  }
+  .contact-info .contact-name { font-size: 13px; font-weight: 500; color: var(--text-primary); }
+  .contact-info .contact-role { font-size: 11px; color: var(--text-secondary); margin-top: 1px; }
+  .contact-links { display: flex; gap: 6px; }
+
+  .btn-email {
+    font-size: 11px; padding: 5px 11px;
+    border-radius: var(--radius-md);
+    border: 0.5px solid var(--border-secondary);
+    background: transparent;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: background .12s;
+  }
+  .btn-email:hover { background: var(--bg-secondary); }
+
+  .btn-reach {
+    font-size: 11px; padding: 5px 11px;
+    border-radius: var(--radius-md);
+    border: 0.5px solid var(--border-success);
+    background: var(--bg-success);
+    color: var(--text-success);
+    cursor: pointer;
+    font-weight: 500;
+    transition: filter .12s;
+  }
+  .btn-reach:hover { filter: brightness(0.95); }
+
+  /* ── Empty state ── */
+  .empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-tertiary);
+  }
+  .empty-state h3 { font-size: 15px; font-weight: 500; margin-bottom: 6px; color: var(--text-secondary); }
+  .empty-state p  { font-size: 13px; }
+
+  /* ── Prompt modal overlay ── */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,0.35);
+    z-index: 200; align-items: center; justify-content: center;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--bg-primary);
+    border-radius: var(--radius-lg);
+    padding: 20px 22px;
+    max-width: 620px; width: 90vw;
+    max-height: 80vh; overflow-y: auto;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  }
+  .modal-title { font-size: 14px; font-weight: 600; margin-bottom: 12px; }
+  .modal-body {
+    font-size: 13px; color: var(--text-secondary);
+    line-height: 1.65;
+    white-space: pre-wrap;
+    background: var(--bg-secondary);
+    border-radius: var(--radius-md);
+    padding: 14px;
+    margin-bottom: 14px;
+  }
+  .modal-actions { display: flex; gap: 8px; justify-content: flex-end; }
+  .btn-copy {
+    font-size: 12px; padding: 6px 14px;
+    border-radius: var(--radius-md);
+    border: 0.5px solid var(--border-secondary);
+    background: var(--bg-secondary);
+    color: var(--text-secondary);
+    cursor: pointer;
+  }
+  .btn-copy.copied { color: var(--text-success); border-color: var(--border-success); }
+  .btn-close {
+    font-size: 12px; padding: 6px 14px;
+    border-radius: var(--radius-md);
+    border: 0.5px solid var(--border-primary);
+    background: var(--text-primary);
+    color: var(--bg-primary);
+    cursor: pointer;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 600px) {
+    .metrics { grid-template-columns: repeat(2, 1fr); }
+    .card-body { grid-template-columns: 1fr 1fr; }
+    .filter-bar { gap: 6px; }
+    .result-count { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="app-header">
+  <div>
+    <div class="app-title">Ad Spend Watcher</div>
+    <div class="app-subtitle">UK &amp; Ireland Trades — Outbound Intelligence</div>
+  </div>
+  <div class="last-updated" id="last-updated">Loading…</div>
+</header>
+
+<div class="container">
+
+  <!-- Metrics row -->
+  <div class="metrics">
+    <div class="metric">
+      <div class="metric-label">Companies tracked</div>
+      <div class="metric-val" id="m-total">—</div>
+      <div class="metric-sub" id="m-total-sub">Updated Monday</div>
+    </div>
+    <div class="metric">
+      <div class="metric-label">Hot leads</div>
+      <div class="metric-val" id="m-hot">—</div>
+      <div class="metric-sub">Ramping now</div>
+    </div>
+    <div class="metric">
+      <div class="metric-label">Avg spend tenure</div>
+      <div class="metric-val" id="m-tenure">—</div>
+      <div class="metric-sub">Across all tracked</div>
+    </div>
+    <div class="metric">
+      <div class="metric-label">Sectors covered</div>
+      <div class="metric-val" id="m-sectors">—</div>
+      <div class="metric-sub">Top 10 per sector</div>
+    </div>
+  </div>
+
+  <!-- Sector tabs -->
+  <div class="sector-tabs" id="tabs"></div>
+
+  <!-- Filter bar -->
+  <div class="filter-bar">
+    <select id="sort-sel" onchange="render()">
+      <option value="score">Sort: Signal score</option>
+      <option value="spend">Sort: Spend duration</option>
+      <option value="staff">Sort: Staff count</option>
+    </select>
+    <select id="region-sel" onchange="render()">
+      <option value="all">All regions</option>
+      <option value="london">London</option>
+      <option value="midlands">Midlands</option>
+      <option value="northwest">North West</option>
+      <option value="scotland">Scotland</option>
+      <option value="southeast">South East</option>
+      <option value="ireland">Ireland</option>
+    </select>
+    <select id="platform-sel" onchange="render()">
+      <option value="all">All platforms</option>
+      <option value="google">Google Ads</option>
+      <option value="meta">Meta Ads</option>
+      <option value="tiktok">TikTok</option>
+    </select>
+    <span class="result-count" id="result-count"></span>
+  </div>
+
+  <!-- Cards -->
+  <div class="company-grid" id="grid"></div>
+</div>
+
+<!-- Prompt modal -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal">
+    <div class="modal-title" id="modal-title">Outreach prompt</div>
+    <div class="modal-body" id="modal-body"></div>
+    <div class="modal-actions">
+      <button class="btn-copy" id="btn-copy" onclick="copyPrompt()">Copy prompt</button>
+      <button class="btn-close" onclick="closeModalDirect()">Close</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   CONFIGURATION
+   The dashboard loads companies from data/companies.json if
+   available (populated by scoring.py after each weekly run).
+   Falls back to the SAMPLE_DATA array for demonstration.
+   ============================================================ */
+
+const SECTORS = ['All','Plumbing','Solar','Electrical','Alarms','Insulation','Windows & Doors','Drainage','Pumps'];
+
+const SAMPLE_DATA = [
+  {
+    "id": 1,
+    "name": "Allstate Solar & Allstate Home Improvements",
+    "sector": "Solar",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 96,
+    "tenure_label": "96 months",
+    "score": 71,
+    "hot_trigger": null,
+    "platforms": [      "facebook",
+      "google"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "AS",
+    "avatarBg": "#E1F5EE",
+    "avatarCol": "#085041"
+  },
+  {
+    "id": 2,
+    "name": "Activ8 Energies",
+    "sector": "Solar",
+    "country": "IE",
+    "region": "ireland",
+    "region_label": "Dublin & Ireland",
+    "staff": "15",
+    "tenure_months": 9,
+    "tenure_label": "9 months",
+    "score": 71,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook",
+      "google"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "AE",
+    "avatarBg": "#E1F5EE",
+    "avatarCol": "#085041"
+  },
+  {
+    "id": 3,
+    "name": "North Midlands Credit Union",
+    "sector": "Solar",
+    "country": "IE",
+    "region": "ireland",
+    "region_label": "Dublin & Ireland",
+    "staff": "15",
+    "tenure_months": 26,
+    "tenure_label": "26 months",
+    "score": 71,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook",
+      "google"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "NM",
+    "avatarBg": "#E1F5EE",
+    "avatarCol": "#085041"
+  },
+  {
+    "id": 4,
+    "name": "Prosolar",
+    "sector": "Solar",
+    "country": "IE",
+    "region": "ireland",
+    "region_label": "Dublin & Ireland",
+    "staff": "15",
+    "tenure_months": 18,
+    "tenure_label": "18 months",
+    "score": 71,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook",
+      "google"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "P",
+    "avatarBg": "#E1F5EE",
+    "avatarCol": "#085041"
+  },
+  {
+    "id": 5,
+    "name": "SPV Lights",
+    "sector": "Solar",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 21,
+    "tenure_label": "21 months",
+    "score": 68,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook",
+      "google"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "SL",
+    "avatarBg": "#E1F5EE",
+    "avatarCol": "#085041"
+  },
+  {
+    "id": 6,
+    "name": "Install Solar Panels",
+    "sector": "Solar",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 34,
+    "tenure_label": "34 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "IS",
+    "avatarBg": "#E1F5EE",
+    "avatarCol": "#085041"
+  },
+  {
+    "id": 7,
+    "name": "Momentum Productions with aosu Life",
+    "sector": "Solar",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 17,
+    "tenure_label": "17 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "MP",
+    "avatarBg": "#E1F5EE",
+    "avatarCol": "#085041"
+  },
+  {
+    "id": 8,
+    "name": "Bringnox Official",
+    "sector": "Solar",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 13,
+    "tenure_label": "13 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "BO",
+    "avatarBg": "#E1F5EE",
+    "avatarCol": "#085041"
+  },
+  {
+    "id": 9,
+    "name": "Evergreen Power UK SOLAR",
+    "sector": "Solar",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 6,
+    "tenure_label": "6 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "EP",
+    "avatarBg": "#E1F5EE",
+    "avatarCol": "#085041"
+  },
+  {
+    "id": 10,
+    "name": "Anglia Safety Electrical & Testing",
+    "sector": "Solar",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 9,
+    "tenure_label": "9 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "AS",
+    "avatarBg": "#E1F5EE",
+    "avatarCol": "#085041"
+  },
+  {
+    "id": 11,
+    "name": "Plug it in",
+    "sector": "Electrical",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 18,
+    "tenure_label": "18 months",
+    "score": 71,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook",
+      "google"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "PI",
+    "avatarBg": "#E6F1FB",
+    "avatarCol": "#0C447C"
+  },
+  {
+    "id": 12,
+    "name": "Hardie Electrical Ltd.",
+    "sector": "Electrical",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 35,
+    "tenure_label": "35 months",
+    "score": 71,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook",
+      "google"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "HE",
+    "avatarBg": "#E6F1FB",
+    "avatarCol": "#0C447C"
+  },
+  {
+    "id": 13,
+    "name": "DP Electrical Specialists Limited",
+    "sector": "Electrical",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 26,
+    "tenure_label": "26 months",
+    "score": 71,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook",
+      "google"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "DE",
+    "avatarBg": "#E6F1FB",
+    "avatarCol": "#0C447C"
+  },
+  {
+    "id": 14,
+    "name": "Lightwave",
+    "sector": "Electrical",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 13,
+    "tenure_label": "13 months",
+    "score": 71,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook",
+      "google"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "L",
+    "avatarBg": "#E6F1FB",
+    "avatarCol": "#0C447C"
+  },
+  {
+    "id": 15,
+    "name": "Merrin Electrical LTD",
+    "sector": "Electrical",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 13,
+    "tenure_label": "13 months",
+    "score": 71,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook",
+      "google"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "ME",
+    "avatarBg": "#E6F1FB",
+    "avatarCol": "#0C447C"
+  },
+  {
+    "id": 16,
+    "name": "lyes_electrical_ltd",
+    "sector": "Electrical",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 32,
+    "tenure_label": "32 months",
+    "score": 71,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook",
+      "google"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "L",
+    "avatarBg": "#E6F1FB",
+    "avatarCol": "#0C447C"
+  },
+  {
+    "id": 17,
+    "name": "CS Electrics",
+    "sector": "Electrical",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 57,
+    "tenure_label": "57 months",
+    "score": 68,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook",
+      "google"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "CE",
+    "avatarBg": "#E6F1FB",
+    "avatarCol": "#0C447C"
+  },
+  {
+    "id": 18,
+    "name": "OpenRent",
+    "sector": "Electrical",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 11,
+    "tenure_label": "11 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "O",
+    "avatarBg": "#E6F1FB",
+    "avatarCol": "#0C447C"
+  },
+  {
+    "id": 19,
+    "name": "Everyday Welding Supplies",
+    "sector": "Electrical",
+    "country": "IE",
+    "region": "ireland",
+    "region_label": "Dublin & Ireland",
+    "staff": "15",
+    "tenure_months": 8,
+    "tenure_label": "8 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "EW",
+    "avatarBg": "#E6F1FB",
+    "avatarCol": "#0C447C"
+  },
+  {
+    "id": 20,
+    "name": "Rointe Ireland",
+    "sector": "Electrical",
+    "country": "IE",
+    "region": "ireland",
+    "region_label": "Dublin & Ireland",
+    "staff": "15",
+    "tenure_months": 3,
+    "tenure_label": "3 months",
+    "score": 45,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "RI",
+    "avatarBg": "#E6F1FB",
+    "avatarCol": "#0C447C"
+  },
+  {
+    "id": 21,
+    "name": "Crestshield Windows",
+    "sector": "Windows & Doors",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 68,
+    "tenure_label": "68 months",
+    "score": 71,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook",
+      "google"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",      "email": null,
+      "li": ""
+    },
+    "avatar": "CW",
+    "avatarBg": "#FDE8EC",
+    "avatarCol": "#7C0C2A"
+  },
+  {
+    "id": 22,
+    "name": "The real Bridgnorth windows",
+    "sector": "Windows & Doors",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 18,
+    "tenure_label": "18 months",
+    "score": 71,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook",
+      "google"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "TR",
+    "avatarBg": "#FDE8EC",
+    "avatarCol": "#7C0C2A"
+  },
+  {
+    "id": 23,
+    "name": "Sunrise Windows - Double Glazing Installers - Plymouth",
+    "sector": "Windows & Doors",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 15,
+    "tenure_label": "15 months",
+    "score": 71,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook",
+      "google"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "SW",
+    "avatarBg": "#FDE8EC",
+    "avatarCol": "#7C0C2A"
+  },
+  {
+    "id": 24,
+    "name": "Shane Howells Ltd",
+    "sector": "Windows & Doors",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 15,
+    "tenure_label": "15 months",
+    "score": 71,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook",
+      "google"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "SH",
+    "avatarBg": "#FDE8EC",
+    "avatarCol": "#7C0C2A"
+  },
+  {
+    "id": 25,
+    "name": "DéDannan Door and Window Parts Ireland",
+    "sector": "Windows & Doors",
+    "country": "IE",
+    "region": "ireland",
+    "region_label": "Dublin & Ireland",
+    "staff": "15",
+    "tenure_months": 13,
+    "tenure_label": "13 months",
+    "score": 68,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook",
+      "google"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "DD",
+    "avatarBg": "#FDE8EC",
+    "avatarCol": "#7C0C2A"
+  },
+  {
+    "id": 26,
+    "name": "Lancashire Double Glazing",
+    "sector": "Windows & Doors",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 9,
+    "tenure_label": "9 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "LD",
+    "avatarBg": "#FDE8EC",
+    "avatarCol": "#7C0C2A"
+  },
+  {
+    "id": 27,
+    "name": "Centaframe Windows and Doors",
+    "sector": "Windows & Doors",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 9,
+    "tenure_label": "9 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "CW",
+    "avatarBg": "#FDE8EC",
+    "avatarCol": "#7C0C2A"
+  },
+  {
+    "id": 28,
+    "name": "Three Counties Windows & Doors",
+    "sector": "Windows & Doors",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 6,
+    "tenure_label": "6 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "TC",
+    "avatarBg": "#FDE8EC",
+    "avatarCol": "#7C0C2A"
+  },
+  {
+    "id": 29,
+    "name": "Revolution Doors",
+    "sector": "Windows & Doors",
+    "country": "IE",
+    "region": "ireland",
+    "region_label": "Dublin & Ireland",
+    "staff": "15",
+    "tenure_months": 6,
+    "tenure_label": "6 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "RD",
+    "avatarBg": "#FDE8EC",
+    "avatarCol": "#7C0C2A"
+  },
+  {
+    "id": 30,
+    "name": "Divine Windows and Doors",
+    "sector": "Windows & Doors",
+    "country": "IE",
+    "region": "ireland",
+    "region_label": "Dublin & Ireland",
+    "staff": "15",
+    "tenure_months": 8,
+    "tenure_label": "8 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "DW",
+    "avatarBg": "#FDE8EC",
+    "avatarCol": "#7C0C2A"
+  },
+  {
+    "id": 31,
+    "name": "Deflo Ltd",
+    "sector": "Drainage",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 38,
+    "tenure_label": "38 months",
+    "score": 71,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook",
+      "google"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "DL",
+    "avatarBg": "#E8F4FD",
+    "avatarCol": "#0A5C84"
+  },
+  {
+    "id": 32,
+    "name": "phd24.co.uk",
+    "sector": "Drainage",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 8,
+    "tenure_label": "8 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "P",
+    "avatarBg": "#E8F4FD",
+    "avatarCol": "#0A5C84"
+  },
+  {
+    "id": 33,
+    "name": "Drain Doctor Nottingham & Mansfield",
+    "sector": "Drainage",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 5,
+    "tenure_label": "5 months",
+    "score": 55,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "DD",
+    "avatarBg": "#E8F4FD",
+    "avatarCol": "#0A5C84"
+  },
+  {
+    "id": 34,
+    "name": "RJP Environmental",
+    "sector": "Drainage",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 5,
+    "tenure_label": "5 months",
+    "score": 55,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "RE",
+    "avatarBg": "#E8F4FD",
+    "avatarCol": "#0A5C84"
+  },
+  {
+    "id": 35,
+    "name": "Electropoint UK",
+    "sector": "Pumps",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 28,
+    "tenure_label": "28 months",
+    "score": 71,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook",
+      "google"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "EU",
+    "avatarBg": "#F0E8FD",
+    "avatarCol": "#4A0A84"
+  },
+  {
+    "id": 36,
+    "name": "Greener Energy Group",
+    "sector": "Pumps",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 6,
+    "tenure_label": "6 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "GE",
+    "avatarBg": "#F0E8FD",
+    "avatarCol": "#4A0A84"
+  },
+  {
+    "id": 37,
+    "name": "C.R.C Electrical & Renewables Limited",
+    "sector": "Pumps",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 5,
+    "tenure_label": "5 months",
+    "score": 55,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "CE",
+    "avatarBg": "#F0E8FD",
+    "avatarCol": "#4A0A84"
+  },
+  {
+    "id": 38,
+    "name": "J P Westall Ltd",
+    "sector": "Pumps",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 5,
+    "tenure_label": "5 months",
+    "score": 55,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "JP",
+    "avatarBg": "#F0E8FD",
+    "avatarCol": "#4A0A84"
+  },
+  {
+    "id": 39,
+    "name": "Tanks For Everything",
+    "sector": "Pumps",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 3,
+    "tenure_label": "3 months",
+    "score": 45,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "TF",
+    "avatarBg": "#F0E8FD",
+    "avatarCol": "#4A0A84"
+  },
+  {
+    "id": 40,
+    "name": "Gold1",
+    "sector": "Plumbing",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 13,
+    "tenure_label": "13 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "G",
+    "avatarBg": "#EEEDFE",
+    "avatarCol": "#3C3489"
+  },
+  {
+    "id": 41,
+    "name": "Prime Pipe Emergency",
+    "sector": "Plumbing",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 5,
+    "tenure_label": "5 months",
+    "score": 55,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "PP",
+    "avatarBg": "#EEEDFE",
+    "avatarCol": "#3C3489"
+  },
+  {
+    "id": 42,
+    "name": "Lincolnshire Walnut Blasting carbon removal",
+    "sector": "Alarms",    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 47,
+    "tenure_label": "47 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "LW",
+    "avatarBg": "#FAEEDA",
+    "avatarCol": "#633806"
+  },
+  {
+    "id": 43,
+    "name": "Blackwood CCTV",
+    "sector": "Alarms",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 9,
+    "tenure_label": "9 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "BC",
+    "avatarBg": "#FAEEDA",
+    "avatarCol": "#633806"
+  },
+  {
+    "id": 44,
+    "name": "ugclasha with aosu Life",
+    "sector": "Alarms",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 4,
+    "tenure_label": "4 months",
+    "score": 50,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "UW",
+    "avatarBg": "#FAEEDA",
+    "avatarCol": "#633806"
+  },
+  {
+    "id": 45,
+    "name": "Foamox spray foam",
+    "sector": "Insulation",
+    "country": "IE",
+    "region": "ireland",
+    "region_label": "Dublin & Ireland",
+    "staff": "15",
+    "tenure_months": 6,
+    "tenure_label": "6 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "FS",
+    "avatarBg": "#F1EFE8",
+    "avatarCol": "#444441"
+  },
+  {
+    "id": 46,
+    "name": "Aran",
+    "sector": "Insulation",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 4,
+    "tenure_label": "4 months",
+    "score": 50,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "A",
+    "avatarBg": "#F1EFE8",
+    "avatarCol": "#444441"
+  },
+  {
+    "id": 47,
+    "name": "Rockwarm",
+    "sector": "Insulation",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 3,
+    "tenure_label": "3 months",
+    "score": 45,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "R",
+    "avatarBg": "#F1EFE8",
+    "avatarCol": "#444441"
+  },
+  {
+    "id": 48,
+    "name": "Trident Damp Solutions",
+    "sector": "Insulation",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 3,
+    "tenure_label": "3 months",
+    "score": 45,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "TD",
+    "avatarBg": "#F1EFE8",
+    "avatarCol": "#444441"
+  }
+];
+
+/* ── State ── */
+let COMPANIES = [...SAMPLE_DATA];
+let activeSector = 'All';
+let currentPrompt = '';
+
+/* ── Load data ── */
+async function loadData() {
+  // Snapshot: data embedded — no fetch needed.
+  const el = document.getElementById('last-updated');
+  el.textContent = 'Snapshot: Sun 13 Apr 2026';
+
+  initTabs();
+  render();
+}
+
+/* ── Tabs ── */
+function initTabs() {
+  document.getElementById('tabs').innerHTML = SECTORS.map(s =>
+    `<div class="tab${s === activeSector ? ' active' : ''}" onclick="setSector('${s}')">${s}</div>`
+  ).join('');
+}
+
+function setSector(s) { activeSector = s; initTabs(); render(); }
+
+/* ── Helpers ── */
+function scoreClass(s) { return s >= 85 ? 'score-hot' : s >= 65 ? 'score-warm' : 'score-watch'; }
+function scoreLabel(s) { return s >= 85 ? 'Hot' : s >= 65 ? 'Warm' : 'Watch'; }
+function sparkColor(s) { return s >= 85 ? '#1D9E75' : s >= 65 ? '#BA7517' : '#888780'; }
+function pctClass(s)   { return s >= 85 ? '' : s >= 65 ? ' warm' : ' watch'; }
+
+function pct(data) {
+  if (!data || data.length < 2) return 0;
+  const start = data[0];
+  const end   = data[data.length - 1];
+  if (!start) return 0;
+  return Math.round(((end - start) / start) * 100);
+}
+
+function staffLabel(s) {
+  const n = parseInt(s);
+  if (isNaN(n)) return s;
+  if (n >= 50) return '50+ staff';
+  if (n >= 20) return `${n} staff`;
+  return `${n} staff`;
+}
+
+function platformPill(key, active) {
+  const labels = { google: 'Google', meta: 'Meta', tiktok: 'TikTok' };
+  return `<span class="platform-pill${active ? ' active' : ''}">${labels[key]}</span>`;
+}
+
+/* ── Sparklines ── */
+function drawSpark(id, data, color) {
+  const svg = document.getElementById('spk-' + id);
+  if (!svg || !data || data.length < 2) return;
+  const max = Math.max(...data), min = Math.min(...data), range = max - min || 1;
+  const pts = data.map((v, i) => {
+    const x = Math.round(i * (120 / (data.length - 1)));
+    const y = Math.round(26 - ((v - min) / range) * 22);
+    return `${x},${y}`;
+  }).join(' ');
+  svg.innerHTML = `<polyline points="${pts}" fill="none" stroke="${color}" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>`;
+}
+
+/* ── Prompts ── */
+function emailPrompt(c) {
+  return `Draft a cold outreach email to ${c.contact.name} at ${c.name}, a ${c.sector} company in ${c.region_label} spending on ${(c.platforms||[]).join(', ')} ads for ${c.tenure_label}. Their audience is ${c.audience}. Keywords they bid on: ${c.keywords}. Lead with a specific observation about their ad activity. Keep it under 150 words. Subject line should reference something specific — never use a generic opener.`;
+}
+
+function sequencePrompt(c) {
+  return `Build the full 3-part outreach sequence for ${c.name}:\n\n(1) Cold email — day 1: specific opening referencing their ad activity on ${(c.platforms||[]).join(', ')}, one-sentence hook, single ask for a 15-minute call. Under 150 words.\n\n(2) LinkedIn connection request — day 3: under 300 characters, references the email you sent.\n\n(3) Call script — day 7: strong opening line proving research, 3 qualifying questions, close to book a call.\n\nDecision maker: ${c.contact.name}, ${c.contact.role}.\nCompany: ${c.sector} in ${c.region_label}, advertising on ${(c.platforms||[]).join(', ')} for ${c.tenure_label}, targeting ${c.audience}.`;
+}
+
+/* ── Prompt modal ── */
+function sendPrompt(type, companyId) {
+  const c = COMPANIES.find(x => x.id === companyId);
+  if (!c) return;
+  const prompt = type === 'email' ? emailPrompt(c) : sequencePrompt(c);
+  currentPrompt = prompt;
+  document.getElementById('modal-title').textContent = type === 'email' ? 'Email draft prompt' : '3-part outreach sequence prompt';
+  document.getElementById('modal-body').textContent = prompt;
+  document.getElementById('btn-copy').textContent = 'Copy prompt';
+  document.getElementById('btn-copy').classList.remove('copied');
+  document.getElementById('modal-overlay').classList.add('open');
+}
+
+function closeModal(event) {
+  if (event.target === document.getElementById('modal-overlay')) closeModalDirect();
+}
+function closeModalDirect() {
+  document.getElementById('modal-overlay').classList.remove('open');
+}
+
+async function copyPrompt() {
+  try {
+    await navigator.clipboard.writeText(currentPrompt);
+    const btn = document.getElementById('btn-copy');
+    btn.textContent = '✓ Copied';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copy prompt'; btn.classList.remove('copied'); }, 2000);
+  } catch(e) {
+    console.error('Copy failed:', e);
+  }
+}
+
+/* ── Render ── */
+function render() {
+  const sort     = document.getElementById('sort-sel').value;
+  const region   = document.getElementById('region-sel').value;
+  const platform = document.getElementById('platform-sel').value;
+
+  let data = [...COMPANIES];
+  if (activeSector !== 'All') data = data.filter(c => c.sector === activeSector);
+  if (region !== 'all')       data = data.filter(c => c.region === region);
+  if (platform !== 'all')     data = data.filter(c => (c.platforms || []).includes(platform));
+
+  if (sort === 'score')       data.sort((a, b) => b.score - a.score);
+  else if (sort === 'spend')  data.sort((a, b) => b.tenure_months - a.tenure_months);
+  else                         data.sort((a, b) => parseInt(b.staff) - parseInt(a.staff));
+
+  /* ── Metrics (always from full dataset) ── */
+  const all = COMPANIES;
+  document.getElementById('m-total').textContent = all.length;
+  document.getElementById('m-hot').textContent = all.filter(c => c.score >= 85).length;
+  const avgT = all.length ? (all.reduce((s, c) => s + (c.tenure_months || 0), 0) / all.length).toFixed(1) : '0';
+  document.getElementById('m-tenure').textContent = avgT + 'm';
+  document.getElementById('m-sectors').textContent = [...new Set(all.map(c => c.sector))].length;
+  document.getElementById('result-count').textContent = data.length + ' companies';
+
+  /* ── Cards ── */
+  if (data.length === 0) {
+    document.getElementById('grid').innerHTML = `
+      <div class="empty-state">
+        <h3>No companies match this filter</h3>
+        <p>Try adjusting the region or platform filters, or select a different sector tab.</p>
+      </div>`;
+    return;
+  }
+
+  document.getElementById('grid').innerHTML = data.map(c => {
+    const p = pct(c.spend);
+    const pSign = p >= 0 ? '+' : '';
+    return `
+<div class="card${c.score >= 85 ? ' card-hot' : ''}">
+  <div class="card-top">
+    <div class="avatar" style="background:${c.avatarBg};color:${c.avatarCol}">${c.avatar}</div>
+    <div class="card-meta">
+      <div class="card-name">
+        ${escHtml(c.name)}
+        ${c.country === 'IE' ? '<span class="ie-badge">IE</span>' : ''}
+        ${c.hot_trigger ? `<span class="trigger-tag">${escHtml(c.hot_trigger)}</span>` : ''}
+      </div>
+      <div class="card-sub">${escHtml(c.sector)} · ${escHtml(c.region_label)} · ${staffLabel(c.staff)}</div>
+    </div>
+    <div class="score-badge ${scoreClass(c.score)}">${scoreLabel(c.score)} ${c.score}</div>
+  </div>
+
+  <div class="card-body">
+    <div class="info-block">
+      <div class="info-label">Ad tenure</div>
+      <div class="info-val">${escHtml(c.tenure_label)}</div>
+    </div>
+    <div class="info-block">
+      <div class="info-label">Audience</div>
+      <div class="info-val" style="font-size:11px">${escHtml(c.audience)}</div>
+    </div>
+    <div class="info-block">
+      <div class="info-label">Top keywords</div>
+      <div class="info-val" style="font-size:11px">${escHtml(c.keywords)}</div>
+    </div>
+  </div>
+
+  <div class="platforms">
+    ${['google','meta','tiktok'].map(p => platformPill(p, (c.platforms||[]).includes(p))).join('')}
+  </div>
+
+  <div class="sparkline-row">
+    <span class="sparkline-label">Spend trend</span>
+    <div class="sparkline-wrap">
+      <svg id="spk-${c.id}" viewBox="0 0 120 28" preserveAspectRatio="none"></svg>
+    </div>
+    <span class="sparkline-pct${pctClass(c.score)}">${pSign}${p}%</span>
+  </div>
+
+  <div class="contact-row">
+    <div class="contact-info">
+      <div class="contact-name">${escHtml(c.contact.name)}</div>
+      <div class="contact-role">${escHtml(c.contact.role)}</div>
+    </div>
+    <div class="contact-links">
+      <button class="btn-email" onclick="sendPrompt('email', ${c.id})">Email draft ↗</button>
+      <button class="btn-reach" onclick="sendPrompt('sequence', ${c.id})">Reach out ↗</button>
+    </div>
+  </div>
+</div>`;
+  }).join('');
+
+  // Draw sparklines after DOM update
+  requestAnimationFrame(() => {
+    data.forEach(c => drawSpark(c.id, c.spend, sparkColor(c.score)));
+  });
+}
+
+/* ── XSS guard ── */
+function escHtml(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+/* ── Boot ── */
+loadData();
+</script>
+</body>
+</html>
