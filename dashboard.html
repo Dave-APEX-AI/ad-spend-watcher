@@ -57,6 +57,14 @@
   .app-subtitle { font-size: 12px; color: var(--text-secondary); margin-top: 1px; }
   .header-right { display: flex; align-items: center; gap: 14px; }
   .last-updated { font-size: 11px; color: var(--text-tertiary); }
+  .sync-indicator {
+    font-size: 11px;
+    color: var(--text-tertiary);
+    letter-spacing: 0.02em;
+  }
+  .sync-indicator.sync-ok      { color: #2F8A4A; }
+  .sync-indicator.sync-warn    { color: #B3691E; }
+  .sync-indicator.sync-syncing { color: var(--text-tertiary); }
   .btn-whats-new {
     font-size: 11px; padding: 4px 10px;
     border-radius: 20px;
@@ -465,6 +473,7 @@
   </div>
   <div class="header-right">
     <button class="btn-whats-new" onclick="openChangelog()">What's new</button>
+    <div class="sync-indicator" id="sync-indicator" title="CRM sync status across devices"></div>
     <div class="last-updated" id="last-updated">Loading…</div>
   </div>
 </header>
@@ -812,7 +821,109 @@ function setStatusFor(id, patch) {
   }
   all[id] = next;
   saveStatus(all);
+  // Fire-and-forget push to Worker so the other device sees it.
+  pushRemoteStatus(id, patch);
   return { prev, next };
+}
+
+/* ── Remote CRM sync (Cloudflare Worker + KV) ─────────────────────
+   Dashboard source-of-truth is localStorage (keeps it working offline).
+   Worker is the cross-device sync layer.
+     - On load: fetchRemoteStatus() → merge newer remote records into local.
+     - On any change: pushRemoteStatus() (fire-and-forget).
+     - Conflict resolution: last-write-wins by updatedAt (Worker) vs
+       lastUpdated (local, ISO string). Ties go to remote.
+     - If the Worker is unreachable, every action still works locally.
+*/
+const WORKER_URL = 'https://asw-status.lucky-voice-f07e.workers.dev/';
+let _syncStatusEl = null;
+
+function setSyncIndicator(state, detail) {
+  // state: 'ok' | 'warn' | 'syncing' | null
+  if (!_syncStatusEl) _syncStatusEl = document.getElementById('sync-indicator');
+  if (!_syncStatusEl) return;
+  if (!state) { _syncStatusEl.textContent = ''; _syncStatusEl.className = 'sync-indicator'; return; }
+  const dot = state === 'ok' ? '●' : state === 'warn' ? '●' : '◐';
+  _syncStatusEl.textContent = dot + ' ' + (detail || '');
+  _syncStatusEl.className = 'sync-indicator sync-' + state;
+}
+
+async function fetchRemoteStatus() {
+  try {
+    const r = await fetch(WORKER_URL, { cache: 'no-store' });
+    if (!r.ok) return null;
+    const { state } = await r.json();
+    return state || {};
+  } catch(e) { return null; }
+}
+
+async function pushRemoteStatus(companyId, patch) {
+  const body = { companyId: String(companyId) };
+  if (patch.status !== undefined) body.status = patch.status;
+  if (patch.notes !== undefined)  body.notes  = patch.notes;
+  // Nothing to send if the patch has neither field.
+  if (body.status === undefined && body.notes === undefined) return true;
+  try {
+    const r = await fetch(WORKER_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+    if (r.ok) setSyncIndicator('ok', 'Synced');
+    else      setSyncIndicator('warn', 'Local only');
+    return r.ok;
+  } catch(e) {
+    setSyncIndicator('warn', 'Offline');
+    return false;
+  }
+}
+
+async function syncFromRemote({ silent } = {}) {
+  if (!silent) setSyncIndicator('syncing', 'Syncing…');
+  const remote = await fetchRemoteStatus();
+  if (remote === null) {
+    setSyncIndicator('warn', 'Offline');
+    return false;
+  }
+  const local = loadStatus();
+  let changed = false;
+  for (const [id, rec] of Object.entries(remote)) {
+    const prev = local[id];
+    const prevTs = prev?.lastUpdated ? new Date(prev.lastUpdated).getTime() : 0;
+    const remoteTs = Number(rec.updatedAt) || 0;
+    if (!prev || remoteTs > prevTs) {
+      const merged = {
+        status: rec.status || 'not_contacted',
+        notes:  rec.notes  || '',
+        lastUpdated: new Date(remoteTs || Date.now()).toISOString(),
+        contactedAt: prev?.contactedAt || null,
+      };
+      // Backfill contactedAt if status implies it and we don't have one yet.
+      if (!merged.contactedAt && ['contacted','replied','booked','passed'].includes(merged.status)) {
+        merged.contactedAt = merged.lastUpdated;
+      }
+      local[id] = merged;
+      changed = true;
+    }
+  }
+  if (changed) saveStatus(local);
+  setSyncIndicator('ok', 'Synced');
+  return changed;
+}
+
+// Poll for remote changes on tab focus + every 60s, so the VA on one device
+// sees Dave's changes within a minute (and vice versa).
+let _syncTimer = null;
+function startSyncHeartbeat() {
+  if (_syncTimer) return;
+  _syncTimer = setInterval(async () => {
+    const changed = await syncFromRemote({ silent: true });
+    if (changed) render();
+  }, 60000);
+  window.addEventListener('focus', async () => {
+    const changed = await syncFromRemote({ silent: true });
+    if (changed) render();
+  });
 }
 
 /* ── Undo state ── */
@@ -830,8 +941,15 @@ function undoStatus() {
   if (!lastUndoable) return;
   const { companyId, prevRecord } = lastUndoable;
   const all = loadStatus();
-  if (prevRecord === null) delete all[companyId];
-  else all[companyId] = prevRecord;
+  if (prevRecord === null) {
+    delete all[companyId];
+    // Worker has no DELETE; write back "not_contacted"/empty so the next
+    // sync doesn't resurrect the undone state.
+    pushRemoteStatus(companyId, { status: 'not_contacted', notes: '' });
+  } else {
+    all[companyId] = prevRecord;
+    pushRemoteStatus(companyId, { status: prevRecord.status, notes: prevRecord.notes || '' });
+  }
   saveStatus(all);
   lastUndoable = null;
   document.getElementById('toast').classList.remove('show');
@@ -883,6 +1001,13 @@ async function loadData() {
   initTabs();
   renderTodayBanner();
   render();
+
+  // Pull latest CRM state from the Worker (cross-device sync) then re-render.
+  // Runs async so the first paint isn't blocked on the network.
+  syncFromRemote().then(changed => {
+    if (changed) { initTabs(); renderTodayBanner(); render(); }
+    startSyncHeartbeat();
+  });
 }
 
 function showWarnBanner(msg) {
