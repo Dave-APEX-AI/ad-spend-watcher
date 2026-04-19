@@ -61,6 +61,39 @@ client but not a logged-in browser. The verified rank still goes into
 `scored_*.json` via a small inline Python block. See run log 2026-04-19 for
 the pattern.
 
+## FB URL capture (next weekly run)
+
+**During the Chrome-based Meta Ad Library scrape, capture the advertiser's
+Facebook page URL as a 5th pipe field:**
+
+```
+Company Name|DD Mon YYYY|sector|UK_or_IE|https://www.facebook.com/<slug>/
+```
+
+Why: the VA dashboard renders `contact.socials.facebook` as a clickable chip
+on each card — one click takes the VA to the company's FB page, which
+already has website, bio, phone, and IG link in one place. Pulling this during
+the scrape (when we're already on the search-results page for each
+advertiser) costs almost nothing and eliminates a 55-company manual backfill.
+
+A one-off backfill of 32/55 was done 2026-04-19 (see
+`data/companies.json`). The remaining 25 are flagged with
+`contact.needs_fb_url: true`; next week's scrape should populate them
+automatically.
+
+In the JS extractor running inside the Ad Library search results page, the
+pattern is:
+
+```js
+Array.from(document.querySelectorAll('a[href*="facebook.com"]'))
+  .map(a => { const u = new URL(a.href); return (u.pathname.match(/^\/([^\/]+)/)||[,''])[1]; })
+  .filter(s => s && /^[a-zA-Z0-9.\-_]+$/.test(s))
+```
+
+then fuzzy-match the slug against the advertiser's normalized name. Numeric
+page IDs (e.g. `61569350681767`) are also valid — FB serves the page at
+`facebook.com/<page_id>`.
+
 ## Dashboard data contract
 
 `data/companies.json` is an array of objects with these fields:
