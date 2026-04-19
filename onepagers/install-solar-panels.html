@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+  @page {
+    size: A4;
+    margin: 0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background: #ffffff;
+    color: #1a1a2e;
+    width: 210mm;
+    min-height: 297mm;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: #0a0f1e;
+    padding: 22px 32px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 3px solid #10b981;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .brand-dot {
+    width: 12px; height: 12px;
+    background: #10b981;
+    border-radius: 50%;
+  }
+  .brand-name {
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+  .brand-sub {
+    color: #10b981;
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+  .company-badge {
+    text-align: right;
+  }
+  .company-name-header {
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 700;
+  }
+  .company-meta {
+    color: #6ee7b7;
+    font-size: 10px;
+    margin-top: 3px;
+    letter-spacing: 0.5px;
+  }
+
+  /* ── HOOK SECTION ── */
+  .hook-section {
+    background: #0f172a;
+    padding: 32px 32px 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hook-accent {
+    position: absolute;
+    top: 0; right: 0;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle at top right, rgba(16,185,129,0.15) 0%, transparent 70%);
+  }
+  .hook-eyebrow {
+    color: #10b981;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .hook-headline {
+    color: #ffffff;
+    font-size: 28px;
+    font-weight: 800;
+    line-height: 1.2;
+    max-width: 480px;
+  }
+  .hook-headline .highlight {
+    color: #f59e0b;
+  }
+  .hook-sub {
+    color: #94a3b8;
+    font-size: 12px;
+    margin-top: 12px;
+    max-width: 460px;
+    line-height: 1.6;
+  }
+  .tenure-pill {
+    display: inline-block;
+    background: rgba(16,185,129,0.15);
+    border: 1px solid #10b981;
+    color: #10b981;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-top: 14px;
+    letter-spacing: 0.5px;
+  }
+
+  /* ── STATS ROW ── */
+  .stats-row {
+    display: flex;
+    background: #f8fafc;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  .stat-box {
+    flex: 1;
+    padding: 20px 20px 18px;
+    text-align: center;
+    border-right: 1px solid #e2e8f0;
+  }
+  .stat-box:last-child { border-right: none; }
+  .stat-label {
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #64748b;
+    margin-bottom: 6px;
+  }
+  .stat-value {
+    font-size: 30px;
+    font-weight: 800;
+    line-height: 1;
+  }
+  .stat-value.green { color: #10b981; }
+  .stat-value.amber { color: #f59e0b; }
+  .stat-value.red   { color: #ef4444; }
+  .stat-footnote {
+    font-size: 9px;
+    color: #94a3b8;
+    margin-top: 5px;
+  }
+
+  /* ── VISUAL SECTION: SPEED TO LEAD ── */
+  .visual-section {
+    padding: 24px 32px 20px;
+    background: #ffffff;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #64748b;
+    margin-bottom: 16px;
+  }
+  .timeline {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+    position: relative;
+  }
+  .timeline-item {
+    flex: 1;
+    text-align: center;
+    position: relative;
+  }
+  .timeline-item::after {
+    content: '→';
+    position: absolute;
+    right: -8px;
+    top: 12px;
+    color: #cbd5e1;
+    font-size: 16px;
+    z-index: 1;
+  }
+  .timeline-item:last-child::after { display: none; }
+  .t-dot {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    margin: 0 auto 8px;
+    font-weight: 700;
+  }
+  .t-dot.good  { background: #d1fae5; color: #065f46; }
+  .t-dot.warn  { background: #fef3c7; color: #92400e; }
+  .t-dot.bad   { background: #fee2e2; color: #991b1b; }
+  .t-dot.lost  { background: #0f172a; color: #ef4444; }
+  .t-label { font-size: 9px; font-weight: 700; color: #374151; }
+  .t-sub   { font-size: 8px; color: #94a3b8; margin-top: 2px; line-height: 1.4; }
+
+  /* ── INSIGHT SECTION ── */
+  .insight-section {
+    padding: 20px 32px;
+    background: #fafafa;
+    border-top: 1px solid #e2e8f0;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  .insight-inner {
+    display: flex;
+    gap: 20px;
+  }
+  .insight-left {
+    flex: 1;
+  }
+  .insight-right {
+    flex: 1;
+  }
+  .insight-title {
+    font-size: 12px;
+    font-weight: 800;
+    color: #0f172a;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .insight-title .red { color: #ef4444; }
+  .insight-title .green { color: #10b981; }
+  .insight-body {
+    font-size: 10.5px;
+    line-height: 1.7;
+    color: #475569;
+  }
+  .insight-body strong { color: #0f172a; }
+  .stat-inline {
+    display: inline-block;
+    background: #0f172a;
+    color: #10b981;
+    font-weight: 800;
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin: 0 2px;
+  }
+  .fix-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  .fix-check {
+    width: 16px; height: 16px;
+    background: #10b981;
+    border-radius: 50%;
+    color: white;
+    font-size: 9px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .fix-text {
+    font-size: 10.5px;
+    color: #374151;
+    line-height: 1.5;
+  }
+
+  /* ── WASTE BAR ── */
+  .waste-bar-section {
+    padding: 16px 32px;
+    background: #fff;
+  }
+  .waste-bar-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 9px;
+    color: #64748b;
+    margin-bottom: 5px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .waste-bar-track {
+    background: #e2e8f0;
+    border-radius: 4px;
+    height: 10px;
+    overflow: hidden;
+  }
+  .waste-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #10b981 38%, #f59e0b 38%, #f59e0b 62%, #ef4444 62%);
+    border-radius: 4px;
+    width: 100%;
+  }
+  .waste-legend {
+    display: flex;
+    gap: 16px;
+    margin-top: 6px;
+  }
+  .legend-item {
+    display: flex; align-items: center; gap: 5px;
+    font-size: 9px; color: #64748b;
+  }
+  .legend-dot {
+    width: 8px; height: 8px; border-radius: 2px;
+  }
+
+  /* ── FOOTER / CTA ── */
+  .cta-section {
+    background: #0a0f1e;
+    padding: 20px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .cta-left {  }
+  .cta-headline {
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 800;
+  }
+  .cta-sub {
+    color: #94a3b8;
+    font-size: 10px;
+    margin-top: 3px;
+  }
+  .cta-button {
+    background: #10b981;
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 800;
+    padding: 10px 22px;
+    border-radius: 6px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .footer-bar {
+    background: #0f172a;
+    padding: 10px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #1e293b;
+  }
+  .footer-text {
+    color: #475569;
+    font-size: 8px;
+    letter-spacing: 0.5px;
+  }
+  .footer-contact {
+    color: #10b981;
+    font-size: 8px;
+    font-weight: 700;
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="brand">
+    <div class="brand-dot"></div>
+    <div>
+      <div class="brand-name">Apex Emerald AI</div>
+      <div class="brand-sub">AI Voice &amp; Speed-to-Lead Systems</div>
+    </div>
+  </div>
+  <div class="company-badge">
+    <div class="company-name-header">Install Solar Panels</div>
+    <div class="company-meta">Solar Panel Installation &nbsp;·&nbsp; 34 months active ads &nbsp;·&nbsp; Facebook</div>
+  </div>
+</div>
+
+<!-- HOOK -->
+<div class="hook-section">
+  <div class="hook-accent"></div>
+  <div class="hook-eyebrow">Confidential Ad Spend Audit — Prepared for Install Solar Panels</div>
+  <div class="hook-headline">
+    You've spent <span class="highlight">£74,800</span> on ads.<br>
+    How much of it <span class="highlight">walked straight out the door?</span>
+  </div>
+  <div class="hook-sub">
+    homeowners researching solar move fast — and they fill out 3 forms in the same afternoon. This report shows you exactly where the money is going — and what it would take to stop the leak.
+  </div>
+  <div class="tenure-pill">📅 Running Facebook Ads for 34 consecutive months</div>
+</div>
+
+<!-- STATS ROW -->
+<div class="stats-row">
+  <div class="stat-box">
+    <div class="stat-label">Estimated Ad Spend</div>
+    <div class="stat-value green">£74,800</div>
+    <div class="stat-footnote">Over 34 months · est. £2,200/mo</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-label">Leads Generated (est.)</div>
+    <div class="stat-value amber">1,662</div>
+    <div class="stat-footnote">solar enquiries in 34 months</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-label">Leads Lost to Slow Follow-Up</div>
+    <div class="stat-value red">1,030</div>
+    <div class="stat-footnote">62% industry avg — never called back in time</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-label">Revenue at Risk</div>
+    <div class="stat-value red">£1.2M</div>
+    <div class="stat-footnote">Conservative 12% close rate estimate</div>
+  </div>
+</div>
+
+<!-- WASTE BAR -->
+<div class="waste-bar-section">
+  <div class="waste-bar-label">
+    <span>Your Ad Spend — Where It Goes</span>
+    <span>£2,200 / month</span>
+  </div>
+  <div class="waste-bar-track">
+    <div class="waste-bar-fill"></div>
+  </div>
+  <div class="waste-legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#10b981"></div>Leads converted (38%)</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#f59e0b"></div>Leads delayed — at risk (24%)</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#ef4444"></div>Leads lost to no response (38%)</div>
+  </div>
+</div>
+
+<!-- SPEED TO LEAD TIMELINE -->
+<div class="visual-section">
+  <div class="section-title">The Speed-to-Lead Window — What Happens After Someone Clicks Your Ad</div>
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="t-dot good">📱</div>
+      <div class="t-label">Lead submits form</div>
+      <div class="t-sub">0:00 — High intent,<br>ready to buy</div>
+    </div>
+    <div class="timeline-item">
+      <div class="t-dot good">⚡</div>
+      <div class="t-label">0–1 min response</div>
+      <div class="t-sub">9x more likely<br>to convert</div>
+    </div>
+    <div class="timeline-item">
+      <div class="t-dot warn">⏱️</div>
+      <div class="t-label">5 min response</div>
+      <div class="t-sub">Conversion drops<br>80%</div>
+    </div>
+    <div class="timeline-item">
+      <div class="t-dot warn">📞</div>
+      <div class="t-label">30 min response</div>
+      <div class="t-sub">Lead has already<br>called 2 others</div>
+    </div>
+    <div class="timeline-item">
+      <div class="t-dot bad">🕐</div>
+      <div class="t-label">Same day</div>
+      <div class="t-sub">Competitor has<br>booked the survey</div>
+    </div>
+    <div class="timeline-item">
+      <div class="t-dot lost">✖</div>
+      <div class="t-label">Next day+</div>
+      <div class="t-sub">Lead is gone.<br>Ad spend wasted.</div>
+    </div>
+  </div>
+</div>
+
+<!-- INSIGHT: PROBLEM + SOLUTION -->
+<div class="insight-section">
+  <div class="insight-inner">
+    <div class="insight-left">
+      <div class="insight-title"><span class="red">The Problem</span> — In Plain English</div>
+      <div class="insight-body">
+        You're generating <strong>solar enquiries</strong> at roughly
+        <span class="stat-inline">£45 per lead</span> through Facebook.
+        But the moment someone submits that form, they start a mental clock.
+        <br><br>
+        78% of solar leads go to the first company that calls back.
+        <br><br>
+        That means an estimated <strong>1,030 enquiries</strong> over the last
+        34 months likely slipped to a competitor — not because your ads
+        failed, but because no one was there to answer instantly.
+        <br><br>
+        <strong>Your ads are working. Your follow-up system isn't.</strong>
+      </div>
+    </div>
+    <div class="insight-right">
+      <div class="insight-title"><span class="green">The Fix</span> — What We Deploy</div>
+      <div class="fix-item">
+        <div class="fix-check">✓</div>
+        <div class="fix-text"><strong>AI Voice Receptionist</strong> — answers every call, 24/7. Qualifies the lead, books the appointment, handles FAQs. Never misses a call.</div>
+      </div>
+      <div class="fix-item">
+        <div class="fix-check">✓</div>
+        <div class="fix-text"><strong>Instant Lead Response</strong> — the moment a form is submitted, our AI calls them back within 60 seconds. Not a text. A conversation.</div>
+      </div>
+      <div class="fix-item">
+        <div class="fix-check">✓</div>
+        <div class="fix-text"><strong>After-Hours Coverage</strong> — Solar Panel Installation enquiries come in evenings and weekends. We handle them all, so you wake up to booked appointments.</div>
+      </div>
+      <div class="fix-item">
+        <div class="fix-check">✓</div>
+        <div class="fix-text"><strong>No extra staff. No missed leads.</strong> Fully integrated with your existing CRM or calendar in under 48 hours.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-section">
+  <div class="cta-left">
+    <div class="cta-headline">Ready to stop losing £1,364/month in missed leads?</div>
+    <div class="cta-sub">Book a free 15-minute audit call — we'll show you exactly what you're missing.</div>
+  </div>
+  <div class="cta-button">Book Free Audit Call</div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer-bar">
+  <div class="footer-text">APEX EMERALD AI &nbsp;·&nbsp; Confidential — Prepared exclusively for Install Solar Panels &nbsp;·&nbsp; 8 April 2026</div>
+  <div class="footer-contact">apexemeraldai.com &nbsp;·&nbsp; dave@apexemeraldai.com</div>
+</div>
+
+</body>
+</html>

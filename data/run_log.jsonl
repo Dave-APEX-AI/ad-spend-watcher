@@ -1,0 +1,17 @@
+{"timestamp": "2026-04-01T20:41:07.676623", "success": true, "companies_tracked": 0, "hot_leads": 0, "error": ""}
+{"timestamp": "2026-04-01T20:41:26.654762", "success": true, "companies_tracked": 0, "hot_leads": 0, "error": ""}
+{"timestamp": "2026-04-01T21:09:56.171735", "success": true, "companies_tracked": 31, "hot_leads": 0, "error": ""}
+{"timestamp": "2026-04-01T21:11:11.666723", "success": true, "companies_tracked": 31, "hot_leads": 0, "error": ""}
+{"timestamp": "2026-04-01T21:19:14.739112", "success": true, "companies_tracked": 31, "hot_leads": 0, "error": ""}
+{"timestamp": "2026-04-02T20:10:33.894507", "success": true, "companies_tracked": 31, "hot_leads": 0, "error": ""}
+{"timestamp": "2026-04-02T20:15:34.390109", "success": true, "companies_tracked": 31, "hot_leads": 0, "error": ""}
+{"timestamp": "2026-04-02T20:20:31.248131", "success": true, "companies_tracked": 31, "hot_leads": 0, "error": ""}
+{"timestamp": "2026-04-06T09:10:35.403736", "success": true, "companies_tracked": 31, "hot_leads": 0, "error": ""}
+{"timestamp": "2026-04-07T11:31:42.871807", "success": true, "companies_tracked": 31, "hot_leads": 0, "error": ""}
+{"timestamp": "2026-04-07T11:39:58.260785", "success": true, "companies_tracked": 0, "hot_leads": 0, "error": ""}
+{"timestamp": "2026-04-07T11:42:36.628055", "success": true, "companies_tracked": 0, "hot_leads": 0, "error": ""}
+{"timestamp": "2026-04-07T11:42:46.330862", "success": true, "companies_tracked": 0, "hot_leads": 0, "error": ""}
+{"timestamp": "2026-04-07T11:57:39.758681", "success": true, "companies_tracked": 0, "hot_leads": 0, "error": ""}
+{"timestamp": "2026-04-07T18:14:41.368680", "success": true, "companies_tracked": 0, "hot_leads": 0, "error": ""}
+{"timestamp": "2026-04-13T07:12:40.355069", "success": true, "run_date": "2026-04-12", "companies_tracked": 48, "hot_leads": 16, "warm_leads": 26, "source": "chrome_browser_scrape", "sectors_covered": 8, "raw_scraped": 204, "qualified_3mo_plus": 69, "google_verified": 19, "report": "Weekly Report 13 April 2026.docx", "error": ""}
+{"timestamp": "2026-04-19T17:26:54.314872", "success": true, "run_date": "2026-04-19", "companies_tracked": 55, "hot_leads": 10, "warm_leads": 35, "watch_leads": 10, "source": "chrome_browser_scrape", "sectors_covered": 8, "raw_scraped": 283, "qualified_3mo_plus": 85, "google_verified": 10, "report": "Weekly Report 19 April 2026.docx", "error": ""}

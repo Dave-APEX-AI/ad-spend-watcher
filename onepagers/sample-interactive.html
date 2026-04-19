@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Install Solar Panels — Your Free Audit | Apex Emerald AI</title>
+<style>
+  :root {
+    --emerald: #10b981;
+    --emerald-light: #6ee7b7;
+    --dark: #0a0f1e;
+    --dark2: #0f172a;
+    --dark3: #1e293b;
+    --amber: #f59e0b;
+    --red: #ef4444;
+    --text: #f8fafc;
+    --muted: #94a3b8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--dark);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    max-width: 480px;
+    margin: 0 auto;
+    min-height: 100vh;
+  }
+
+  /* ── STICKY HEADER ── */
+  .sticky-header {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(10,15,30,0.95);
+    backdrop-filter: blur(12px);
+    padding: 12px 20px;
+    border-bottom: 1px solid rgba(16,185,129,0.3);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .brand-row { display: flex; align-items: center; gap: 8px; }
+  .brand-dot { width: 8px; height: 8px; background: var(--emerald); border-radius: 50%; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:0.7; transform:scale(1.3); } }
+  .brand-text { font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text); }
+  .header-cta {
+    background: var(--emerald); color: #fff;
+    font-size: 10px; font-weight: 800;
+    padding: 6px 14px; border-radius: 20px;
+    text-decoration: none; letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    padding: 36px 24px 32px;
+    background: linear-gradient(160deg, #0a0f1e 0%, #0f1f35 50%, #0a0f1e 100%);
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: -80px; right: -80px;
+    width: 280px; height: 280px;
+    background: radial-gradient(circle, rgba(16,185,129,0.18) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .hero::after {
+    content: '';
+    position: absolute; bottom: -60px; left: -60px;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(245,158,11,0.1) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(16,185,129,0.15);
+    border: 1px solid rgba(16,185,129,0.4);
+    color: var(--emerald);
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    padding: 5px 12px; border-radius: 20px;
+    margin-bottom: 20px;
+  }
+  .hero-company {
+    color: var(--muted); font-size: 13px; margin-bottom: 8px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .hero-company span { color: var(--text); font-weight: 600; }
+  .hero-headline {
+    font-size: 30px; font-weight: 900; line-height: 1.15;
+    margin-bottom: 16px; letter-spacing: -0.5px;
+  }
+  .hero-headline .amber { color: var(--amber); }
+  .hero-headline .emerald { color: var(--emerald); }
+  .hero-sub {
+    font-size: 14px; color: var(--muted); line-height: 1.7;
+    margin-bottom: 24px;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px; padding: 10px 16px;
+    font-size: 12px; color: var(--muted);
+  }
+  .hero-badge strong { color: var(--text); }
+
+  /* ── STATS CARDS ── */
+  .stats-section { padding: 28px 20px 8px; }
+  .section-label {
+    font-size: 10px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--muted);
+    margin-bottom: 14px; display: flex; align-items: center; gap: 8px;
+  }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: rgba(255,255,255,0.08); }
+  .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .stat-card {
+    background: var(--dark2);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 14px; padding: 18px 16px;
+    position: relative; overflow: hidden;
+    opacity: 0; transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .stat-card.visible { opacity: 1; transform: translateY(0); }
+  .stat-card::before {
+    content: ''; position: absolute;
+    top: 0; left: 0; right: 0; height: 2px;
+  }
+  .stat-card.green::before { background: var(--emerald); }
+  .stat-card.amber::before { background: var(--amber); }
+  .stat-card.red::before   { background: var(--red); }
+  .stat-card.blue::before  { background: #60a5fa; }
+  .stat-icon { font-size: 22px; margin-bottom: 10px; display: block; }
+  .stat-num {
+    font-size: 26px; font-weight: 900; display: block;
+    line-height: 1; margin-bottom: 5px;
+  }
+  .stat-card.green .stat-num { color: var(--emerald); }
+  .stat-card.amber .stat-num { color: var(--amber); }
+  .stat-card.red .stat-num   { color: var(--red); }
+  .stat-card.blue .stat-num  { color: #60a5fa; }
+  .stat-name { font-size: 10px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; line-height: 1.4; }
+
+  /* ── WASTE BAR ── */
+  .waste-section {
+    margin: 20px 20px 0;
+    background: var(--dark2);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 14px; padding: 20px;
+  }
+  .waste-title { font-size: 12px; font-weight: 700; margin-bottom: 14px; }
+  .waste-bar-track {
+    background: rgba(255,255,255,0.08);
+    border-radius: 8px; height: 12px;
+    overflow: hidden; margin-bottom: 10px;
+  }
+  .waste-bar-fill {
+    height: 100%; border-radius: 8px; width: 0;
+    background: linear-gradient(90deg, var(--emerald) 0% 38%, var(--amber) 38% 62%, var(--red) 62% 100%);
+    transition: width 1.5s cubic-bezier(0.4,0,0.2,1);
+  }
+  .waste-legend { display: flex; flex-direction: column; gap: 7px; }
+  .legend-row { display: flex; align-items: center; justify-content: space-between; }
+  .legend-left { display: flex; align-items: center; gap: 7px; font-size: 11px; color: var(--muted); }
+  .legend-dot { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
+  .legend-pct { font-size: 11px; font-weight: 700; }
+
+  /* ── TIMELINE ── */
+  .timeline-section { padding: 28px 20px 8px; }
+  .timeline-scroll { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 8px; scrollbar-width: none; }
+  .timeline-scroll::-webkit-scrollbar { display: none; }
+  .t-card {
+    flex-shrink: 0; width: 100px;
+    background: var(--dark2);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 12px; padding: 14px 10px;
+    text-align: center;
+    position: relative;
+  }
+  .t-card::after {
+    content: '→'; position: absolute; right: -8px; top: 50%;
+    transform: translateY(-50%); font-size: 12px; color: rgba(255,255,255,0.2);
+  }
+  .t-card:last-child::after { display: none; }
+  .t-emoji { font-size: 20px; display: block; margin-bottom: 8px; }
+  .t-time { font-size: 11px; font-weight: 800; display: block; margin-bottom: 4px; }
+  .t-time.good  { color: var(--emerald); }
+  .t-time.warn  { color: var(--amber); }
+  .t-time.bad   { color: var(--red); }
+  .t-desc { font-size: 9px; color: var(--muted); line-height: 1.4; }
+
+  /* ── INSIGHT ── */
+  .insight-section { padding: 24px 20px 8px; }
+  .insight-card {
+    background: var(--dark2);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 14px; padding: 20px;
+    margin-bottom: 12px;
+    opacity: 0; transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .insight-card.visible { opacity: 1; transform: translateY(0); }
+  .insight-card-title {
+    font-size: 13px; font-weight: 800; margin-bottom: 12px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .insight-card-title .badge {
+    font-size: 9px; padding: 3px 8px; border-radius: 4px;
+    font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase;
+  }
+  .badge.problem { background: rgba(239,68,68,0.2); color: var(--red); }
+  .badge.fix     { background: rgba(16,185,129,0.2); color: var(--emerald); }
+  .insight-body { font-size: 13px; color: var(--muted); line-height: 1.7; }
+  .insight-body strong { color: var(--text); }
+  .insight-body .highlight {
+    background: rgba(16,185,129,0.15); color: var(--emerald);
+    padding: 1px 6px; border-radius: 4px; font-weight: 700;
+  }
+  .fix-list { list-style: none; margin-top: 12px; }
+  .fix-list li {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+    font-size: 13px; color: var(--muted); line-height: 1.5;
+  }
+  .fix-list li:last-child { border-bottom: none; }
+  .fix-list .check {
+    width: 18px; height: 18px; background: var(--emerald);
+    border-radius: 50%; display: flex; align-items: center;
+    justify-content: center; font-size: 10px; flex-shrink: 0;
+    margin-top: 1px; font-weight: 900; color: white;
+  }
+
+  /* ── SOCIAL PROOF ── */
+  .proof-section { padding: 24px 20px 8px; }
+  .proof-card {
+    background: linear-gradient(135deg, rgba(16,185,129,0.1), rgba(16,185,129,0.05));
+    border: 1px solid rgba(16,185,129,0.25);
+    border-radius: 14px; padding: 20px; margin-bottom: 12px;
+  }
+  .proof-stat-row { display: flex; gap: 0; }
+  .proof-stat { flex: 1; text-align: center; padding: 0 12px; border-right: 1px solid rgba(255,255,255,0.08); }
+  .proof-stat:last-child { border-right: none; }
+  .proof-num { font-size: 24px; font-weight: 900; color: var(--emerald); display: block; }
+  .proof-lbl { font-size: 9px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px; line-height: 1.4; }
+
+  /* ── CTA ── */
+  .cta-section {
+    margin: 24px 20px;
+    background: linear-gradient(135deg, #0d2818, #0a1f2f);
+    border: 1px solid rgba(16,185,129,0.3);
+    border-radius: 20px; padding: 28px 24px;
+    text-align: center;
+  }
+  .cta-headline { font-size: 20px; font-weight: 900; margin-bottom: 8px; line-height: 1.3; }
+  .cta-sub { font-size: 13px; color: var(--muted); margin-bottom: 24px; line-height: 1.6; }
+  .cta-btn {
+    display: block; background: var(--emerald);
+    color: white; font-weight: 800; font-size: 15px;
+    padding: 16px 24px; border-radius: 14px;
+    text-decoration: none; letter-spacing: 0.3px;
+    margin-bottom: 12px;
+    box-shadow: 0 8px 32px rgba(16,185,129,0.35);
+  }
+  .cta-btn-secondary {
+    display: block; color: var(--muted);
+    font-size: 12px; text-decoration: none;
+    padding: 10px;
+  }
+  .cta-guarantee {
+    display: flex; align-items: center; justify-content: center;
+    gap: 6px; font-size: 11px; color: var(--muted);
+    margin-top: 16px;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    background: var(--dark2); padding: 20px 24px;
+    text-align: center; border-top: 1px solid rgba(255,255,255,0.05);
+  }
+  .footer-brand { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; }
+  .footer-text { font-size: 10px; color: var(--muted); line-height: 1.6; }
+  .footer-text a { color: var(--emerald); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<!-- STICKY HEADER -->
+<div class="sticky-header">
+  <div class="brand-row">
+    <div class="brand-dot"></div>
+    <div class="brand-text">Apex Emerald AI</div>
+  </div>
+  <a href="mailto:dave@apexemeraldai.com?subject=Free Audit Call" class="header-cta">Book Free Call</a>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="eyebrow">
+    <span>🔍</span> Confidential Audit Report
+  </div>
+  <div class="hero-company">Prepared for <span>Install Solar Panels</span></div>
+  <div class="hero-headline">
+    You've invested <span class="amber">£74,800</span> in ads.<br>
+    Are you closing <span class="emerald">every lead</span>?
+  </div>
+  <div class="hero-sub">
+    Homeowners researching solar fill out 3 forms in the same afternoon.
+    Whoever calls first wins the job. This report shows you what's happening after your ad spend.
+  </div>
+  <div class="hero-badge">
+    <span>📅</span>
+    <div><strong>34 months</strong> of active Facebook ads &nbsp;·&nbsp; Solar Panel Installation</div>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats-section">
+  <div class="section-label">Your Numbers — By The Data</div>
+  <div class="stats-grid">
+    <div class="stat-card green" data-animate>
+      <span class="stat-icon">📊</span>
+      <span class="stat-num" data-target="74800" data-prefix="£" data-format="currency">£0</span>
+      <span class="stat-name">Estimated Ad Spend</span>
+    </div>
+    <div class="stat-card amber" data-animate>
+      <span class="stat-icon">👥</span>
+      <span class="stat-num" data-target="1662" data-format="number">0</span>
+      <span class="stat-name">Leads Generated (Est.)</span>
+    </div>
+    <div class="stat-card red" data-animate>
+      <span class="stat-icon">❌</span>
+      <span class="stat-num" data-target="1030" data-format="number">0</span>
+      <span class="stat-name">Leads Lost to Slow Follow-Up</span>
+    </div>
+    <div class="stat-card red" data-animate>
+      <span class="stat-icon">💸</span>
+      <span class="stat-num" data-target="1174200" data-prefix="£" data-format="currency">£0</span>
+      <span class="stat-name">Revenue at Risk</span>
+    </div>
+  </div>
+</div>
+
+<!-- WASTE BAR -->
+<div class="waste-section" id="wasteBar">
+  <div class="waste-title">Where Your £2,200/month Actually Goes</div>
+  <div class="waste-bar-track">
+    <div class="waste-bar-fill" id="wasteFill"></div>
+  </div>
+  <div class="waste-legend">
+    <div class="legend-row">
+      <div class="legend-left">
+        <div class="legend-dot" style="background:var(--emerald)"></div>
+        Leads converted — working as intended
+      </div>
+      <span class="legend-pct" style="color:var(--emerald)">38%</span>
+    </div>
+    <div class="legend-row">
+      <div class="legend-left">
+        <div class="legend-dot" style="background:var(--amber)"></div>
+        Leads delayed — still at risk
+      </div>
+      <span class="legend-pct" style="color:var(--amber)">24%</span>
+    </div>
+    <div class="legend-row">
+      <div class="legend-left">
+        <div class="legend-dot" style="background:var(--red)"></div>
+        Leads lost — no response in time
+      </div>
+      <span class="legend-pct" style="color:var(--red)">38%</span>
+    </div>
+  </div>
+</div>
+
+<!-- TIMELINE -->
+<div class="timeline-section">
+  <div class="section-label">What Happens After They Click Your Ad</div>
+  <div class="timeline-scroll">
+    <div class="t-card">
+      <span class="t-emoji">📱</span>
+      <span class="t-time good">0:00</span>
+      <span class="t-desc">Form submitted. High intent. Ready to buy.</span>
+    </div>
+    <div class="t-card">
+      <span class="t-emoji">⚡</span>
+      <span class="t-time good">Under 1 min</span>
+      <span class="t-desc">9× more likely to convert.</span>
+    </div>
+    <div class="t-card">
+      <span class="t-emoji">⏱</span>
+      <span class="t-time warn">5 mins</span>
+      <span class="t-desc">Conversion drops 80%.</span>
+    </div>
+    <div class="t-card">
+      <span class="t-emoji">📞</span>
+      <span class="t-time warn">30 mins</span>
+      <span class="t-desc">They've called 2 competitors.</span>
+    </div>
+    <div class="t-card">
+      <span class="t-emoji">🏠</span>
+      <span class="t-time bad">Same day</span>
+      <span class="t-desc">Competitor booked the survey.</span>
+    </div>
+    <div class="t-card">
+      <span class="t-emoji">✖</span>
+      <span class="t-time bad">Next day+</span>
+      <span class="t-desc">Lead gone. Ad spend wasted.</span>
+    </div>
+  </div>
+</div>
+
+<!-- INSIGHT CARDS -->
+<div class="insight-section">
+  <div class="section-label">The Analysis</div>
+
+  <div class="insight-card" data-animate>
+    <div class="insight-card-title">
+      <span>⚠️</span> The Problem
+      <span class="badge problem">Critical</span>
+    </div>
+    <div class="insight-body">
+      You're generating solar enquiries at roughly <span class="highlight">£45 per lead</span> through Facebook.
+      But the moment someone submits that form, they start a mental clock.
+      <br><br>
+      <strong>78% of solar leads go to the first company that calls back.</strong>
+      <br><br>
+      That means an estimated <strong>1,030 enquiries</strong> over the last 34 months
+      likely went to a competitor — not because your ads failed, but because
+      no one was there to answer instantly. <strong>Your ads are working. Your follow-up isn't.</strong>
+    </div>
+  </div>
+
+  <div class="insight-card" data-animate>
+    <div class="insight-card-title">
+      <span>✅</span> What We Deploy
+      <span class="badge fix">The Fix</span>
+    </div>
+    <ul class="fix-list">
+      <li><span class="check">✓</span><span><strong style="color:var(--text)">AI Voice Receptionist</strong> — answers every call, 24/7. Qualifies the lead, books the survey, handles FAQs. Never misses a call.</span></li>
+      <li><span class="check">✓</span><span><strong style="color:var(--text)">60-Second Lead Response</strong> — the moment a form is submitted, our AI calls them back instantly. Not a text. A real conversation.</span></li>
+      <li><span class="check">✓</span><span><strong style="color:var(--text)">After-Hours Coverage</strong> — solar enquiries come in evenings and weekends. We handle them all so you wake up to booked surveys.</span></li>
+      <li><span class="check">✓</span><span><strong style="color:var(--text)">Live in 48 Hours</strong> — fully integrated with your existing calendar or CRM. No new software to learn.</span></li>
+    </ul>
+  </div>
+</div>
+
+<!-- SOCIAL PROOF -->
+<div class="proof-section">
+  <div class="proof-card">
+    <div class="section-label" style="margin-bottom:16px">Industry Benchmarks</div>
+    <div class="proof-stat-row">
+      <div class="proof-stat">
+        <span class="proof-num">9×</span>
+        <span class="proof-lbl">Higher conversion under 1 min response</span>
+      </div>
+      <div class="proof-stat">
+        <span class="proof-num">78%</span>
+        <span class="proof-lbl">Leads go to first company to call back</span>
+      </div>
+      <div class="proof-stat">
+        <span class="proof-num">48hrs</span>
+        <span class="proof-lbl">To go live with full AI system</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-section">
+  <div class="cta-headline">Stop Losing <span style="color:var(--amber)">£1,364/month</span> in missed leads</div>
+  <div class="cta-sub">
+    Book a free 15-minute audit call. We'll show you exactly how many leads you're losing and what it would take to recover them.
+  </div>
+  <a href="mailto:dave@apexemeraldai.com?subject=Free Audit - Install Solar Panels" class="cta-btn">
+    📞 Book Your Free Audit Call
+  </a>
+  <a href="mailto:dave@apexemeraldai.com" class="cta-btn-secondary">Or email us directly →</a>
+  <div class="cta-guarantee">
+    <span>🔒</span> No obligation. No sales pitch. Just the numbers.
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="footer-brand">Apex Emerald AI</div>
+  <div class="footer-text">
+    AI Voice Receptionists &amp; Speed-to-Lead Systems<br>
+    <a href="mailto:dave@apexemeraldai.com">dave@apexemeraldai.com</a> &nbsp;·&nbsp;
+    <a href="https://apexemeraldai.com">apexemeraldai.com</a><br><br>
+    This report was prepared exclusively for Install Solar Panels.<br>
+    Estimates are based on industry benchmarks for the solar sector.
+  </div>
+</div>
+
+<script>
+// ── Counter animation ──
+function animateCounter(el) {
+  const target = parseInt(el.dataset.target);
+  const format = el.dataset.format;
+  const prefix = el.dataset.prefix || '';
+  const duration = 2000;
+  const start = performance.now();
+
+  function update(now) {
+    const elapsed = now - start;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    const current = Math.round(target * eased);
+
+    if (format === 'currency') {
+      if (current >= 1000000) {
+        el.textContent = prefix + '£' + (current / 1000000).toFixed(1) + 'M';
+      } else {
+        el.textContent = prefix + '£' + current.toLocaleString();
+      }
+    } else {
+      el.textContent = current.toLocaleString();
+    }
+
+    if (progress < 1) requestAnimationFrame(update);
+  }
+  requestAnimationFrame(update);
+}
+
+// ── Intersection observer for scroll animations ──
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const el = entry.target;
+      el.classList.add('visible');
+
+      // Animate counters in stat cards
+      const counter = el.querySelector('[data-target]');
+      if (counter) {
+        setTimeout(() => animateCounter(counter), 200);
+      }
+
+      // Animate waste bar
+      if (el.id === 'wasteBar') {
+        setTimeout(() => {
+          document.getElementById('wasteFill').style.width = '100%';
+        }, 300);
+      }
+
+      observer.unobserve(el);
+    }
+  });
+}, { threshold: 0.2 });
+
+document.querySelectorAll('[data-animate], #wasteBar').forEach(el => {
+  observer.observe(el);
+});
+</script>
+</body>
+</html>

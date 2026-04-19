@@ -1,0 +1,29 @@
+# Secrets — NEVER commit
+config/credentials.json
+!config/credentials.json.example
+*.env
+.env
+.env.*
+
+# Cloudflare Workers local state
+.wrangler/
+
+# Python bytecode
+__pycache__/
+*.pyc
+*.pyo
+
+# Raw scrape dumps (large, regenerated each run)
+data/meta_raw_browser_*.txt
+data/meta_raw_browser_*.json
+data/google_raw_*.json
+
+# Node
+node_modules/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temp build artifacts
+*.tmp

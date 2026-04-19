@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ad Spend Watcher — Archive</title>
+<style>
+  :root {
+    --bg: #f6f8fb;
+    --card: #ffffff;
+    --ink: #0f172a;
+    --muted: #64748b;
+    --accent: #2563eb;
+    --border: #e2e8f0;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    margin: 0;
+    padding: 40px 20px;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.5;
+  }
+  .wrap { max-width: 720px; margin: 0 auto; }
+  header { margin-bottom: 32px; }
+  h1 { font-size: 28px; margin: 0 0 4px; }
+  .sub { color: var(--muted); font-size: 15px; }
+  .back {
+    display: inline-block;
+    margin-bottom: 20px;
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 14px;
+  }
+  .back:hover { text-decoration: underline; }
+  .list {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    text-decoration: none;
+    color: var(--ink);
+    transition: background 0.15s;
+  }
+  .item:last-child { border-bottom: none; }
+  .item:hover { background: #f8fafc; }
+  .date { font-weight: 600; font-size: 16px; }
+  .meta { color: var(--muted); font-size: 13px; margin-top: 2px; }
+  .arrow { color: var(--accent); font-size: 20px; }
+  .empty { padding: 40px; text-align: center; color: var(--muted); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="../">← Back to live dashboard</a>
+  <header>
+    <h1>Weekly Archive</h1>
+    <div class="sub">Each Sunday, a snapshot of the dashboard is frozen and kept here.</div>
+  </header>
+  <div class="list" id="list">
+    <a class="item" href="2026-04-19.html">
+      <div>
+        <div class="date">Week of 19 April 2026</div>
+        <div class="meta">55 companies tracked · 10 Hot · 35 Warm · 10 Watch</div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+    <a class="item" href="2026-04-13.html">
+      <div>
+        <div class="date">Week of 13 April 2026</div>
+        <div class="meta">Prior week snapshot</div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+  </div>
+</div>
+</body>
+</html>
