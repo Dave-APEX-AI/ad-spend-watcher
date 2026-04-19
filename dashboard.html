@@ -22,6 +22,11 @@
     --color-hot:     #1D9E75;
     --color-warm:    #BA7517;
     --color-watch:   #888780;
+    --color-blue:    #1554C0;
+    --bg-blue:       #E6F1FB;
+    --border-blue:   #85B7EB;
+    --color-purple:  #6B3FA0;
+    --bg-purple:     #F3ECFA;
     --radius-md: 6px;
     --radius-lg: 10px;
   }
@@ -50,9 +55,38 @@
   }
   .app-title { font-size: 15px; font-weight: 600; color: var(--text-primary); }
   .app-subtitle { font-size: 12px; color: var(--text-secondary); margin-top: 1px; }
+  .header-right { display: flex; align-items: center; gap: 14px; }
   .last-updated { font-size: 11px; color: var(--text-tertiary); }
+  .btn-whats-new {
+    font-size: 11px; padding: 4px 10px;
+    border-radius: 20px;
+    border: 0.5px solid var(--border-secondary);
+    background: var(--bg-primary);
+    color: var(--text-secondary);
+    cursor: pointer;
+  }
+  .btn-whats-new:hover { border-color: var(--border-primary); color: var(--text-primary); }
 
   .container { max-width: 960px; margin: 0 auto; padding: 20px 20px 60px; }
+
+  /* ── Today banner ── */
+  .today-banner {
+    background: linear-gradient(135deg, #E6F1FB 0%, #F3ECFA 100%);
+    border: 0.5px solid var(--border-blue);
+    border-radius: var(--radius-md);
+    padding: 10px 14px;
+    font-size: 12px;
+    color: var(--color-blue);
+    margin-bottom: 14px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .today-banner a {
+    margin-left: auto;
+    color: var(--color-blue);
+    font-weight: 500;
+    text-decoration: underline;
+    cursor: pointer;
+  }
 
   /* ── Metrics row ── */
   .metrics {
@@ -85,6 +119,9 @@
   }
   .tab:hover { border-color: var(--border-primary); color: var(--text-primary); }
   .tab.active { border-color: var(--border-primary); color: var(--text-primary); font-weight: 500; background: var(--bg-secondary); }
+  .tab.today-tab { background: var(--bg-blue); border-color: var(--border-blue); color: var(--color-blue); font-weight: 500; }
+  .tab.today-tab.active { background: var(--color-blue); color: #fff; border-color: var(--color-blue); }
+  .tab .tab-count { font-size: 10px; margin-left: 4px; opacity: 0.7; }
 
   /* ── Filter bar ── */
   .filter-bar { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; align-items: center; }
@@ -100,6 +137,17 @@
   }
   .filter-bar select:focus { border-color: var(--border-primary); }
   .result-count { font-size: 12px; color: var(--text-tertiary); margin-left: auto; }
+
+  /* ── Warning banner (if companies.json fails to load) ── */
+  .warn-banner {
+    background: #FEF3C7;
+    border: 0.5px solid #F59E0B;
+    color: #78350F;
+    padding: 10px 14px;
+    border-radius: var(--radius-md);
+    font-size: 12px;
+    margin-bottom: 14px;
+  }
 
   /* ── Company grid ── */
   .company-grid { display: flex; flex-direction: column; gap: 10px; }
@@ -117,6 +165,8 @@
     border-left: 3px solid var(--color-hot);
     border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
   }
+  .card-passed { opacity: 0.55; }
+  .card-booked { border-left: 3px solid var(--color-purple); }
 
   /* Card header */
   .card-top { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px; }
@@ -180,7 +230,7 @@
     color: var(--text-tertiary);
     background: transparent;
   }
-  .platform-pill.active { background: #E6F1FB; border-color: #85B7EB; color: #0C447C; }
+  .platform-pill.active { background: var(--bg-blue); border-color: var(--border-blue); color: var(--color-blue); }
 
   /* Sparkline row */
   .sparkline-row { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
@@ -191,38 +241,110 @@
   .sparkline-pct.warm { color: var(--color-warm); }
   .sparkline-pct.watch { color: var(--color-watch); }
 
-  /* Contact row */
+  /* Contact + action row */
   .contact-row {
     display: flex; align-items: center; justify-content: space-between;
     padding-top: 10px;
     border-top: 0.5px solid var(--border-tertiary);
+    gap: 10px; flex-wrap: wrap;
   }
+  .contact-info { min-width: 120px; }
   .contact-info .contact-name { font-size: 13px; font-weight: 500; color: var(--text-primary); }
   .contact-info .contact-role { font-size: 11px; color: var(--text-secondary); margin-top: 1px; }
-  .contact-links { display: flex; gap: 6px; }
+  .contact-info .contact-name.unknown { color: var(--text-tertiary); font-style: italic; font-weight: 400; }
 
-  .btn-email {
-    font-size: 11px; padding: 5px 11px;
+  /* Action chips — call/email/website/social */
+  .chips { display: flex; gap: 6px; flex-wrap: wrap; }
+  .chip {
+    font-size: 11px; padding: 4px 9px;
+    border-radius: var(--radius-md);
+    border: 0.5px solid var(--border-secondary);
+    background: var(--bg-primary);
+    color: var(--text-secondary);
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex; align-items: center; gap: 4px;
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+  .chip:hover { border-color: var(--border-primary); color: var(--text-primary); background: var(--bg-secondary); }
+  .chip-call { color: var(--color-hot); border-color: var(--border-success); background: var(--bg-success); }
+  .chip-call:hover { filter: brightness(0.96); }
+  .chip-email { color: var(--color-blue); border-color: var(--border-blue); background: var(--bg-blue); }
+  .chip-email:hover { filter: brightness(0.96); }
+  .chip-disabled { opacity: 0.4; cursor: not-allowed; pointer-events: none; }
+
+  /* Status + notes row */
+  .status-row {
+    display: flex; align-items: center; gap: 10px;
+    margin-top: 10px; padding-top: 10px;
+    border-top: 0.5px dashed var(--border-tertiary);
+    flex-wrap: wrap;
+  }
+  .status-select {
+    font-size: 12px; font-weight: 500;
+    padding: 4px 10px; border-radius: 20px;
+    border: 0.5px solid var(--border-secondary);
+    cursor: pointer;
+    appearance: none; -webkit-appearance: none;
+    background: var(--bg-primary) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='8' height='6' viewBox='0 0 8 6'><path d='M0 0h8L4 6z' fill='%23696860'/></svg>") no-repeat right 8px center;
+    padding-right: 22px;
+    outline: none;
+  }
+  .status-notcontacted { background-color: #F1EFE8; color: #444441; border-color: #DDDCDA; }
+  .status-contacted    { background-color: var(--bg-blue); color: var(--color-blue); border-color: var(--border-blue); }
+  .status-replied      { background-color: #FAEEDA; color: var(--color-warm); border-color: #E7CC90; }
+  .status-booked       { background-color: var(--bg-purple); color: var(--color-purple); border-color: #C6A5E0; }
+  .status-passed       { background-color: #F1EFE8; color: var(--text-tertiary); border-color: var(--border-secondary); }
+
+  .btn-tmpl {
+    font-size: 11px; padding: 4px 9px;
+    border-radius: var(--radius-md);
+    border: 0.5px solid var(--border-secondary);
+    background: var(--bg-primary);
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: inline-flex; align-items: center; gap: 4px;
+  }
+  .btn-tmpl:hover { border-color: var(--border-primary); color: var(--text-primary); }
+
+  .btn-notes {
+    font-size: 11px; padding: 4px 9px;
     border-radius: var(--radius-md);
     border: 0.5px solid var(--border-secondary);
     background: transparent;
     color: var(--text-secondary);
     cursor: pointer;
-    transition: background .12s;
   }
-  .btn-email:hover { background: var(--bg-secondary); }
+  .btn-notes:hover { border-color: var(--border-primary); color: var(--text-primary); }
+  .btn-notes.has-notes { color: var(--color-warm); border-color: #E7CC90; background: #FAEEDA; }
 
-  .btn-reach {
-    font-size: 11px; padding: 5px 11px;
-    border-radius: var(--radius-md);
-    border: 0.5px solid var(--border-success);
-    background: var(--bg-success);
-    color: var(--text-success);
-    cursor: pointer;
-    font-weight: 500;
-    transition: filter .12s;
+  .last-contact-info {
+    font-size: 11px; color: var(--text-tertiary);
+    margin-left: auto;
   }
-  .btn-reach:hover { filter: brightness(0.95); }
+  .last-contact-info.overdue { color: var(--color-warm); font-weight: 500; }
+
+  /* Notes panel (expandable) */
+  .notes-panel {
+    margin-top: 10px; padding-top: 10px;
+    border-top: 0.5px dashed var(--border-tertiary);
+    display: none;
+  }
+  .notes-panel.open { display: block; }
+  .notes-panel textarea {
+    width: 100%; min-height: 60px;
+    font: inherit; font-size: 12px;
+    padding: 8px 10px;
+    border: 0.5px solid var(--border-secondary);
+    border-radius: var(--radius-md);
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    resize: vertical;
+    outline: none;
+  }
+  .notes-panel textarea:focus { border-color: var(--border-primary); background: var(--bg-primary); }
+  .notes-meta { font-size: 10px; color: var(--text-tertiary); margin-top: 4px; }
 
   /* ── Empty state ── */
   .empty-state {
@@ -233,7 +355,7 @@
   .empty-state h3 { font-size: 15px; font-weight: 500; margin-bottom: 6px; color: var(--text-secondary); }
   .empty-state p  { font-size: 13px; }
 
-  /* ── Prompt modal overlay ── */
+  /* ── Modal overlay ── */
   .modal-overlay {
     display: none; position: fixed; inset: 0;
     background: rgba(0,0,0,0.35);
@@ -248,7 +370,8 @@
     max-height: 80vh; overflow-y: auto;
     box-shadow: 0 8px 32px rgba(0,0,0,0.12);
   }
-  .modal-title { font-size: 14px; font-weight: 600; margin-bottom: 12px; }
+  .modal-title { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+  .modal-sub { font-size: 12px; color: var(--text-secondary); margin-bottom: 12px; }
   .modal-body {
     font-size: 13px; color: var(--text-secondary);
     line-height: 1.65;
@@ -277,12 +400,59 @@
     cursor: pointer;
   }
 
+  /* Template picker tabs */
+  .tmpl-tabs {
+    display: flex; gap: 6px; margin-bottom: 10px; flex-wrap: wrap;
+  }
+  .tmpl-tabs .tab-sm {
+    font-size: 11px; padding: 3px 9px;
+    border-radius: 20px;
+    border: 0.5px solid var(--border-secondary);
+    background: var(--bg-primary);
+    color: var(--text-secondary);
+    cursor: pointer;
+  }
+  .tmpl-tabs .tab-sm.active { border-color: var(--border-primary); color: var(--text-primary); font-weight: 500; background: var(--bg-secondary); }
+
+  /* Changelog modal */
+  .changelog h4 { font-size: 13px; font-weight: 600; margin: 14px 0 4px; color: var(--text-primary); }
+  .changelog h4:first-child { margin-top: 0; }
+  .changelog ul { font-size: 12px; color: var(--text-secondary); margin-left: 18px; line-height: 1.55; }
+  .changelog .date { font-size: 11px; color: var(--text-tertiary); font-weight: 400; margin-left: 6px; }
+
+  /* ── Undo toast ── */
+  .toast {
+    position: fixed;
+    bottom: 20px; left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--text-primary);
+    color: var(--bg-primary);
+    padding: 10px 16px;
+    border-radius: var(--radius-md);
+    font-size: 12px;
+    display: flex; align-items: center; gap: 12px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s, transform 0.2s;
+    z-index: 300;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); pointer-events: auto; }
+  .toast button {
+    background: transparent; color: #85B7EB;
+    border: none; cursor: pointer;
+    font: inherit; font-weight: 500;
+    text-decoration: underline;
+  }
+
   /* ── Responsive ── */
   @media (max-width: 600px) {
     .metrics { grid-template-columns: repeat(2, 1fr); }
     .card-body { grid-template-columns: 1fr 1fr; }
     .filter-bar { gap: 6px; }
     .result-count { display: none; }
+    .contact-row { flex-direction: column; align-items: stretch; }
+    .chips { justify-content: flex-start; }
   }
 </style>
 </head>
@@ -293,22 +463,30 @@
     <div class="app-title">Ad Spend Watcher</div>
     <div class="app-subtitle">UK & Ireland Trades — Outbound Intelligence</div>
   </div>
-  <div class="last-updated" id="last-updated">Loading…</div>
+  <div class="header-right">
+    <button class="btn-whats-new" onclick="openChangelog()">What's new</button>
+    <div class="last-updated" id="last-updated">Loading…</div>
+  </div>
 </header>
 
 <div class="container">
+
+  <div id="warn-banner"></div>
+
+  <!-- Today follow-up banner (hidden unless there are items) -->
+  <div class="today-banner" id="today-banner" style="display:none"></div>
 
   <!-- Metrics row -->
   <div class="metrics">
     <div class="metric">
       <div class="metric-label">Companies tracked</div>
       <div class="metric-val" id="m-total">—</div>
-      <div class="metric-sub" id="m-total-sub">Updated Monday</div>
+      <div class="metric-sub" id="m-total-sub">Updated weekly</div>
     </div>
     <div class="metric">
       <div class="metric-label">Hot leads</div>
       <div class="metric-val" id="m-hot">—</div>
-      <div class="metric-sub">Ramping now</div>
+      <div class="metric-sub">Score 70+</div>
     </div>
     <div class="metric">
       <div class="metric-label">Avg spend tenure</div>
@@ -316,9 +494,9 @@
       <div class="metric-sub">Across all tracked</div>
     </div>
     <div class="metric">
-      <div class="metric-label">Sectors covered</div>
-      <div class="metric-val" id="m-sectors">—</div>
-      <div class="metric-sub">Top 10 per sector</div>
+      <div class="metric-label">Booked calls</div>
+      <div class="metric-val" id="m-booked">—</div>
+      <div class="metric-sub" id="m-booked-sub">This week</div>
     </div>
   </div>
 
@@ -331,20 +509,27 @@
       <option value="score">Sort: Signal score</option>
       <option value="spend">Sort: Spend duration</option>
       <option value="staff">Sort: Staff count</option>
+      <option value="status">Sort: Status</option>
     </select>
-    <select id="region-sel" onchange="render()">
-      <option value="all">All regions</option>
-      <option value="london">London</option>
-      <option value="midlands">Midlands</option>
-      <option value="northwest">North West</option>
-      <option value="scotland">Scotland</option>
-      <option value="southeast">South East</option>
-      <option value="ireland">Ireland</option>
+    <select id="status-sel" onchange="render()">
+      <option value="all">All statuses</option>
+      <option value="not_contacted">Not contacted</option>
+      <option value="contacted">Contacted</option>
+      <option value="replied">Replied</option>
+      <option value="booked">Booked</option>
+      <option value="passed">Passed</option>
+    </select>
+    <select id="country-sel" onchange="render()">
+      <option value="all">All countries</option>
+      <option value="UK">UK</option>
+      <option value="IE">Ireland</option>
     </select>
     <select id="platform-sel" onchange="render()">
       <option value="all">All platforms</option>
-      <option value="google">Google Ads</option>
-      <option value="meta">Meta Ads</option>
+      <option value="google">Google</option>
+      <option value="meta">Meta</option>
+      <option value="facebook">Facebook</option>
+      <option value="instagram">Instagram</option>
       <option value="tiktok">TikTok</option>
     </select>
     <span class="result-count" id="result-count"></span>
@@ -354,405 +539,294 @@
   <div class="company-grid" id="grid"></div>
 </div>
 
-<!-- Prompt modal -->
+<!-- Prompt modal (AI prompts) -->
 <div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
   <div class="modal">
     <div class="modal-title" id="modal-title">Outreach prompt</div>
+    <div class="modal-sub" id="modal-sub"></div>
+    <div id="modal-tmpl-tabs"></div>
     <div class="modal-body" id="modal-body"></div>
     <div class="modal-actions">
-      <button class="btn-copy" id="btn-copy" onclick="copyPrompt()">Copy prompt</button>
+      <button class="btn-copy" id="btn-copy" onclick="copyModalBody()">Copy</button>
       <button class="btn-close" onclick="closeModalDirect()">Close</button>
     </div>
   </div>
 </div>
 
+<!-- Changelog modal -->
+<div class="modal-overlay" id="changelog-overlay" onclick="closeChangelog(event)">
+  <div class="modal">
+    <div class="modal-title">What's new</div>
+    <div class="changelog">
+      <h4>Week of 19 April 2026 <span class="date">— 19 Apr</span></h4>
+      <ul>
+        <li>Status layer: Not contacted · Contacted · Replied · Booked · Passed — with notes and undo.</li>
+        <li>Click-to-call and pre-filled email chips on every card.</li>
+        <li>"Today" view shows leads due for follow-up (contacted 3+ days ago).</li>
+        <li>Per-sector outreach template library — one-click copy with pre-filled name, sector, tenure.</li>
+        <li>Stable live URL: <code>https://dave-apex-ai.github.io/ad-spend-watcher/</code></li>
+      </ul>
+      <h4>Week of 13 April 2026 <span class="date">— 13 Apr</span></h4>
+      <ul>
+        <li>55 companies across 8 sectors (Solar, Plumbing, Electrical, Alarms, Insulation, Windows & Doors, Drainage, Pumps).</li>
+        <li>Google page-1 verification for Tier-1 candidates.</li>
+        <li>Weekly Word report generated automatically.</li>
+      </ul>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-close" onclick="closeChangelogDirect()">Got it</button>
+    </div>
+  </div>
+</div>
+
+<!-- Undo toast -->
+<div class="toast" id="toast">
+  <span id="toast-msg"></span>
+  <button onclick="undoStatus()">Undo</button>
+</div>
+
 <script>
 /* ============================================================
-   CONFIGURATION
-   The dashboard loads companies from data/companies.json if
-   available (populated by scoring.py after each weekly run).
-   Falls back to the SAMPLE_DATA array for demonstration.
+   Ad Spend Watcher — VA dashboard
+   Live URL: https://dave-apex-ai.github.io/ad-spend-watcher/
+   Data source: data/companies.json (updated every Sunday)
+   Status state: localStorage key "adwatch_status_v1"
    ============================================================ */
 
 const SECTORS = ['All','Plumbing','Solar','Electrical','Alarms','Insulation','Windows & Doors','Drainage','Pumps'];
 
-const SAMPLE_DATA = [
-  {
-    "id": 1,
-    "name": "Spectra Solar Ltd",
-    "sector": "Solar",
-    "country": "UK",
-    "region": "other",
-    "region_label": "UK",
-    "staff": "15",
-    "tenure_months": 6,
-    "tenure_label": "6 months",
-    "score": 59,
-    "hot_trigger": null,
-    "platforms": [
-      "facebook",
-      "instagram"
-    ],
-    "audience": "Homeowners",
-    "keywords": "",
-    "spend": [
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3
-    ],
-    "contact": {
-      "name": "Unknown",
-      "role": "Director",
-      "email": null,
-      "li": ""
-    },
-    "avatar": "SS",
-    "avatarBg": "#E1F5EE",
-    "avatarCol": "#085041"
-  },
-  {
-    "id": 2,
-    "name": "JDM Earth Ltd - EV Charging, Electrical & Solar",
-    "sector": "Solar",
-    "country": "UK",
-    "region": "other",
-    "region_label": "UK",
-    "staff": "15",
-    "tenure_months": 6,
-    "tenure_label": "6 months",
-    "score": 59,
-    "hot_trigger": null,
-    "platforms": [
-      "facebook",
-      "instagram"
-    ],
-    "audience": "Homeowners",
-    "keywords": "",
-    "spend": [
-      5,
-      5,
-      5,
-      5,
-      5,
-      5,
-      5
-    ],
-    "contact": {
-      "name": "Unknown",
-      "role": "Director",
-      "email": null,
-      "li": ""
-    },
-    "avatar": "JE",
-    "avatarBg": "#E1F5EE",
-    "avatarCol": "#085041"
-  },
-  {
-    "id": 3,
-    "name": "Eco-Worthy",
-    "sector": "Solar",
-    "country": "UK",
-    "region": "other",
-    "region_label": "UK",
-    "staff": "15",
-    "tenure_months": 48,
-    "tenure_label": "48 months",
-    "score": 59,
-    "hot_trigger": null,
-    "platforms": [
-      "facebook",
-      "instagram"
-    ],
-    "audience": "Homeowners",
-    "keywords": "",
-    "spend": [
-      2,
-      2,
-      2,
-      2,
-      2,
-      2,
-      2
-    ],
-    "contact": {
-      "name": "Unknown",
-      "role": "Director",
-      "email": null,
-      "li": ""
-    },
-    "avatar": "E",
-    "avatarBg": "#E1F5EE",
-    "avatarCol": "#085041"
-  },
-  {
-    "id": 4,
-    "name": "Evergreen Power UK SOLAR",
-    "sector": "Solar",
-    "country": "UK",
-    "region": "other",
-    "region_label": "UK",
-    "staff": "15",
-    "tenure_months": 6,
-    "tenure_label": "6 months",
-    "score": 59,
-    "hot_trigger": null,
-    "platforms": [
-      "facebook",
-      "instagram"
-    ],
-    "audience": "Homeowners",
-    "keywords": "",
-    "spend": [
-      2,
-      2,
-      2,
-      2,
-      2,
-      2,
-      2
-    ],
-    "contact": {
-      "name": "Unknown",
-      "role": "Director",
-      "email": null,
-      "li": ""
-    },
-    "avatar": "EP",
-    "avatarBg": "#E1F5EE",
-    "avatarCol": "#085041"
-  },
-  {
-    "id": 5,
-    "name": "EDF Energy",
-    "sector": "Solar",
-    "country": "UK",
-    "region": "other",
-    "region_label": "UK",
-    "staff": "15",
-    "tenure_months": 7,
-    "tenure_label": "7 months",
-    "score": 59,
-    "hot_trigger": null,
-    "platforms": [
-      "facebook",
-      "instagram"
-    ],
-    "audience": "Homeowners",
-    "keywords": "",
-    "spend": [
-      4,
-      4,
-      4,
-      4,
-      4,
-      4,
-      4
-    ],
-    "contact": {
-      "name": "Unknown",
-      "role": "Director",
-      "email": null,
-      "li": ""
-    },
-    "avatar": "EE",
-    "avatarBg": "#E1F5EE",
-    "avatarCol": "#085041"
-  },
-  {
-    "id": 6,
-    "name": "Electropoint UK",
-    "sector": "Solar",
-    "country": "UK",
-    "region": "other",
-    "region_label": "UK",
-    "staff": "15",
-    "tenure_months": 7,
-    "tenure_label": "7 months",
-    "score": 59,
-    "hot_trigger": null,
-    "platforms": [
-      "facebook",
-      "instagram"
-    ],
-    "audience": "Homeowners",
-    "keywords": "",
-    "spend": [
-      5,
-      5,
-      5,
-      5,
-      5,
-      5,
-      5
-    ],
-    "contact": {
-      "name": "Unknown",
-      "role": "Director",
-      "email": null,
-      "li": ""
-    },
-    "avatar": "EU",
-    "avatarBg": "#E1F5EE",
-    "avatarCol": "#085041"
-  },
-  {
-    "id": 7,
-    "name": "WestQuay Energy",
-    "sector": "Solar",
-    "country": "IE",
-    "region": "ireland",
-    "region_label": "Dublin & Ireland",
-    "staff": "15",
-    "tenure_months": 13,
-    "tenure_label": "13 months",
-    "score": 59,
-    "hot_trigger": null,
-    "platforms": [
-      "facebook",
-      "instagram"
-    ],
-    "audience": "Homeowners",
-    "keywords": "",
-    "spend": [
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3
-    ],
-    "contact": {
-      "name": "Unknown",
-      "role": "Director",
-      "email": null,
-      "li": ""
-    },
-    "avatar": "WE",
-    "avatarBg": "#E1F5EE",
-    "avatarCol": "#085041"
-  },
-  {
-    "id": 8,
-    "name": "Zetta Home Services",
-    "sector": "Solar",
-    "country": "IE",
-    "region": "ireland",
-    "region_label": "Dublin & Ireland",
-    "staff": "15",
-    "tenure_months": 10,
-    "tenure_label": "10 months",
-    "score": 59,
-    "hot_trigger": null,
-    "platforms": [
-      "facebook",
-      "instagram"
-    ],
-    "audience": "Homeowners",
-    "keywords": "",
-    "spend": [
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3
-    ],
-    "contact": {
-      "name": "Unknown",
-      "role": "Director",
-      "email": null,
-      "li": ""
-    },
-    "avatar": "ZH",
-    "avatarBg": "#E1F5EE",
-    "avatarCol": "#085041"
-  },
-  {
-    "id": 9,
-    "name": "PVGEN",
-    "sector": "Solar",
-    "country": "IE",
-    "region": "ireland",
-    "region_label": "Dublin & Ireland",
-    "staff": "15",
-    "tenure_months": 6,
-    "tenure_label": "6 months",
-    "score": 59,
-    "hot_trigger": null,
-    "platforms": [
-      "facebook",
-      "instagram"
-    ],
-    "audience": "Homeowners",
-    "keywords": "",
-    "spend": [
-      5,
-      5,
-      5,
-      5,
-      5,
-      5,
-      5
-    ],
-    "contact": {
-      "name": "Unknown",
-      "role": "Director",
-      "email": null,
-      "li": ""
-    },
-    "avatar": "P",
-    "avatarBg": "#E1F5EE",
-    "avatarCol": "#085041"
-  },
-  {
-    "id": 10,
-    "name": "BOXT",
-    "sector": "Solar",
-    "country": "UK",
-    "region": "other",
-    "region_label": "UK",
-    "staff": "15",
-    "tenure_months": 5,
-    "tenure_label": "5 months",
-    "score": 54,
-    "hot_trigger": null,
-    "platforms": [
-      "facebook",
-      "instagram"
-    ],
-    "audience": "Homeowners",
-    "keywords": "",
-    "spend": [
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3
-    ],
-    "contact": {
-      "name": "Unknown",
-      "role": "Director",
-      "email": null,
-      "li": ""
-    },
-    "avatar": "B",
-    "avatarBg": "#E1F5EE",
-    "avatarCol": "#085041"
-  }
+const STATUS_OPTIONS = [
+  { value: 'not_contacted', label: 'Not contacted' },
+  { value: 'contacted',     label: 'Contacted' },
+  { value: 'replied',       label: 'Replied' },
+  { value: 'booked',        label: 'Booked' },
+  { value: 'passed',        label: 'Passed' },
 ];
 
+/* ── Sector-specific outreach templates ── */
+/* Each has {email: [subject, body], sms, call_opener}. Placeholders: {name}, {sector}, {tenure_months}, {first_name} */
+const TEMPLATES = {
+  Solar: {
+    email: {
+      subject: "Noticed {name}'s solar ads running {tenure_months} months",
+      body: `Hi {first_name},
+
+I noticed {name} has been running solar ads on Meta for around {tenure_months} months — that's a serious commitment and usually means you've dialled in what's converting.
+
+We help solar installers lower cost-per-lead by ~30% by layering short-form video creative on top of the demand you're already generating. Happy to share three ad angles specific to UK homeowner pain points if useful.
+
+Worth a 15-min call next week?
+
+Best,
+[Your name]`
+    },
+    sms: "Hi {first_name} — saw {name}'s solar ads running strong. Got 3 video angles that cut CPL for a similar installer last month. 15 min this week?",
+    call: "Hi {first_name}, quick one — I noticed your solar ads on Meta have been running for about {tenure_months} months. I work with UK solar installers on creative and wanted to ask what's currently your biggest bottleneck — lead volume, lead quality, or appointment rate?"
+  },
+  Plumbing: {
+    email: {
+      subject: "{name}'s Meta ads — a quick observation",
+      body: `Hi {first_name},
+
+{name}'s plumbing ads have been live for {tenure_months} months — that's rare in the trade. Most plumbers we speak to never get past month 3 because creative goes stale fast.
+
+We help local trades keep creative fresh with short monthly hooks filmed on-site. One of our plumbing clients cut their CPL from £52 to £19 in 6 weeks.
+
+Open to a 15-min chat next week to walk through it?
+
+Best,
+[Your name]`
+    },
+    sms: "Hi {first_name} — noticed {name}'s plumbing ads still going at {tenure_months} months. We help trades beat ad fatigue with monthly on-site creative. Quick chat?",
+    call: "Hi {first_name}, I noticed {name}'s Meta ads have been live for {tenure_months} months. Most plumbers I speak to hit ad fatigue by month 3 — what's been working for you?"
+  },
+  Electrical: {
+    email: {
+      subject: "Saw {name}'s ads — quick question about lead quality",
+      body: `Hi {first_name},
+
+{name}'s electrical ads have been running consistently for {tenure_months} months — impressive consistency most competitors don't manage.
+
+We specialise in helping electricians filter out tyre-kickers at the form stage. One of our clients saw their booked-job rate jump from 18% to 41% after we rebuilt their landing page and ad copy around a qualifying question.
+
+Worth 15 minutes next week?
+
+Best,
+[Your name]`
+    },
+    sms: "Hi {first_name} — {name}'s ads have been running {tenure_months} months. We help electricians cut tyre-kickers. 15 min chat?",
+    call: "Hi {first_name}, I saw {name}'s ads have been running on Meta for {tenure_months} months. What's your current lead-to-booked-job conversion rate? Most electricians I speak to are losing half their leads to tyre-kickers."
+  },
+  Alarms: {
+    email: {
+      subject: "{name}'s ads — how's lead quality vs. quantity?",
+      body: `Hi {first_name},
+
+{name}'s alarm ads have been running for {tenure_months} months on Meta. That's a strong signal that you've found an angle that works.
+
+We help security installers scale without burning through the same audience by running three creative variations per month focused on different buyer concerns (break-ins, kids at home, holiday coverage).
+
+Open to a 15-min walk-through next week?
+
+Best,
+[Your name]`
+    },
+    sms: "Hi {first_name} — {name}'s alarm ads at {tenure_months} months. We rotate 3 creative angles/mo to keep CPL flat. Quick chat?",
+    call: "Hi {first_name}, I saw {name} has been advertising on Meta for {tenure_months} months. Are you rotating creative monthly or running the same ad? Most installers we work with see CPL double after month 4 without fresh angles."
+  },
+  Insulation: {
+    email: {
+      subject: "Quick thought on {name}'s insulation ads",
+      body: `Hi {first_name},
+
+{name}'s insulation ads have been running {tenure_months} months — you've clearly got something dialled in, especially with grant-eligible messaging being so crowded right now.
+
+We help insulation installers distinguish themselves with homeowner-language creative (not "ECO4" jargon). One client tripled booked surveys after we swapped their hero copy.
+
+Worth 15 minutes next week to compare notes?
+
+Best,
+[Your name]`
+    },
+    sms: "Hi {first_name} — {name}'s insulation ads strong at {tenure_months} months. We rewrite creative in homeowner-language (not ECO4 jargon). Chat?",
+    call: "Hi {first_name}, I saw {name}'s insulation ads have been running for {tenure_months} months. Are you getting homeowner-quality leads or mostly grant-chasers? We help installers screen out the latter."
+  },
+  'Windows & Doors': {
+    email: {
+      subject: "{name}'s ads — how's the install backlog looking?",
+      body: `Hi {first_name},
+
+{name}'s windows & doors ads have been running for {tenure_months} months — unusual for the category because most competitors pause over winter.
+
+We help window installers extend their season by running seasonal angles (energy costs in winter, security in summer). One client hit a 4-week install backlog in January for the first time.
+
+Open to 15 min next week?
+
+Best,
+[Your name]`
+    },
+    sms: "Hi {first_name} — {name}'s windows ads at {tenure_months} months, still strong. We help installers ad-season to hit winter backlogs. Chat?",
+    call: "Hi {first_name}, I saw {name}'s ads have been running for {tenure_months} months on Meta. Do you pause in winter or run year-round? We help window installers keep a backlog through January with seasonal creative swaps."
+  },
+  Drainage: {
+    email: {
+      subject: "{name}'s drainage ads — emergency vs planned split?",
+      body: `Hi {first_name},
+
+{name}'s drainage ads have been running for {tenure_months} months — that's a strong baseline for a category where most pause and restart based on weather.
+
+We help drainage companies balance emergency (high-intent, low-margin) vs planned maintenance (lower-intent, higher-LTV) lead flow. One client doubled their maintenance contract base in 8 weeks.
+
+Worth a 15-min call next week?
+
+Best,
+[Your name]`
+    },
+    sms: "Hi {first_name} — {name}'s ads running {tenure_months} months. We help drainage firms balance emergency vs. maintenance lead flow. Chat?",
+    call: "Hi {first_name}, I saw {name} has been running ads for {tenure_months} months. What's your split between emergency jobs and planned maintenance right now? Most drainage firms we work with are over-indexed on one and missing out on the other."
+  },
+  Pumps: {
+    email: {
+      subject: "{name} — quick question on your pump install funnel",
+      body: `Hi {first_name},
+
+{name}'s pump ads have been live for {tenure_months} months — that's good consistency in a category where most firms rely purely on trade referrals.
+
+We help pump installers turn their ad spend into booked site-surveys by rebuilding landing pages with clear diagnostic questions up front. One client cut their pre-survey drop-off from 60% to 22%.
+
+Open to 15 minutes next week?
+
+Best,
+[Your name]`
+    },
+    sms: "Hi {first_name} — {name}'s pump ads at {tenure_months} months. We help reduce survey drop-off with diagnostic landing pages. Quick chat?",
+    call: "Hi {first_name}, I saw {name} has been advertising for {tenure_months} months. What percentage of your leads actually make it to a site survey? Most pump firms we work with are losing 50%+ at that stage."
+  },
+  default: {
+    email: {
+      subject: "Saw {name}'s Meta ads — quick thought",
+      body: `Hi {first_name},
+
+I noticed {name} has been running Meta ads for {tenure_months} months — that's a real commitment. Most businesses in your space never sustain paid spend that long.
+
+I work with {sector} companies on creative refresh and landing-page conversion. Happy to share two specific ideas I had watching your ads.
+
+Worth 15 minutes next week?
+
+Best,
+[Your name]`
+    },
+    sms: "Hi {first_name} — {name}'s ads still running at {tenure_months} months. Impressive. Got 2 quick ideas to share. 15 min chat?",
+    call: "Hi {first_name}, I saw {name}'s Meta ads have been running for {tenure_months} months. What's your current #1 priority — more leads, better leads, or lower cost per booked job?"
+  }
+};
+
+/* ── LocalStorage helpers ── */
+const LS_STATUS_KEY = 'adwatch_status_v1';
+
+function loadStatus() {
+  try {
+    const raw = localStorage.getItem(LS_STATUS_KEY);
+    if (!raw) return {};
+    return JSON.parse(raw);
+  } catch(e) { return {}; }
+}
+
+function saveStatus(obj) {
+  try {
+    localStorage.setItem(LS_STATUS_KEY, JSON.stringify(obj));
+  } catch(e) { console.warn('Could not save status:', e); }
+}
+
+function getStatusFor(id) {
+  const all = loadStatus();
+  return all[id] || { status: 'not_contacted', notes: '', lastUpdated: null, contactedAt: null };
+}
+
+function setStatusFor(id, patch) {
+  const all = loadStatus();
+  const prev = all[id] || { status: 'not_contacted', notes: '', lastUpdated: null, contactedAt: null };
+  const next = { ...prev, ...patch, lastUpdated: new Date().toISOString() };
+  // If status changed to "contacted" or later for the first time, stamp contactedAt
+  if (patch.status && ['contacted','replied','booked','passed'].includes(patch.status) && !prev.contactedAt) {
+    next.contactedAt = new Date().toISOString();
+  }
+  all[id] = next;
+  saveStatus(all);
+  return { prev, next };
+}
+
+/* ── Undo state ── */
+let lastUndoable = null; // { companyId, prevRecord }
+
+function showToast(msg) {
+  document.getElementById('toast-msg').textContent = msg;
+  const toast = document.getElementById('toast');
+  toast.classList.add('show');
+  clearTimeout(toast._timer);
+  toast._timer = setTimeout(() => toast.classList.remove('show'), 5000);
+}
+
+function undoStatus() {
+  if (!lastUndoable) return;
+  const { companyId, prevRecord } = lastUndoable;
+  const all = loadStatus();
+  if (prevRecord === null) delete all[companyId];
+  else all[companyId] = prevRecord;
+  saveStatus(all);
+  lastUndoable = null;
+  document.getElementById('toast').classList.remove('show');
+  render();
+}
+
 /* ── State ── */
-let COMPANIES = [...SAMPLE_DATA];
+let COMPANIES = [];
 let activeSector = 'All';
-let currentPrompt = '';
+let modalCompany = null;
+let modalTemplateKind = 'email';
+
+/* ── Embedded fallback sample ── */
+const SAMPLE_DATA = [];  // will rarely be used — data/companies.json is the source
 
 /* ── Load data ── */
 async function loadData() {
@@ -762,12 +836,23 @@ async function loadData() {
       const json = await resp.json();
       if (Array.isArray(json) && json.length > 0) {
         COMPANIES = json;
-        console.log('Loaded', json.length, 'companies from data/companies.json');
+      } else {
+        showWarnBanner("data/companies.json was empty. Contact whoever maintains the feed.");
       }
+    } else {
+      showWarnBanner("Could not load data/companies.json (HTTP " + resp.status + "). Showing the last known dataset.");
     }
   } catch(e) {
-    console.log('Using embedded data (data/companies.json not found).');
+    showWarnBanner("Offline or data file missing. Showing embedded sample only.");
+    COMPANIES = [...SAMPLE_DATA];
   }
+
+  if (COMPANIES.length === 0) COMPANIES = [...SAMPLE_DATA];
+
+  // Derive `region` if missing (so filters work even if feed doesn't set it)
+  COMPANIES.forEach(c => {
+    if (!c.region) c.region = (c.country === 'IE') ? 'ireland' : 'other';
+  });
 
   // Set last updated timestamp
   const el = document.getElementById('last-updated');
@@ -777,23 +862,72 @@ async function loadData() {
   });
 
   initTabs();
+  renderTodayBanner();
   render();
+}
+
+function showWarnBanner(msg) {
+  const el = document.getElementById('warn-banner');
+  el.innerHTML = `<div class="warn-banner">⚠ ${escHtml(msg)}</div>`;
 }
 
 /* ── Tabs ── */
 function initTabs() {
-  document.getElementById('tabs').innerHTML = SECTORS.map(s =>
-    `<div class="tab${s === activeSector ? ' active' : ''}" onclick="setSector('${s}')">${s}</div>`
-  ).join('');
+  const todayCount = todayLeadsCount();
+  const items = [
+    `<div class="tab today-tab${activeSector === '__today__' ? ' active' : ''}" onclick="setSector('__today__')">Today${todayCount > 0 ? `<span class="tab-count">(${todayCount})</span>` : ''}</div>`,
+    ...SECTORS.map(s =>
+      `<div class="tab${s === activeSector ? ' active' : ''}" onclick="setSector('${s}')">${s}</div>`
+    )
+  ];
+  document.getElementById('tabs').innerHTML = items.join('');
 }
 
 function setSector(s) { activeSector = s; initTabs(); render(); }
 
+/* ── Today view logic ── */
+function todayLeadsCount() {
+  const all = loadStatus();
+  const now = Date.now();
+  let count = 0;
+  for (const c of COMPANIES) {
+    const s = all[c.id];
+    if (!s) continue;
+    // Due for follow-up: status=contacted, 3+ days since last update, not passed/booked
+    if (s.status === 'contacted' && s.lastUpdated) {
+      const age = (now - Date.parse(s.lastUpdated)) / (1000 * 60 * 60 * 24);
+      if (age >= 3) count++;
+    }
+  }
+  return count;
+}
+
+function renderTodayBanner() {
+  const count = todayLeadsCount();
+  const banner = document.getElementById('today-banner');
+  if (count > 0) {
+    banner.style.display = 'flex';
+    banner.innerHTML = `
+      <span>📋</span>
+      <span><strong>${count}</strong> ${count === 1 ? 'lead is' : 'leads are'} due for follow-up today (contacted 3+ days ago).</span>
+      <a onclick="setSector('__today__')">View</a>`;
+  } else {
+    banner.style.display = 'none';
+  }
+}
+
+function companyNeedsFollowupToday(c) {
+  const s = getStatusFor(c.id);
+  if (s.status !== 'contacted' || !s.lastUpdated) return false;
+  const age = (Date.now() - Date.parse(s.lastUpdated)) / (1000 * 60 * 60 * 24);
+  return age >= 3;
+}
+
 /* ── Helpers ── */
-function scoreClass(s) { return s >= 85 ? 'score-hot' : s >= 65 ? 'score-warm' : 'score-watch'; }
-function scoreLabel(s) { return s >= 85 ? 'Hot' : s >= 65 ? 'Warm' : 'Watch'; }
-function sparkColor(s) { return s >= 85 ? '#1D9E75' : s >= 65 ? '#BA7517' : '#888780'; }
-function pctClass(s)   { return s >= 85 ? '' : s >= 65 ? ' warm' : ' watch'; }
+function scoreClass(s) { return s >= 70 ? 'score-hot' : s >= 55 ? 'score-warm' : 'score-watch'; }
+function scoreLabel(s) { return s >= 70 ? 'Hot' : s >= 55 ? 'Warm' : 'Watch'; }
+function sparkColor(s) { return s >= 70 ? '#1D9E75' : s >= 55 ? '#BA7517' : '#888780'; }
+function pctClass(s)   { return s >= 70 ? '' : s >= 55 ? ' warm' : ' watch'; }
 
 function pct(data) {
   if (!data || data.length < 2) return 0;
@@ -805,15 +939,36 @@ function pct(data) {
 
 function staffLabel(s) {
   const n = parseInt(s);
-  if (isNaN(n)) return s;
-  if (n >= 50) return '50+ staff';
-  if (n >= 20) return `${n} staff`;
+  if (isNaN(n)) return s || '';
   return `${n} staff`;
 }
 
 function platformPill(key, active) {
-  const labels = { google: 'Google', meta: 'Meta', tiktok: 'TikTok' };
+  const labels = { google: 'Google', meta: 'Meta', facebook: 'Facebook', instagram: 'Instagram', tiktok: 'TikTok' };
+  if (!labels[key]) return '';
   return `<span class="platform-pill${active ? ' active' : ''}">${labels[key]}</span>`;
+}
+
+function firstName(name) {
+  if (!name || name === 'Unknown') return 'there';
+  return String(name).trim().split(/\s+/)[0];
+}
+
+function fillTemplate(str, c) {
+  return String(str || '')
+    .replaceAll('{name}', c.name)
+    .replaceAll('{first_name}', firstName(c.contact?.name))
+    .replaceAll('{sector}', c.sector)
+    .replaceAll('{tenure_months}', String(c.tenure_months || '?'));
+}
+
+function templateFor(sector) {
+  return TEMPLATES[sector] || TEMPLATES.default;
+}
+
+function daysSince(iso) {
+  if (!iso) return null;
+  return Math.floor((Date.now() - Date.parse(iso)) / (1000 * 60 * 60 * 24));
 }
 
 /* ── Sparklines ── */
@@ -829,77 +984,207 @@ function drawSpark(id, data, color) {
   svg.innerHTML = `<polyline points="${pts}" fill="none" stroke="${color}" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>`;
 }
 
-/* ── Prompts ── */
-function emailPrompt(c) {
-  return `Draft a cold outreach email to ${c.contact.name} at ${c.name}, a ${c.sector} company in ${c.region_label} spending on ${(c.platforms||[]).join(', ')} ads for ${c.tenure_label}. Their audience is ${c.audience}. Keywords they bid on: ${c.keywords}. Lead with a specific observation about their ad activity. Keep it under 150 words. Subject line should reference something specific — never use a generic opener.`;
+/* ── Status pill: cycle on change ── */
+function changeStatus(id, newStatus) {
+  const prev = loadStatus()[id] || null;
+  const { next } = setStatusFor(id, { status: newStatus });
+  lastUndoable = { companyId: id, prevRecord: prev };
+  const label = STATUS_OPTIONS.find(o => o.value === newStatus)?.label || newStatus;
+  const company = COMPANIES.find(c => c.id === id);
+  showToast(`${company?.name || 'Company'} → ${label}`);
+  renderTodayBanner();
+  initTabs();
+  render();
 }
 
-function sequencePrompt(c) {
-  return `Build the full 3-part outreach sequence for ${c.name}:\n\n(1) Cold email — day 1: specific opening referencing their ad activity on ${(c.platforms||[]).join(', ')}, one-sentence hook, single ask for a 15-minute call. Under 150 words.\n\n(2) LinkedIn connection request — day 3: under 300 characters, references the email you sent.\n\n(3) Call script — day 7: strong opening line proving research, 3 qualifying questions, close to book a call.\n\nDecision maker: ${c.contact.name}, ${c.contact.role}.\nCompany: ${c.sector} in ${c.region_label}, advertising on ${(c.platforms||[]).join(', ')} for ${c.tenure_label}, targeting ${c.audience}.`;
+function toggleNotes(id) {
+  const panel = document.getElementById('notes-' + id);
+  const btn = document.getElementById('notes-btn-' + id);
+  if (!panel) return;
+  panel.classList.toggle('open');
+  if (panel.classList.contains('open')) {
+    const ta = panel.querySelector('textarea');
+    if (ta) ta.focus();
+  }
 }
 
-/* ── Prompt modal ── */
-function sendPrompt(type, companyId) {
+function saveNotes(id) {
+  const ta = document.querySelector('#notes-' + id + ' textarea');
+  if (!ta) return;
+  setStatusFor(id, { notes: ta.value });
+  const btn = document.getElementById('notes-btn-' + id);
+  if (btn) {
+    btn.classList.toggle('has-notes', ta.value.trim().length > 0);
+    btn.textContent = ta.value.trim().length > 0 ? '📝 Notes' : '＋ Notes';
+  }
+  const meta = document.getElementById('notes-meta-' + id);
+  if (meta) meta.textContent = 'Saved just now';
+}
+
+/* ── Template modal ── */
+function openTemplates(companyId) {
   const c = COMPANIES.find(x => x.id === companyId);
   if (!c) return;
-  const prompt = type === 'email' ? emailPrompt(c) : sequencePrompt(c);
-  currentPrompt = prompt;
-  document.getElementById('modal-title').textContent = type === 'email' ? 'Email draft prompt' : '3-part outreach sequence prompt';
-  document.getElementById('modal-body').textContent = prompt;
-  document.getElementById('btn-copy').textContent = 'Copy prompt';
-  document.getElementById('btn-copy').classList.remove('copied');
+  modalCompany = c;
+  modalTemplateKind = 'email';
+  renderTemplateModal();
   document.getElementById('modal-overlay').classList.add('open');
 }
+
+function renderTemplateModal() {
+  if (!modalCompany) return;
+  const c = modalCompany;
+  const tmpl = templateFor(c.sector);
+
+  document.getElementById('modal-title').textContent = `Outreach templates — ${c.name}`;
+  document.getElementById('modal-sub').textContent = `${c.sector} · ${c.region_label || c.country} · ${c.tenure_label}`;
+
+  document.getElementById('modal-tmpl-tabs').innerHTML = `
+    <div class="tmpl-tabs">
+      <div class="tab-sm${modalTemplateKind==='email' ? ' active' : ''}" onclick="setTemplateKind('email')">Email</div>
+      <div class="tab-sm${modalTemplateKind==='sms' ? ' active' : ''}" onclick="setTemplateKind('sms')">SMS</div>
+      <div class="tab-sm${modalTemplateKind==='call' ? ' active' : ''}" onclick="setTemplateKind('call')">Call opener</div>
+    </div>`;
+
+  let body = '';
+  if (modalTemplateKind === 'email') {
+    body = `Subject: ${fillTemplate(tmpl.email.subject, c)}\n\n${fillTemplate(tmpl.email.body, c)}`;
+  } else if (modalTemplateKind === 'sms') {
+    body = fillTemplate(tmpl.sms, c);
+  } else {
+    body = fillTemplate(tmpl.call, c);
+  }
+
+  document.getElementById('modal-body').textContent = body;
+}
+
+function setTemplateKind(k) { modalTemplateKind = k; renderTemplateModal(); }
 
 function closeModal(event) {
   if (event.target === document.getElementById('modal-overlay')) closeModalDirect();
 }
-function closeModalDirect() {
-  document.getElementById('modal-overlay').classList.remove('open');
-}
+function closeModalDirect() { document.getElementById('modal-overlay').classList.remove('open'); }
 
-async function copyPrompt() {
+async function copyModalBody() {
+  const text = document.getElementById('modal-body').textContent;
   try {
-    await navigator.clipboard.writeText(currentPrompt);
+    await navigator.clipboard.writeText(text);
     const btn = document.getElementById('btn-copy');
     btn.textContent = '✓ Copied';
     btn.classList.add('copied');
-    setTimeout(() => { btn.textContent = 'Copy prompt'; btn.classList.remove('copied'); }, 2000);
-  } catch(e) {
-    console.error('Copy failed:', e);
+    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+  } catch(e) { console.error('Copy failed:', e); }
+}
+
+/* ── Changelog modal ── */
+function openChangelog() { document.getElementById('changelog-overlay').classList.add('open'); }
+function closeChangelog(event) {
+  if (event.target === document.getElementById('changelog-overlay')) closeChangelogDirect();
+}
+function closeChangelogDirect() { document.getElementById('changelog-overlay').classList.remove('open'); }
+
+/* ── Contact chip rendering ── */
+function contactChips(c) {
+  const contact = c.contact || {};
+  const chips = [];
+
+  // Call
+  if (contact.phone) {
+    const telClean = String(contact.phone).replace(/[^+0-9]/g, '');
+    chips.push(`<a class="chip chip-call" href="tel:${escAttr(telClean)}" title="Call ${escAttr(contact.phone)}">📞 Call</a>`);
+  } else {
+    chips.push(`<span class="chip chip-disabled" title="Phone not yet enriched">📞 Call</span>`);
   }
+
+  // Email — pre-filled with template subject
+  if (contact.email) {
+    const tmpl = templateFor(c.sector);
+    const subj = encodeURIComponent(fillTemplate(tmpl.email.subject, c));
+    const body = encodeURIComponent(fillTemplate(tmpl.email.body, c));
+    chips.push(`<a class="chip chip-email" href="mailto:${escAttr(contact.email)}?subject=${subj}&body=${body}" title="Email ${escAttr(contact.email)}">✉ Email</a>`);
+  } else {
+    chips.push(`<span class="chip chip-disabled" title="Email not yet enriched">✉ Email</span>`);
+  }
+
+  // Website
+  if (contact.website) {
+    const url = /^https?:/.test(contact.website) ? contact.website : `https://${contact.website}`;
+    chips.push(`<a class="chip" href="${escAttr(url)}" target="_blank" rel="noopener" title="Visit website">🌐 Site</a>`);
+  }
+
+  // Socials
+  const socials = contact.socials || {};
+  const socialLabels = { facebook: '📘 FB', instagram: '📷 IG', linkedin: '💼 LI', tiktok: '🎵 TT', youtube: '📺 YT', twitter: '🐦 X' };
+  for (const [k, v] of Object.entries(socials)) {
+    if (v && socialLabels[k]) {
+      const url = /^https?:/.test(v) ? v : `https://${v}`;
+      chips.push(`<a class="chip" href="${escAttr(url)}" target="_blank" rel="noopener" title="${socialLabels[k]}">${socialLabels[k]}</a>`);
+    }
+  }
+
+  // LinkedIn (legacy `li` field)
+  if (!socials.linkedin && contact.li) {
+    const url = /^https?:/.test(contact.li) ? contact.li : `https://${contact.li}`;
+    chips.push(`<a class="chip" href="${escAttr(url)}" target="_blank" rel="noopener" title="LinkedIn">💼 LI</a>`);
+  }
+
+  // Outreach templates button — always available
+  chips.push(`<button class="btn-tmpl" onclick="openTemplates(${c.id})" title="Copy outreach templates">📋 Templates</button>`);
+
+  return chips.join('');
 }
 
 /* ── Render ── */
 function render() {
   const sort     = document.getElementById('sort-sel').value;
-  const region   = document.getElementById('region-sel').value;
+  const statusF  = document.getElementById('status-sel').value;
+  const country  = document.getElementById('country-sel').value;
   const platform = document.getElementById('platform-sel').value;
 
   let data = [...COMPANIES];
-  if (activeSector !== 'All') data = data.filter(c => c.sector === activeSector);
-  if (region !== 'all')       data = data.filter(c => c.region === region);
-  if (platform !== 'all')     data = data.filter(c => (c.platforms || []).includes(platform));
 
-  if (sort === 'score')       data.sort((a, b) => b.score - a.score);
-  else if (sort === 'spend')  data.sort((a, b) => b.tenure_months - a.tenure_months);
-  else                         data.sort((a, b) => parseInt(b.staff) - parseInt(a.staff));
+  if (activeSector === '__today__') {
+    data = data.filter(companyNeedsFollowupToday);
+  } else if (activeSector !== 'All') {
+    data = data.filter(c => c.sector === activeSector);
+  }
+
+  if (statusF !== 'all') {
+    data = data.filter(c => getStatusFor(c.id).status === statusF);
+  }
+  if (country !== 'all') data = data.filter(c => c.country === country);
+  if (platform !== 'all') data = data.filter(c => (c.platforms || []).includes(platform));
+
+  const statusOrder = { not_contacted: 0, contacted: 1, replied: 2, booked: 3, passed: 4 };
+  if (sort === 'score')        data.sort((a, b) => (b.score||0) - (a.score||0));
+  else if (sort === 'spend')   data.sort((a, b) => (b.tenure_months||0) - (a.tenure_months||0));
+  else if (sort === 'staff')   data.sort((a, b) => (parseInt(b.staff)||0) - (parseInt(a.staff)||0));
+  else if (sort === 'status')  data.sort((a, b) =>
+    (statusOrder[getStatusFor(a.id).status] ?? 99) - (statusOrder[getStatusFor(b.id).status] ?? 99));
 
   /* ── Metrics (always from full dataset) ── */
   const all = COMPANIES;
+  const statuses = loadStatus();
   document.getElementById('m-total').textContent = all.length;
-  document.getElementById('m-hot').textContent = all.filter(c => c.score >= 85).length;
+  document.getElementById('m-hot').textContent = all.filter(c => (c.score||0) >= 70).length;
   const avgT = all.length ? (all.reduce((s, c) => s + (c.tenure_months || 0), 0) / all.length).toFixed(1) : '0';
   document.getElementById('m-tenure').textContent = avgT + 'm';
-  document.getElementById('m-sectors').textContent = [...new Set(all.map(c => c.sector))].length;
+  const bookedCount = Object.values(statuses).filter(s => s.status === 'booked').length;
+  document.getElementById('m-booked').textContent = bookedCount;
   document.getElementById('result-count').textContent = data.length + ' companies';
 
   /* ── Cards ── */
   if (data.length === 0) {
+    let msg = 'No companies match this filter';
+    let sub = 'Try adjusting the region, status, or platform filters, or select a different sector.';
+    if (activeSector === '__today__') {
+      msg = '🎉 Inbox zero';
+      sub = "No leads are due for follow-up today. They'll show up here 3 days after you mark them Contacted.";
+    }
     document.getElementById('grid').innerHTML = `
       <div class="empty-state">
-        <h3>No companies match this filter</h3>
-        <p>Try adjusting the region or platform filters, or select a different sector tab.</p>
+        <h3>${escHtml(msg)}</h3>
+        <p>${escHtml(sub)}</p>
       </div>`;
     return;
   }
@@ -907,38 +1192,64 @@ function render() {
   document.getElementById('grid').innerHTML = data.map(c => {
     const p = pct(c.spend);
     const pSign = p >= 0 ? '+' : '';
+    const status = getStatusFor(c.id);
+    const statusLabel = STATUS_OPTIONS.find(o => o.value === status.status)?.label || 'Not contacted';
+    const contactName = c.contact?.name || 'Unknown';
+    const isUnknown = !contactName || contactName === 'Unknown';
+    const contactRole = c.contact?.role || 'Contact unknown';
+    const hasNotes = !!(status.notes && status.notes.trim());
+
+    // Last-contact info
+    let lastContactInfo = '';
+    const days = daysSince(status.lastUpdated);
+    if (status.status === 'contacted' && days !== null) {
+      const cls = days >= 3 ? 'last-contact-info overdue' : 'last-contact-info';
+      lastContactInfo = `<span class="${cls}">Contacted ${days === 0 ? 'today' : days + 'd ago'}${days >= 3 ? ' · follow up' : ''}</span>`;
+    } else if (status.status === 'replied' && days !== null) {
+      lastContactInfo = `<span class="last-contact-info">Replied ${days === 0 ? 'today' : days + 'd ago'}</span>`;
+    } else if (status.status === 'booked') {
+      lastContactInfo = `<span class="last-contact-info" style="color: var(--color-purple); font-weight: 500;">📅 Booked</span>`;
+    }
+
+    const cardClass = [
+      'card',
+      (c.score||0) >= 70 ? 'card-hot' : '',
+      status.status === 'passed' ? 'card-passed' : '',
+      status.status === 'booked' ? 'card-booked' : '',
+    ].filter(Boolean).join(' ');
+
     return `
-<div class="card${c.score >= 85 ? ' card-hot' : ''}">
+<div class="${cardClass}">
   <div class="card-top">
-    <div class="avatar" style="background:${c.avatarBg};color:${c.avatarCol}">${c.avatar}</div>
+    <div class="avatar" style="background:${escAttr(c.avatarBg || '#E1F5EE')};color:${escAttr(c.avatarCol || '#085041')}">${escHtml(c.avatar || '?')}</div>
     <div class="card-meta">
       <div class="card-name">
         ${escHtml(c.name)}
         ${c.country === 'IE' ? '<span class="ie-badge">IE</span>' : ''}
         ${c.hot_trigger ? `<span class="trigger-tag">${escHtml(c.hot_trigger)}</span>` : ''}
       </div>
-      <div class="card-sub">${escHtml(c.sector)} · ${escHtml(c.region_label)} · ${staffLabel(c.staff)}</div>
+      <div class="card-sub">${escHtml(c.sector)} · ${escHtml(c.region_label || c.country)} · ${staffLabel(c.staff)}</div>
     </div>
-    <div class="score-badge ${scoreClass(c.score)}">${scoreLabel(c.score)} ${c.score}</div>
+    <div class="score-badge ${scoreClass(c.score||0)}">${scoreLabel(c.score||0)} ${c.score||0}</div>
   </div>
 
   <div class="card-body">
     <div class="info-block">
       <div class="info-label">Ad tenure</div>
-      <div class="info-val">${escHtml(c.tenure_label)}</div>
+      <div class="info-val">${escHtml(c.tenure_label || '—')}</div>
     </div>
     <div class="info-block">
       <div class="info-label">Audience</div>
-      <div class="info-val" style="font-size:11px">${escHtml(c.audience)}</div>
+      <div class="info-val" style="font-size:11px">${escHtml(c.audience || '—')}</div>
     </div>
     <div class="info-block">
       <div class="info-label">Top keywords</div>
-      <div class="info-val" style="font-size:11px">${escHtml(c.keywords)}</div>
+      <div class="info-val" style="font-size:11px">${escHtml(c.keywords || '—')}</div>
     </div>
   </div>
 
   <div class="platforms">
-    ${['google','meta','tiktok'].map(p => platformPill(p, (c.platforms||[]).includes(p))).join('')}
+    ${['google','meta','facebook','instagram','tiktok'].map(p => platformPill(p, (c.platforms||[]).includes(p))).filter(Boolean).join('')}
   </div>
 
   <div class="sparkline-row">
@@ -946,31 +1257,43 @@ function render() {
     <div class="sparkline-wrap">
       <svg id="spk-${c.id}" viewBox="0 0 120 28" preserveAspectRatio="none"></svg>
     </div>
-    <span class="sparkline-pct${pctClass(c.score)}">${pSign}${p}%</span>
+    <span class="sparkline-pct${pctClass(c.score||0)}">${pSign}${p}%</span>
   </div>
 
   <div class="contact-row">
     <div class="contact-info">
-      <div class="contact-name">${escHtml(c.contact.name)}</div>
-      <div class="contact-role">${escHtml(c.contact.role)}</div>
+      <div class="contact-name${isUnknown ? ' unknown' : ''}">${escHtml(contactName)}</div>
+      <div class="contact-role">${escHtml(contactRole)}</div>
     </div>
-    <div class="contact-links">
-      <button class="btn-email" onclick="sendPrompt('email', ${c.id})">Email draft ↗</button>
-      <button class="btn-reach" onclick="sendPrompt('sequence', ${c.id})">Reach out ↗</button>
+    <div class="chips">
+      ${contactChips(c)}
     </div>
+  </div>
+
+  <div class="status-row">
+    <select class="status-select status-${status.status}" onchange="changeStatus(${c.id}, this.value)">
+      ${STATUS_OPTIONS.map(o => `<option value="${o.value}"${o.value === status.status ? ' selected' : ''}>${o.label}</option>`).join('')}
+    </select>
+    <button class="btn-notes${hasNotes ? ' has-notes' : ''}" id="notes-btn-${c.id}" onclick="toggleNotes(${c.id})">${hasNotes ? '📝 Notes' : '＋ Notes'}</button>
+    ${lastContactInfo}
+  </div>
+
+  <div class="notes-panel" id="notes-${c.id}">
+    <textarea placeholder="Private notes — saved automatically (to this browser). Call outcomes, objections, follow-up timing, etc." oninput="saveNotes(${c.id})">${escHtml(status.notes || '')}</textarea>
+    <div class="notes-meta" id="notes-meta-${c.id}">${status.lastUpdated ? 'Last saved ' + new Date(status.lastUpdated).toLocaleString('en-GB') : 'Not yet saved'}</div>
   </div>
 </div>`;
   }).join('');
 
   // Draw sparklines after DOM update
   requestAnimationFrame(() => {
-    data.forEach(c => drawSpark(c.id, c.spend, sparkColor(c.score)));
+    data.forEach(c => drawSpark(c.id, c.spend, sparkColor(c.score||0)));
   });
 }
 
-/* ── XSS guard ── */
+/* ── XSS guards ── */
 function escHtml(str) {
-  if (!str) return '';
+  if (str === null || str === undefined) return '';
   return String(str)
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
@@ -978,9 +1301,18 @@ function escHtml(str) {
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#39;');
 }
+function escAttr(str) { return escHtml(str); }
 
 /* ── Boot ── */
 loadData();
+
+// Keyboard shortcuts
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    closeModalDirect();
+    closeChangelogDirect();
+  }
+});
 </script>
 </body>
 </html>
