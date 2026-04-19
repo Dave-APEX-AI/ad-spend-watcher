@@ -564,6 +564,7 @@
         <li>Click-to-call and pre-filled email chips on every card.</li>
         <li>"Today" view shows leads due for follow-up (contacted 3+ days ago).</li>
         <li>Per-sector outreach template library — one-click copy with pre-filled name, sector, tenure.</li>
+        <li>Templates rewritten around speed-to-lead agents: 64% avg conversion lift, qualify + book in &lt;60s.</li>
         <li>Stable live URL: <code>https://dave-apex-ai.github.io/ad-spend-watcher/</code></li>
       </ul>
       <h4>Week of 13 April 2026 <span class="date">— 13 Apr</span></h4>
@@ -608,156 +609,174 @@ const STATUS_OPTIONS = [
 const TEMPLATES = {
   Solar: {
     email: {
-      subject: "Noticed {name}'s solar ads running {tenure_months} months",
+      subject: "Noticed {name}'s solar ad spend running {tenure_months} months",
       body: `Hi {first_name},
 
-I noticed {name} has been running solar ads on Meta for around {tenure_months} months — that's a serious commitment and usually means you've dialled in what's converting.
+I noticed {name} has been spending on solar ads on Meta for around {tenure_months} months — that kind of sustained spend usually means you're seeing returns, but most installers still leak 40–60% of leads between the click and the booked survey.
 
-We help solar installers lower cost-per-lead by ~30% by layering short-form video creative on top of the demand you're already generating. Happy to share three ad angles specific to UK homeowner pain points if useful.
+We increase conversion rates by 64% on average with speed-to-lead agents that sit waiting on your ads. The moment someone fills out a form or clicks to call, a live agent picks up inside 60 seconds, fully qualifies them against your criteria (postcode, property type, roof suitability, budget, timeline), and books the appointment straight into your calendar.
 
-Worth a 15-min call next week?
+For a solar installer spending at your level, even a 20% lift in booked surveys usually pays for the service several times over.
+
+Worth a 15-min call next week to walk through how it works?
 
 Best,
 [Your name]`
     },
-    sms: "Hi {first_name} — saw {name}'s solar ads running strong. Got 3 video angles that cut CPL for a similar installer last month. 15 min this week?",
-    call: "Hi {first_name}, quick one — I noticed your solar ads on Meta have been running for about {tenure_months} months. I work with UK solar installers on creative and wanted to ask what's currently your biggest bottleneck — lead volume, lead quality, or appointment rate?"
+    sms: "Hi {first_name} — saw {name}'s solar ad spend going {tenure_months} months. We book 64% more of your leads with speed-to-lead agents. 15 min this week?",
+    call: "Hi {first_name}, quick one — I noticed {name}'s solar ad spend on Meta has been consistent for about {tenure_months} months. When someone fills out one of your forms, how fast is a human getting back to them? We lift conversion 64% on average with speed-to-lead agents that qualify and book."
   },
   Plumbing: {
     email: {
-      subject: "{name}'s Meta ads — a quick observation",
+      subject: "Noticed {name}'s ad spend running {tenure_months} months",
       body: `Hi {first_name},
 
-{name}'s plumbing ads have been live for {tenure_months} months — that's rare in the trade. Most plumbers we speak to never get past month 3 because creative goes stale fast.
+I noticed {name} has been spending on Meta ads for around {tenure_months} months — that's rare in the plumbing trade, most firms never get past month 3. So you're clearly seeing returns, but most plumbers still lose half their ad leads because no one picks up fast enough when they call.
 
-We help local trades keep creative fresh with short monthly hooks filmed on-site. One of our plumbing clients cut their CPL from £52 to £19 in 6 weeks.
+We increase conversion rates by 64% on average with speed-to-lead agents that sit waiting on your ads. The moment someone submits a form or clicks to call, a live agent answers inside 60 seconds, fully qualifies them (postcode, job type, urgency, budget), and books the visit straight into your calendar.
 
-Open to a 15-min chat next week to walk through it?
+For a plumbing firm spending at your level, even a 20% lift in booked jobs usually pays for the service several times over.
+
+Open to a 15-min chat next week to walk through how it works?
 
 Best,
 [Your name]`
     },
-    sms: "Hi {first_name} — noticed {name}'s plumbing ads still going at {tenure_months} months. We help trades beat ad fatigue with monthly on-site creative. Quick chat?",
-    call: "Hi {first_name}, I noticed {name}'s Meta ads have been live for {tenure_months} months. Most plumbers I speak to hit ad fatigue by month 3 — what's been working for you?"
+    sms: "Hi {first_name} — noticed {name}'s ad spend still going at {tenure_months} months. We book 64% more of your leads with speed-to-lead agents. Quick chat?",
+    call: "Hi {first_name}, I noticed {name}'s Meta ad spend has been consistent for {tenure_months} months. When someone fills one of your forms, how fast does a human call them back? We lift conversion 64% on average with speed-to-lead agents that qualify and book."
   },
   Electrical: {
     email: {
-      subject: "Saw {name}'s ads — quick question about lead quality",
+      subject: "Noticed {name}'s ad spend running {tenure_months} months",
       body: `Hi {first_name},
 
-{name}'s electrical ads have been running consistently for {tenure_months} months — impressive consistency most competitors don't manage.
+I noticed {name} has been spending on Meta ads consistently for {tenure_months} months — that's a level of commitment most electrical competitors can't sustain. But most electricians we speak to are still losing half their ad leads to tyre-kickers and slow callbacks.
 
-We specialise in helping electricians filter out tyre-kickers at the form stage. One of our clients saw their booked-job rate jump from 18% to 41% after we rebuilt their landing page and ad copy around a qualifying question.
+We increase conversion rates by 64% on average with speed-to-lead agents that sit waiting on your ads. The moment someone submits a form or clicks to call, a live agent picks up inside 60 seconds, fully qualifies them (job type, urgency, budget, commercial vs. domestic), and books the visit straight into your calendar.
 
-Worth 15 minutes next week?
+For an electrical firm spending at your level, even a 20% lift in booked jobs usually pays for the service several times over.
+
+Worth 15 minutes next week to walk through how it works?
 
 Best,
 [Your name]`
     },
-    sms: "Hi {first_name} — {name}'s ads have been running {tenure_months} months. We help electricians cut tyre-kickers. 15 min chat?",
-    call: "Hi {first_name}, I saw {name}'s ads have been running on Meta for {tenure_months} months. What's your current lead-to-booked-job conversion rate? Most electricians I speak to are losing half their leads to tyre-kickers."
+    sms: "Hi {first_name} — {name}'s ad spend at {tenure_months} months. We book 64% more of your leads with speed-to-lead agents. 15 min chat?",
+    call: "Hi {first_name}, I saw {name}'s Meta ad spend has been consistent for {tenure_months} months. When someone fills one of your forms, how fast is a human calling them back? We lift conversion 64% on average with speed-to-lead agents that qualify and book."
   },
   Alarms: {
     email: {
-      subject: "{name}'s ads — how's lead quality vs. quantity?",
+      subject: "Noticed {name}'s ad spend running {tenure_months} months",
       body: `Hi {first_name},
 
-{name}'s alarm ads have been running for {tenure_months} months on Meta. That's a strong signal that you've found an angle that works.
+I noticed {name} has been spending on Meta ads for {tenure_months} months — a strong signal you've found an angle that works. But most security installers we speak to are still losing 40–60% of their leads because no one picks up fast enough when they enquire.
 
-We help security installers scale without burning through the same audience by running three creative variations per month focused on different buyer concerns (break-ins, kids at home, holiday coverage).
+We increase conversion rates by 64% on average with speed-to-lead agents that sit waiting on your ads. The moment someone submits a form or clicks to call, a live agent answers inside 60 seconds, fully qualifies them (property type, system preference, timeline, budget), and books the site-survey straight into your calendar.
+
+For a security firm spending at your level, even a 20% lift in booked surveys usually pays for the service several times over.
 
 Open to a 15-min walk-through next week?
 
 Best,
 [Your name]`
     },
-    sms: "Hi {first_name} — {name}'s alarm ads at {tenure_months} months. We rotate 3 creative angles/mo to keep CPL flat. Quick chat?",
-    call: "Hi {first_name}, I saw {name} has been advertising on Meta for {tenure_months} months. Are you rotating creative monthly or running the same ad? Most installers we work with see CPL double after month 4 without fresh angles."
+    sms: "Hi {first_name} — {name}'s alarm ad spend at {tenure_months} months. We book 64% more of your leads with speed-to-lead agents. Quick chat?",
+    call: "Hi {first_name}, I saw {name}'s Meta ad spend has been consistent for {tenure_months} months. When an enquiry comes in, how fast is a human calling them back? We lift conversion 64% on average with speed-to-lead agents that qualify and book the survey."
   },
   Insulation: {
     email: {
-      subject: "Quick thought on {name}'s insulation ads",
+      subject: "Noticed {name}'s ad spend running {tenure_months} months",
       body: `Hi {first_name},
 
-{name}'s insulation ads have been running {tenure_months} months — you've clearly got something dialled in, especially with grant-eligible messaging being so crowded right now.
+I noticed {name} has been spending on Meta ads for {tenure_months} months — a rare run in an insulation market this crowded with grant-eligible messaging. But most insulation installers we speak to are still losing a huge chunk of their leads to grant-chasers and slow callbacks.
 
-We help insulation installers distinguish themselves with homeowner-language creative (not "ECO4" jargon). One client tripled booked surveys after we swapped their hero copy.
+We increase conversion rates by 64% on average with speed-to-lead agents that sit waiting on your ads. The moment someone submits a form or clicks to call, a live agent picks up inside 60 seconds, fully qualifies them (property type, EPC, grant eligibility, homeowner vs. tenant, timeline), and books the survey straight into your calendar.
 
-Worth 15 minutes next week to compare notes?
+For an insulation installer spending at your level, even a 20% lift in qualified booked surveys usually pays for the service several times over.
+
+Worth 15 minutes next week to walk through how it works?
 
 Best,
 [Your name]`
     },
-    sms: "Hi {first_name} — {name}'s insulation ads strong at {tenure_months} months. We rewrite creative in homeowner-language (not ECO4 jargon). Chat?",
-    call: "Hi {first_name}, I saw {name}'s insulation ads have been running for {tenure_months} months. Are you getting homeowner-quality leads or mostly grant-chasers? We help installers screen out the latter."
+    sms: "Hi {first_name} — {name}'s insulation ad spend at {tenure_months} months. We book 64% more of your leads with speed-to-lead agents. Chat?",
+    call: "Hi {first_name}, I saw {name}'s Meta ad spend has been consistent for {tenure_months} months. When an enquiry comes in, how fast is a human calling them back and qualifying them? We lift conversion 64% on average with speed-to-lead agents that book the survey."
   },
   'Windows & Doors': {
     email: {
-      subject: "{name}'s ads — how's the install backlog looking?",
+      subject: "Noticed {name}'s ad spend running {tenure_months} months",
       body: `Hi {first_name},
 
-{name}'s windows & doors ads have been running for {tenure_months} months — unusual for the category because most competitors pause over winter.
+I noticed {name} has been spending on Meta ads for {tenure_months} months — unusual for windows & doors, because most of your competitors pause over winter. But most window installers we speak to are still losing 40–60% of their ad leads to slow callbacks and weak qualification.
 
-We help window installers extend their season by running seasonal angles (energy costs in winter, security in summer). One client hit a 4-week install backlog in January for the first time.
+We increase conversion rates by 64% on average with speed-to-lead agents that sit waiting on your ads. The moment someone submits a form or clicks to call, a live agent picks up inside 60 seconds, fully qualifies them (property type, number of openings, material preference, timeline, budget), and books the survey straight into your calendar.
 
-Open to 15 min next week?
+For a window installer spending at your level, even a 20% lift in booked surveys usually pays for the service several times over.
+
+Open to 15 minutes next week to walk through how it works?
 
 Best,
 [Your name]`
     },
-    sms: "Hi {first_name} — {name}'s windows ads at {tenure_months} months, still strong. We help installers ad-season to hit winter backlogs. Chat?",
-    call: "Hi {first_name}, I saw {name}'s ads have been running for {tenure_months} months on Meta. Do you pause in winter or run year-round? We help window installers keep a backlog through January with seasonal creative swaps."
+    sms: "Hi {first_name} — {name}'s windows ad spend at {tenure_months} months. We book 64% more of your leads with speed-to-lead agents. Chat?",
+    call: "Hi {first_name}, I saw {name}'s Meta ad spend has been consistent for {tenure_months} months. When an enquiry comes in, how fast is a human calling them back? We lift conversion 64% on average with speed-to-lead agents that qualify and book the survey."
   },
   Drainage: {
     email: {
-      subject: "{name}'s drainage ads — emergency vs planned split?",
+      subject: "Noticed {name}'s ad spend running {tenure_months} months",
       body: `Hi {first_name},
 
-{name}'s drainage ads have been running for {tenure_months} months — that's a strong baseline for a category where most pause and restart based on weather.
+I noticed {name} has been spending on Meta ads for {tenure_months} months — a strong baseline in drainage, where most firms pause and restart based on weather. But most drainage companies we speak to are still losing high-intent emergency leads because no one picks up fast enough when a blocked drain can't wait.
 
-We help drainage companies balance emergency (high-intent, low-margin) vs planned maintenance (lower-intent, higher-LTV) lead flow. One client doubled their maintenance contract base in 8 weeks.
+We increase conversion rates by 64% on average with speed-to-lead agents that sit waiting on your ads. The moment someone submits a form or clicks to call, a live agent answers inside 60 seconds, fully qualifies them (domestic vs. commercial, emergency vs. planned, postcode, budget), and books the visit straight into your calendar.
 
-Worth a 15-min call next week?
+For a drainage firm spending at your level, even a 20% lift in booked jobs usually pays for the service several times over.
+
+Worth a 15-min call next week to walk through how it works?
 
 Best,
 [Your name]`
     },
-    sms: "Hi {first_name} — {name}'s ads running {tenure_months} months. We help drainage firms balance emergency vs. maintenance lead flow. Chat?",
-    call: "Hi {first_name}, I saw {name} has been running ads for {tenure_months} months. What's your split between emergency jobs and planned maintenance right now? Most drainage firms we work with are over-indexed on one and missing out on the other."
+    sms: "Hi {first_name} — {name}'s drainage ad spend at {tenure_months} months. We book 64% more of your leads with speed-to-lead agents. Chat?",
+    call: "Hi {first_name}, I saw {name}'s Meta ad spend has been consistent for {tenure_months} months. When an emergency enquiry comes in, how fast is a human calling them back? We lift conversion 64% on average with speed-to-lead agents that qualify and book."
   },
   Pumps: {
     email: {
-      subject: "{name} — quick question on your pump install funnel",
+      subject: "Noticed {name}'s ad spend running {tenure_months} months",
       body: `Hi {first_name},
 
-{name}'s pump ads have been live for {tenure_months} months — that's good consistency in a category where most firms rely purely on trade referrals.
+I noticed {name} has been spending on Meta ads for {tenure_months} months — good consistency in a category where most firms rely purely on trade referrals. But most pump installers we speak to are still losing 50%+ of their leads between the click and the site-survey.
 
-We help pump installers turn their ad spend into booked site-surveys by rebuilding landing pages with clear diagnostic questions up front. One client cut their pre-survey drop-off from 60% to 22%.
+We increase conversion rates by 64% on average with speed-to-lead agents that sit waiting on your ads. The moment someone submits a form or clicks to call, a live agent picks up inside 60 seconds, fully qualifies them (pump type, property, existing system, timeline, budget), and books the site-survey straight into your calendar.
 
-Open to 15 minutes next week?
+For a pump installer spending at your level, even a 20% lift in booked surveys usually pays for the service several times over.
+
+Open to 15 minutes next week to walk through how it works?
 
 Best,
 [Your name]`
     },
-    sms: "Hi {first_name} — {name}'s pump ads at {tenure_months} months. We help reduce survey drop-off with diagnostic landing pages. Quick chat?",
-    call: "Hi {first_name}, I saw {name} has been advertising for {tenure_months} months. What percentage of your leads actually make it to a site survey? Most pump firms we work with are losing 50%+ at that stage."
+    sms: "Hi {first_name} — {name}'s pump ad spend at {tenure_months} months. We book 64% more of your leads with speed-to-lead agents. Quick chat?",
+    call: "Hi {first_name}, I saw {name}'s Meta ad spend has been consistent for {tenure_months} months. When an enquiry comes in, how fast is a human calling them back and qualifying them for a survey? We lift conversion 64% on average with speed-to-lead agents that book the visit."
   },
   default: {
     email: {
-      subject: "Saw {name}'s Meta ads — quick thought",
+      subject: "Noticed {name}'s ad spend running {tenure_months} months",
       body: `Hi {first_name},
 
-I noticed {name} has been running Meta ads for {tenure_months} months — that's a real commitment. Most businesses in your space never sustain paid spend that long.
+I noticed {name} has been spending on Meta ads for {tenure_months} months — that kind of sustained spend usually means you're seeing returns, but most businesses in your space are still losing 40–60% of their ad leads between the click and the booked job.
 
-I work with {sector} companies on creative refresh and landing-page conversion. Happy to share two specific ideas I had watching your ads.
+We increase conversion rates by 64% on average with speed-to-lead agents that sit waiting on your ads. The moment someone submits a form or clicks to call, a live agent picks up inside 60 seconds, fully qualifies them against your criteria (postcode, job type, timeline, budget, intent), and books the appointment straight into your calendar.
 
-Worth 15 minutes next week?
+For a {sector} company spending at your level, even a 20% lift in booked jobs usually pays for the service several times over.
+
+Worth 15 minutes next week to walk through how it works?
 
 Best,
 [Your name]`
     },
-    sms: "Hi {first_name} — {name}'s ads still running at {tenure_months} months. Impressive. Got 2 quick ideas to share. 15 min chat?",
-    call: "Hi {first_name}, I saw {name}'s Meta ads have been running for {tenure_months} months. What's your current #1 priority — more leads, better leads, or lower cost per booked job?"
+    sms: "Hi {first_name} — {name}'s ad spend at {tenure_months} months. We book 64% more of your leads with speed-to-lead agents. 15 min chat?",
+    call: "Hi {first_name}, I saw {name}'s Meta ad spend has been consistent for {tenure_months} months. When someone fills one of your forms, how fast is a human calling them back? We lift conversion 64% on average with speed-to-lead agents that qualify and book."
   }
 };
 
