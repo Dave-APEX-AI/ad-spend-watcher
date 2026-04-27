@@ -22,11 +22,6 @@
     --color-hot:     #1D9E75;
     --color-warm:    #BA7517;
     --color-watch:   #888780;
-    --color-blue:    #1554C0;
-    --bg-blue:       #E6F1FB;
-    --border-blue:   #85B7EB;
-    --color-purple:  #6B3FA0;
-    --bg-purple:     #F3ECFA;
     --radius-md: 6px;
     --radius-lg: 10px;
   }
@@ -55,46 +50,9 @@
   }
   .app-title { font-size: 15px; font-weight: 600; color: var(--text-primary); }
   .app-subtitle { font-size: 12px; color: var(--text-secondary); margin-top: 1px; }
-  .header-right { display: flex; align-items: center; gap: 14px; }
   .last-updated { font-size: 11px; color: var(--text-tertiary); }
-  .sync-indicator {
-    font-size: 11px;
-    color: var(--text-tertiary);
-    letter-spacing: 0.02em;
-  }
-  .sync-indicator.sync-ok      { color: #2F8A4A; }
-  .sync-indicator.sync-warn    { color: #B3691E; }
-  .sync-indicator.sync-syncing { color: var(--text-tertiary); }
-  .btn-whats-new {
-    font-size: 11px; padding: 4px 10px;
-    border-radius: 20px;
-    border: 0.5px solid var(--border-secondary);
-    background: var(--bg-primary);
-    color: var(--text-secondary);
-    cursor: pointer;
-  }
-  .btn-whats-new:hover { border-color: var(--border-primary); color: var(--text-primary); }
 
   .container { max-width: 960px; margin: 0 auto; padding: 20px 20px 60px; }
-
-  /* ── Today banner ── */
-  .today-banner {
-    background: linear-gradient(135deg, #E6F1FB 0%, #F3ECFA 100%);
-    border: 0.5px solid var(--border-blue);
-    border-radius: var(--radius-md);
-    padding: 10px 14px;
-    font-size: 12px;
-    color: var(--color-blue);
-    margin-bottom: 14px;
-    display: flex; align-items: center; gap: 8px;
-  }
-  .today-banner a {
-    margin-left: auto;
-    color: var(--color-blue);
-    font-weight: 500;
-    text-decoration: underline;
-    cursor: pointer;
-  }
 
   /* ── Metrics row ── */
   .metrics {
@@ -127,9 +85,6 @@
   }
   .tab:hover { border-color: var(--border-primary); color: var(--text-primary); }
   .tab.active { border-color: var(--border-primary); color: var(--text-primary); font-weight: 500; background: var(--bg-secondary); }
-  .tab.today-tab { background: var(--bg-blue); border-color: var(--border-blue); color: var(--color-blue); font-weight: 500; }
-  .tab.today-tab.active { background: var(--color-blue); color: #fff; border-color: var(--color-blue); }
-  .tab .tab-count { font-size: 10px; margin-left: 4px; opacity: 0.7; }
 
   /* ── Filter bar ── */
   .filter-bar { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; align-items: center; }
@@ -145,17 +100,6 @@
   }
   .filter-bar select:focus { border-color: var(--border-primary); }
   .result-count { font-size: 12px; color: var(--text-tertiary); margin-left: auto; }
-
-  /* ── Warning banner (if companies.json fails to load) ── */
-  .warn-banner {
-    background: #FEF3C7;
-    border: 0.5px solid #F59E0B;
-    color: #78350F;
-    padding: 10px 14px;
-    border-radius: var(--radius-md);
-    font-size: 12px;
-    margin-bottom: 14px;
-  }
 
   /* ── Company grid ── */
   .company-grid { display: flex; flex-direction: column; gap: 10px; }
@@ -173,8 +117,6 @@
     border-left: 3px solid var(--color-hot);
     border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
   }
-  .card-passed { opacity: 0.55; }
-  .card-booked { border-left: 3px solid var(--color-purple); }
 
   /* Card header */
   .card-top { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px; }
@@ -218,6 +160,31 @@
     font-weight: 500; flex-shrink: 0; white-space: nowrap;
   }
 
+  /* "NEW this week" badge — surfaces advertisers first seen in the latest scrape */
+  .new-badge {
+    font-size: 10px; padding: 2px 7px;
+    border-radius: 20px;
+    background: #FEF3C7; color: #78350F;
+    font-weight: 600; flex-shrink: 0; white-space: nowrap;
+    letter-spacing: 0.5px;
+  }
+
+  /* Fresh-spenders banner above the grid */
+  .new-banner {
+    background: #FEF3C7; color: #78350F;
+    border: 1px solid #FBBF24;
+    border-radius: var(--radius-md);
+    padding: 10px 14px;
+    margin-bottom: 12px;
+    font-size: 13px; font-weight: 500;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .new-banner .count {
+    background: #78350F; color: #FEF3C7;
+    border-radius: 10px;
+    padding: 1px 8px; font-weight: 700;
+  }
+
   /* Card body — 3 column data */
   .card-body {
     display: grid;
@@ -238,7 +205,7 @@
     color: var(--text-tertiary);
     background: transparent;
   }
-  .platform-pill.active { background: var(--bg-blue); border-color: var(--border-blue); color: var(--color-blue); }
+  .platform-pill.active { background: #E6F1FB; border-color: #85B7EB; color: #0C447C; }
 
   /* Sparkline row */
   .sparkline-row { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
@@ -249,110 +216,83 @@
   .sparkline-pct.warm { color: var(--color-warm); }
   .sparkline-pct.watch { color: var(--color-watch); }
 
-  /* Contact + action row */
+  /* Contact row */
   .contact-row {
     display: flex; align-items: center; justify-content: space-between;
     padding-top: 10px;
     border-top: 0.5px solid var(--border-tertiary);
-    gap: 10px; flex-wrap: wrap;
   }
-  .contact-info { min-width: 120px; }
   .contact-info .contact-name { font-size: 13px; font-weight: 500; color: var(--text-primary); }
   .contact-info .contact-role { font-size: 11px; color: var(--text-secondary); margin-top: 1px; }
-  .contact-info .contact-name.unknown { color: var(--text-tertiary); font-style: italic; font-weight: 400; }
+  .contact-links { display: flex; gap: 6px; }
 
-  /* Action chips — call/email/website/social */
-  .chips { display: flex; gap: 6px; flex-wrap: wrap; }
-  .chip {
-    font-size: 11px; padding: 4px 9px;
-    border-radius: var(--radius-md);
-    border: 0.5px solid var(--border-secondary);
-    background: var(--bg-primary);
-    color: var(--text-secondary);
-    cursor: pointer;
-    text-decoration: none;
-    display: inline-flex; align-items: center; gap: 4px;
-    line-height: 1.2;
-    white-space: nowrap;
-  }
-  .chip:hover { border-color: var(--border-primary); color: var(--text-primary); background: var(--bg-secondary); }
-  .chip-call { color: var(--color-hot); border-color: var(--border-success); background: var(--bg-success); }
-  .chip-call:hover { filter: brightness(0.96); }
-  .chip-email { color: var(--color-blue); border-color: var(--border-blue); background: var(--bg-blue); }
-  .chip-email:hover { filter: brightness(0.96); }
-  .chip-disabled { opacity: 0.4; cursor: not-allowed; pointer-events: none; }
-
-  /* Status + notes row */
-  .status-row {
-    display: flex; align-items: center; gap: 10px;
-    margin-top: 10px; padding-top: 10px;
-    border-top: 0.5px dashed var(--border-tertiary);
-    flex-wrap: wrap;
-  }
-  .status-select {
-    font-size: 12px; font-weight: 500;
-    padding: 4px 10px; border-radius: 20px;
-    border: 0.5px solid var(--border-secondary);
-    cursor: pointer;
-    appearance: none; -webkit-appearance: none;
-    background: var(--bg-primary) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='8' height='6' viewBox='0 0 8 6'><path d='M0 0h8L4 6z' fill='%23696860'/></svg>") no-repeat right 8px center;
-    padding-right: 22px;
-    outline: none;
-  }
-  .status-notcontacted { background-color: #F1EFE8; color: #444441; border-color: #DDDCDA; }
-  .status-contacted    { background-color: var(--bg-blue); color: var(--color-blue); border-color: var(--border-blue); }
-  .status-replied      { background-color: #FAEEDA; color: var(--color-warm); border-color: #E7CC90; }
-  .status-booked       { background-color: var(--bg-purple); color: var(--color-purple); border-color: #C6A5E0; }
-  .status-passed       { background-color: #F1EFE8; color: var(--text-tertiary); border-color: var(--border-secondary); }
-
-  .btn-tmpl {
-    font-size: 11px; padding: 4px 9px;
-    border-radius: var(--radius-md);
-    border: 0.5px solid var(--border-secondary);
-    background: var(--bg-primary);
-    color: var(--text-secondary);
-    cursor: pointer;
-    display: inline-flex; align-items: center; gap: 4px;
-  }
-  .btn-tmpl:hover { border-color: var(--border-primary); color: var(--text-primary); }
-
-  .btn-notes {
-    font-size: 11px; padding: 4px 9px;
+  .btn-email {
+    font-size: 11px; padding: 5px 11px;
     border-radius: var(--radius-md);
     border: 0.5px solid var(--border-secondary);
     background: transparent;
     color: var(--text-secondary);
     cursor: pointer;
+    transition: background .12s;
   }
-  .btn-notes:hover { border-color: var(--border-primary); color: var(--text-primary); }
-  .btn-notes.has-notes { color: var(--color-warm); border-color: #E7CC90; background: #FAEEDA; }
+  .btn-email:hover { background: var(--bg-secondary); }
 
-  .last-contact-info {
-    font-size: 11px; color: var(--text-tertiary);
-    margin-left: auto;
-  }
-  .last-contact-info.overdue { color: var(--color-warm); font-weight: 500; }
-
-  /* Notes panel (expandable) */
-  .notes-panel {
-    margin-top: 10px; padding-top: 10px;
-    border-top: 0.5px dashed var(--border-tertiary);
-    display: none;
-  }
-  .notes-panel.open { display: block; }
-  .notes-panel textarea {
-    width: 100%; min-height: 60px;
-    font: inherit; font-size: 12px;
-    padding: 8px 10px;
-    border: 0.5px solid var(--border-secondary);
+  .btn-reach {
+    font-size: 11px; padding: 5px 11px;
     border-radius: var(--radius-md);
-    background: var(--bg-secondary);
-    color: var(--text-primary);
-    resize: vertical;
-    outline: none;
+    border: 0.5px solid var(--border-success);
+    background: var(--bg-success);
+    color: var(--text-success);
+    cursor: pointer;
+    font-weight: 500;
+    transition: filter .12s;
   }
-  .notes-panel textarea:focus { border-color: var(--border-primary); background: var(--bg-primary); }
-  .notes-meta { font-size: 10px; color: var(--text-tertiary); margin-top: 4px; }
+  .btn-reach:hover { filter: brightness(0.95); }
+
+  /* "Send video" — one-click POST to the Worker that dispatches the sector-matched video email */
+  .btn-send-video {
+    font-size: 11px; padding: 5px 11px;
+    border-radius: var(--radius-md);
+    border: 0.5px solid #1D9E75;
+    background: #1D9E75;
+    color: #fff;
+    cursor: pointer;
+    font-weight: 600;
+    transition: filter .12s, background .12s;
+  }
+  .btn-send-video:hover:not(:disabled) { filter: brightness(0.95); }
+  .btn-send-video:disabled {
+    cursor: default;
+    opacity: 0.65;
+    background: var(--bg-tertiary);
+    color: var(--text-secondary);
+    border-color: var(--border-secondary);
+  }
+  .btn-send-video.sent {
+    background: var(--bg-success);
+    color: var(--text-success);
+    border-color: var(--border-success);
+    opacity: 1;
+  }
+  .btn-send-video.skipped {
+    background: #FEF3C7;
+    color: #78350F;
+    border-color: #FBBF24;
+    opacity: 1;
+  }
+  .btn-send-video.no-email {
+    cursor: not-allowed;
+  }
+  .send-status {
+    font-size: 10px;
+    color: var(--text-tertiary);
+    margin-top: 4px;
+    text-align: right;
+    min-height: 12px;
+  }
+  .send-status.ok { color: var(--text-success); }
+  .send-status.skipped { color: #78350F; }
+  .send-status.err { color: #B91C1C; }
 
   /* ── Empty state ── */
   .empty-state {
@@ -363,7 +303,7 @@
   .empty-state h3 { font-size: 15px; font-weight: 500; margin-bottom: 6px; color: var(--text-secondary); }
   .empty-state p  { font-size: 13px; }
 
-  /* ── Modal overlay ── */
+  /* ── Prompt modal overlay ── */
   .modal-overlay {
     display: none; position: fixed; inset: 0;
     background: rgba(0,0,0,0.35);
@@ -378,8 +318,7 @@
     max-height: 80vh; overflow-y: auto;
     box-shadow: 0 8px 32px rgba(0,0,0,0.12);
   }
-  .modal-title { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
-  .modal-sub { font-size: 12px; color: var(--text-secondary); margin-bottom: 12px; }
+  .modal-title { font-size: 14px; font-weight: 600; margin-bottom: 12px; }
   .modal-body {
     font-size: 13px; color: var(--text-secondary);
     line-height: 1.65;
@@ -408,59 +347,12 @@
     cursor: pointer;
   }
 
-  /* Template picker tabs */
-  .tmpl-tabs {
-    display: flex; gap: 6px; margin-bottom: 10px; flex-wrap: wrap;
-  }
-  .tmpl-tabs .tab-sm {
-    font-size: 11px; padding: 3px 9px;
-    border-radius: 20px;
-    border: 0.5px solid var(--border-secondary);
-    background: var(--bg-primary);
-    color: var(--text-secondary);
-    cursor: pointer;
-  }
-  .tmpl-tabs .tab-sm.active { border-color: var(--border-primary); color: var(--text-primary); font-weight: 500; background: var(--bg-secondary); }
-
-  /* Changelog modal */
-  .changelog h4 { font-size: 13px; font-weight: 600; margin: 14px 0 4px; color: var(--text-primary); }
-  .changelog h4:first-child { margin-top: 0; }
-  .changelog ul { font-size: 12px; color: var(--text-secondary); margin-left: 18px; line-height: 1.55; }
-  .changelog .date { font-size: 11px; color: var(--text-tertiary); font-weight: 400; margin-left: 6px; }
-
-  /* ── Undo toast ── */
-  .toast {
-    position: fixed;
-    bottom: 20px; left: 50%;
-    transform: translateX(-50%) translateY(20px);
-    background: var(--text-primary);
-    color: var(--bg-primary);
-    padding: 10px 16px;
-    border-radius: var(--radius-md);
-    font-size: 12px;
-    display: flex; align-items: center; gap: 12px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.2s, transform 0.2s;
-    z-index: 300;
-  }
-  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); pointer-events: auto; }
-  .toast button {
-    background: transparent; color: #85B7EB;
-    border: none; cursor: pointer;
-    font: inherit; font-weight: 500;
-    text-decoration: underline;
-  }
-
   /* ── Responsive ── */
   @media (max-width: 600px) {
     .metrics { grid-template-columns: repeat(2, 1fr); }
     .card-body { grid-template-columns: 1fr 1fr; }
     .filter-bar { gap: 6px; }
     .result-count { display: none; }
-    .contact-row { flex-direction: column; align-items: stretch; }
-    .chips { justify-content: flex-start; }
   }
 </style>
 </head>
@@ -471,31 +363,22 @@
     <div class="app-title">Ad Spend Watcher</div>
     <div class="app-subtitle">UK & Ireland Trades — Outbound Intelligence</div>
   </div>
-  <div class="header-right">
-    <button class="btn-whats-new" onclick="openChangelog()">What's new</button>
-    <div class="sync-indicator" id="sync-indicator" title="CRM sync status across devices"></div>
-    <div class="last-updated" id="last-updated">Loading…</div>
-  </div>
+  <div class="last-updated" id="last-updated">Loading…</div>
 </header>
 
 <div class="container">
-
-  <div id="warn-banner"></div>
-
-  <!-- Today follow-up banner (hidden unless there are items) -->
-  <div class="today-banner" id="today-banner" style="display:none"></div>
 
   <!-- Metrics row -->
   <div class="metrics">
     <div class="metric">
       <div class="metric-label">Companies tracked</div>
       <div class="metric-val" id="m-total">—</div>
-      <div class="metric-sub" id="m-total-sub">Updated weekly</div>
+      <div class="metric-sub" id="m-total-sub">Updated Monday</div>
     </div>
     <div class="metric">
       <div class="metric-label">Hot leads</div>
       <div class="metric-val" id="m-hot">—</div>
-      <div class="metric-sub">Score 70+</div>
+      <div class="metric-sub">Ramping now</div>
     </div>
     <div class="metric">
       <div class="metric-label">Avg spend tenure</div>
@@ -503,9 +386,9 @@
       <div class="metric-sub">Across all tracked</div>
     </div>
     <div class="metric">
-      <div class="metric-label">Booked calls</div>
-      <div class="metric-val" id="m-booked">—</div>
-      <div class="metric-sub" id="m-booked-sub">This week</div>
+      <div class="metric-label">Sectors covered</div>
+      <div class="metric-val" id="m-sectors">—</div>
+      <div class="metric-sub">Top 10 per sector</div>
     </div>
   </div>
 
@@ -518,452 +401,2436 @@
       <option value="score">Sort: Signal score</option>
       <option value="spend">Sort: Spend duration</option>
       <option value="staff">Sort: Staff count</option>
-      <option value="status">Sort: Status</option>
     </select>
-    <select id="status-sel" onchange="render()">
-      <option value="all">All statuses</option>
-      <option value="not_contacted">Not contacted</option>
-      <option value="contacted">Contacted</option>
-      <option value="replied">Replied</option>
-      <option value="booked">Booked</option>
-      <option value="passed">Passed</option>
-    </select>
-    <select id="country-sel" onchange="render()">
-      <option value="all">All countries</option>
-      <option value="UK">UK</option>
-      <option value="IE">Ireland</option>
+    <select id="region-sel" onchange="render()">
+      <option value="all">All regions</option>
+      <option value="london">London</option>
+      <option value="midlands">Midlands</option>
+      <option value="northwest">North West</option>
+      <option value="scotland">Scotland</option>
+      <option value="southeast">South East</option>
+      <option value="ireland">Ireland</option>
     </select>
     <select id="platform-sel" onchange="render()">
       <option value="all">All platforms</option>
-      <option value="google">Google</option>
-      <option value="meta">Meta</option>
-      <option value="facebook">Facebook</option>
-      <option value="instagram">Instagram</option>
+      <option value="google">Google Ads</option>
+      <option value="meta">Meta Ads</option>
       <option value="tiktok">TikTok</option>
+    </select>
+    <select id="new-sel" onchange="render()">
+      <option value="all">All advertisers</option>
+      <option value="new">New this week only</option>
+      <option value="returning">Returning only</option>
     </select>
     <span class="result-count" id="result-count"></span>
   </div>
+
+  <!-- Fresh-spenders banner (populated in render()) -->
+  <div id="new-banner-slot"></div>
 
   <!-- Cards -->
   <div class="company-grid" id="grid"></div>
 </div>
 
-<!-- Prompt modal (AI prompts) -->
+<!-- Prompt modal -->
 <div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
   <div class="modal">
     <div class="modal-title" id="modal-title">Outreach prompt</div>
-    <div class="modal-sub" id="modal-sub"></div>
-    <div id="modal-tmpl-tabs"></div>
     <div class="modal-body" id="modal-body"></div>
     <div class="modal-actions">
-      <button class="btn-copy" id="btn-copy" onclick="copyModalBody()">Copy</button>
+      <button class="btn-copy" id="btn-copy" onclick="copyPrompt()">Copy prompt</button>
       <button class="btn-close" onclick="closeModalDirect()">Close</button>
     </div>
   </div>
 </div>
 
-<!-- Changelog modal -->
-<div class="modal-overlay" id="changelog-overlay" onclick="closeChangelog(event)">
-  <div class="modal">
-    <div class="modal-title">What's new</div>
-    <div class="changelog">
-      <h4>Week of 19 April 2026 <span class="date">— 19 Apr</span></h4>
-      <ul>
-        <li>Status layer: Not contacted · Contacted · Replied · Booked · Passed — with notes and undo.</li>
-        <li>Click-to-call and pre-filled email chips on every card.</li>
-        <li>"Today" view shows leads due for follow-up (contacted 3+ days ago).</li>
-        <li>Per-sector outreach template library — one-click copy with pre-filled name, sector, tenure.</li>
-        <li>Templates rewritten around speed-to-lead agents: 64% avg conversion lift, qualify + book in &lt;60s.</li>
-        <li>Stable live URL: <code>https://dave-apex-ai.github.io/ad-spend-watcher/</code></li>
-      </ul>
-      <h4>Week of 13 April 2026 <span class="date">— 13 Apr</span></h4>
-      <ul>
-        <li>55 companies across 8 sectors (Solar, Plumbing, Electrical, Alarms, Insulation, Windows & Doors, Drainage, Pumps).</li>
-        <li>Google page-1 verification for Tier-1 candidates.</li>
-        <li>Weekly Word report generated automatically.</li>
-      </ul>
-    </div>
-    <div class="modal-actions">
-      <button class="btn-close" onclick="closeChangelogDirect()">Got it</button>
-    </div>
-  </div>
-</div>
-
-<!-- Undo toast -->
-<div class="toast" id="toast">
-  <span id="toast-msg"></span>
-  <button onclick="undoStatus()">Undo</button>
-</div>
-
 <script>
 /* ============================================================
-   Ad Spend Watcher — VA dashboard
-   Live URL: https://dave-apex-ai.github.io/ad-spend-watcher/
-   Data source: data/companies.json (updated every Sunday)
-   Status state: localStorage key "adwatch_status_v1"
+   CONFIGURATION
+   The dashboard loads companies from data/companies.json if
+   available (populated by scoring.py after each weekly run).
+   Falls back to the SAMPLE_DATA array for demonstration.
    ============================================================ */
 
 const SECTORS = ['All','Plumbing','Solar','Electrical','Alarms','Insulation','Windows & Doors','Drainage','Pumps'];
 
-const STATUS_OPTIONS = [
-  { value: 'not_contacted', label: 'Not contacted' },
-  { value: 'contacted',     label: 'Contacted' },
-  { value: 'replied',       label: 'Replied' },
-  { value: 'booked',        label: 'Booked' },
-  { value: 'passed',        label: 'Passed' },
+const SAMPLE_DATA = [
+  {
+    "id": 1,
+    "name": "Install Solar Panels",
+    "sector": "Solar",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 34,
+    "tenure_label": "34 months",
+    "score": 71,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook",
+      "google"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "IS",
+    "avatarBg": "#E1F5EE",
+    "avatarCol": "#085041",
+    "first_seen": "2026-04-07",
+    "is_new_this_week": false
+  },
+  {
+    "id": 2,
+    "name": "Allstate Solar & Allstate Home Improvements",
+    "sector": "Solar",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 96,
+    "tenure_label": "96 months",
+    "score": 71,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook",
+      "google"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "AS",
+    "avatarBg": "#E1F5EE",
+    "avatarCol": "#085041",
+    "first_seen": "2026-04-07",
+    "is_new_this_week": false
+  },
+  {
+    "id": 3,
+    "name": "Prosolar",
+    "sector": "Solar",
+    "country": "IE",
+    "region": "ireland",
+    "region_label": "Dublin & Ireland",
+    "staff": "15",
+    "tenure_months": 19,
+    "tenure_label": "19 months",
+    "score": 71,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook",
+      "google"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "P",
+    "avatarBg": "#E1F5EE",
+    "avatarCol": "#085041",
+    "first_seen": "2026-04-12",
+    "is_new_this_week": false
+  },
+  {
+    "id": 4,
+    "name": "SPV Lights",
+    "sector": "Solar",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 21,
+    "tenure_label": "21 months",
+    "score": 68,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook",
+      "google"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "SL",
+    "avatarBg": "#E1F5EE",
+    "avatarCol": "#085041",
+    "first_seen": "2026-04-07",
+    "is_new_this_week": false
+  },
+  {
+    "id": 5,
+    "name": "Momentum Productions with aosu Life",
+    "sector": "Solar",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 17,
+    "tenure_label": "17 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "MP",
+    "avatarBg": "#E1F5EE",
+    "avatarCol": "#085041",
+    "first_seen": "2026-04-07",
+    "is_new_this_week": false
+  },
+  {
+    "id": 6,
+    "name": "Bringnox Official",
+    "sector": "Solar",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 13,
+    "tenure_label": "13 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "BO",
+    "avatarBg": "#E1F5EE",
+    "avatarCol": "#085041",
+    "first_seen": "2026-04-07",
+    "is_new_this_week": false
+  },
+  {
+    "id": 7,
+    "name": "Evergreen Power UK SOLAR",
+    "sector": "Solar",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 6,
+    "tenure_label": "6 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "EP",
+    "avatarBg": "#E1F5EE",
+    "avatarCol": "#085041",
+    "first_seen": "2026-04-01",
+    "is_new_this_week": false
+  },
+  {
+    "id": 8,
+    "name": "Anglia Safety Electrical & Testing",
+    "sector": "Solar",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 10,
+    "tenure_label": "10 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "AS",
+    "avatarBg": "#E1F5EE",
+    "avatarCol": "#085041",
+    "first_seen": "2026-04-07",
+    "is_new_this_week": false
+  },
+  {
+    "id": 9,
+    "name": "Activ8 Energies",
+    "sector": "Solar",
+    "country": "IE",
+    "region": "ireland",
+    "region_label": "Dublin & Ireland",
+    "staff": "15",
+    "tenure_months": 10,
+    "tenure_label": "10 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "AE",
+    "avatarBg": "#E1F5EE",
+    "avatarCol": "#085041",
+    "first_seen": "2026-04-12",
+    "is_new_this_week": false
+  },
+  {
+    "id": 10,
+    "name": "North Midlands Credit Union",
+    "sector": "Solar",
+    "country": "IE",
+    "region": "ireland",
+    "region_label": "Dublin & Ireland",
+    "staff": "15",
+    "tenure_months": 26,
+    "tenure_label": "26 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "NM",
+    "avatarBg": "#E1F5EE",
+    "avatarCol": "#085041",
+    "first_seen": "2026-04-07",
+    "is_new_this_week": false
+  },
+  {
+    "id": 11,
+    "name": "NES Ireland Solar PV",
+    "sector": "Solar",
+    "country": "IE",
+    "region": "ireland",
+    "region_label": "Dublin & Ireland",
+    "staff": "15",
+    "tenure_months": 11,
+    "tenure_label": "11 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "NI",
+    "avatarBg": "#E1F5EE",
+    "avatarCol": "#085041",
+    "first_seen": "2026-04-27",
+    "is_new_this_week": true
+  },
+  {
+    "id": 12,
+    "name": "Devon Electrical Contractors Ltd",
+    "sector": "Solar",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 4,
+    "tenure_label": "4 months",
+    "score": 50,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "DE",
+    "avatarBg": "#E1F5EE",
+    "avatarCol": "#085041",
+    "first_seen": "2026-04-27",
+    "is_new_this_week": true
+  },
+  {
+    "id": 13,
+    "name": "Caldor Solar",
+    "sector": "Solar",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 4,
+    "tenure_label": "4 months",
+    "score": 50,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "CS",
+    "avatarBg": "#E1F5EE",
+    "avatarCol": "#085041",
+    "first_seen": "2026-04-27",
+    "is_new_this_week": true
+  },
+  {
+    "id": 14,
+    "name": "hsscu",
+    "sector": "Solar",
+    "country": "IE",
+    "region": "ireland",
+    "region_label": "Dublin & Ireland",
+    "staff": "15",
+    "tenure_months": 4,
+    "tenure_label": "4 months",
+    "score": 50,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "H",
+    "avatarBg": "#E1F5EE",
+    "avatarCol": "#085041",
+    "first_seen": "2026-04-27",
+    "is_new_this_week": true
+  },
+  {
+    "id": 15,
+    "name": "Solid Power Ltd",
+    "sector": "Solar",
+    "country": "IE",
+    "region": "ireland",
+    "region_label": "Dublin & Ireland",
+    "staff": "15",
+    "tenure_months": 4,
+    "tenure_label": "4 months",
+    "score": 50,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "SP",
+    "avatarBg": "#E1F5EE",
+    "avatarCol": "#085041",
+    "first_seen": "2026-04-27",
+    "is_new_this_week": true
+  },
+  {
+    "id": 16,
+    "name": "Pat Shortt with Sun Arc Solar Systems",
+    "sector": "Solar",
+    "country": "IE",
+    "region": "ireland",
+    "region_label": "Dublin & Ireland",
+    "staff": "15",
+    "tenure_months": 4,
+    "tenure_label": "4 months",
+    "score": 50,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "PS",
+    "avatarBg": "#E1F5EE",
+    "avatarCol": "#085041",
+    "first_seen": "2026-04-27",
+    "is_new_this_week": true
+  },
+  {
+    "id": 17,
+    "name": "All Solar Works",
+    "sector": "Solar",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 3,
+    "tenure_label": "3 months",
+    "score": 45,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "AS",
+    "avatarBg": "#E1F5EE",
+    "avatarCol": "#085041",
+    "first_seen": "2026-04-27",
+    "is_new_this_week": true
+  },
+  {
+    "id": 18,
+    "name": "Electric Ireland",
+    "sector": "Solar",
+    "country": "IE",
+    "region": "ireland",
+    "region_label": "Dublin & Ireland",
+    "staff": "15",
+    "tenure_months": 3,
+    "tenure_label": "3 months",
+    "score": 45,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "EI",
+    "avatarBg": "#E1F5EE",
+    "avatarCol": "#085041",
+    "first_seen": "2026-04-27",
+    "is_new_this_week": true
+  },
+  {
+    "id": 19,
+    "name": "DP Electrical Specialists Limited",
+    "sector": "Electrical",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 27,
+    "tenure_label": "27 months",
+    "score": 71,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook",
+      "google"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "DE",
+    "avatarBg": "#E6F1FB",
+    "avatarCol": "#0C447C",
+    "first_seen": "2026-04-07",
+    "is_new_this_week": false
+  },
+  {
+    "id": 20,
+    "name": "Lightwave",
+    "sector": "Electrical",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 13,
+    "tenure_label": "13 months",
+    "score": 71,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook",
+      "google"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "L",
+    "avatarBg": "#E6F1FB",
+    "avatarCol": "#0C447C",
+    "first_seen": "2026-04-12",
+    "is_new_this_week": false
+  },
+  {
+    "id": 21,
+    "name": "CS Electrics",
+    "sector": "Electrical",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 57,
+    "tenure_label": "57 months",
+    "score": 71,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook",
+      "google"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "CE",
+    "avatarBg": "#E6F1FB",
+    "avatarCol": "#0C447C",
+    "first_seen": "2026-04-12",
+    "is_new_this_week": false
+  },
+  {
+    "id": 22,
+    "name": "OpenRent",
+    "sector": "Electrical",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 12,
+    "tenure_label": "12 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "O",
+    "avatarBg": "#E6F1FB",
+    "avatarCol": "#0C447C",
+    "first_seen": "2026-04-07",
+    "is_new_this_week": false
+  },
+  {
+    "id": 23,
+    "name": "James' Marketing ToolBox",
+    "sector": "Electrical",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 13,
+    "tenure_label": "13 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "JM",
+    "avatarBg": "#E6F1FB",
+    "avatarCol": "#0C447C",
+    "first_seen": "2026-04-19",
+    "is_new_this_week": false
+  },
+  {
+    "id": 24,
+    "name": "Dec-Elec Electrical Contractors",
+    "sector": "Electrical",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 7,
+    "tenure_label": "7 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "DE",
+    "avatarBg": "#E6F1FB",
+    "avatarCol": "#0C447C",
+    "first_seen": "2026-04-27",
+    "is_new_this_week": true
+  },
+  {
+    "id": 25,
+    "name": "Merrin Electrical LTD",
+    "sector": "Electrical",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 13,
+    "tenure_label": "13 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "ME",
+    "avatarBg": "#E6F1FB",
+    "avatarCol": "#0C447C",
+    "first_seen": "2026-04-12",
+    "is_new_this_week": false
+  },
+  {
+    "id": 26,
+    "name": "lyes_electrical_ltd",
+    "sector": "Electrical",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 32,
+    "tenure_label": "32 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "L",
+    "avatarBg": "#E6F1FB",
+    "avatarCol": "#0C447C",
+    "first_seen": "2026-04-12",
+    "is_new_this_week": false
+  },
+  {
+    "id": 27,
+    "name": "Everyday Welding Supplies",
+    "sector": "Electrical",
+    "country": "IE",
+    "region": "ireland",
+    "region_label": "Dublin & Ireland",
+    "staff": "15",
+    "tenure_months": 9,
+    "tenure_label": "9 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "EW",
+    "avatarBg": "#E6F1FB",
+    "avatarCol": "#0C447C",
+    "first_seen": "2026-04-12",
+    "is_new_this_week": false
+  },
+  {
+    "id": 28,
+    "name": "City & Guilds Electrical",
+    "sector": "Electrical",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 4,
+    "tenure_label": "4 months",
+    "score": 50,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "C&",
+    "avatarBg": "#E6F1FB",
+    "avatarCol": "#0C447C",
+    "first_seen": "2026-04-27",
+    "is_new_this_week": true
+  },
+  {
+    "id": 29,
+    "name": "Rointe Ireland",
+    "sector": "Electrical",
+    "country": "IE",
+    "region": "ireland",
+    "region_label": "Dublin & Ireland",
+    "staff": "15",
+    "tenure_months": 4,
+    "tenure_label": "4 months",
+    "score": 50,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "RI",
+    "avatarBg": "#E6F1FB",
+    "avatarCol": "#0C447C",
+    "first_seen": "2026-04-12",
+    "is_new_this_week": false
+  },
+  {
+    "id": 30,
+    "name": "Treacy Solar",
+    "sector": "Electrical",
+    "country": "IE",
+    "region": "ireland",
+    "region_label": "Dublin & Ireland",
+    "staff": "15",
+    "tenure_months": 3,
+    "tenure_label": "3 months",
+    "score": 45,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "TS",
+    "avatarBg": "#E6F1FB",
+    "avatarCol": "#0C447C",
+    "first_seen": "2026-04-19",
+    "is_new_this_week": false
+  },
+  {
+    "id": 31,
+    "name": "Lincolnshire Walnut Blasting carbon removal",
+    "sector": "Alarms",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 47,
+    "tenure_label": "47 months",
+    "score": 71,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook",
+      "google"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "LW",
+    "avatarBg": "#FAEEDA",
+    "avatarCol": "#633806",
+    "first_seen": "2026-04-12",
+    "is_new_this_week": false
+  },
+  {
+    "id": 32,
+    "name": "Blackwood CCTV",
+    "sector": "Alarms",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 10,
+    "tenure_label": "10 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "BC",
+    "avatarBg": "#FAEEDA",
+    "avatarCol": "#633806",
+    "first_seen": "2026-04-07",
+    "is_new_this_week": false
+  },
+  {
+    "id": 33,
+    "name": "Corten Steel Ireland",
+    "sector": "Alarms",
+    "country": "IE",
+    "region": "ireland",
+    "region_label": "Dublin & Ireland",
+    "staff": "15",
+    "tenure_months": 6,
+    "tenure_label": "6 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "CS",
+    "avatarBg": "#FAEEDA",
+    "avatarCol": "#633806",
+    "first_seen": "2026-04-19",
+    "is_new_this_week": false
+  },
+  {
+    "id": 34,
+    "name": "ugclasha with aosu Life",
+    "sector": "Alarms",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 5,
+    "tenure_label": "5 months",
+    "score": 55,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "UW",
+    "avatarBg": "#FAEEDA",
+    "avatarCol": "#633806",
+    "first_seen": "2026-04-12",
+    "is_new_this_week": false
+  },
+  {
+    "id": 35,
+    "name": "Network Security.ie",
+    "sector": "Alarms",
+    "country": "IE",
+    "region": "ireland",
+    "region_label": "Dublin & Ireland",
+    "staff": "15",
+    "tenure_months": 3,
+    "tenure_label": "3 months",
+    "score": 45,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "NS",
+    "avatarBg": "#FAEEDA",
+    "avatarCol": "#633806",
+    "first_seen": "2026-04-19",
+    "is_new_this_week": false
+  },
+  {
+    "id": 36,
+    "name": "Dolmen Insurance",
+    "sector": "Alarms",
+    "country": "IE",
+    "region": "ireland",
+    "region_label": "Dublin & Ireland",
+    "staff": "15",
+    "tenure_months": 3,
+    "tenure_label": "3 months",
+    "score": 45,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "DI",
+    "avatarBg": "#FAEEDA",
+    "avatarCol": "#633806",
+    "first_seen": "2026-04-27",
+    "is_new_this_week": true
+  },
+  {
+    "id": 37,
+    "name": "Crestshield Windows",
+    "sector": "Windows & Doors",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 69,
+    "tenure_label": "69 months",
+    "score": 71,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook",
+      "google"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "CW",
+    "avatarBg": "#FDE8EC",
+    "avatarCol": "#7C0C2A",
+    "first_seen": "2026-04-07",
+    "is_new_this_week": false
+  },
+  {
+    "id": 38,
+    "name": "Sunrise Windows - Double Glazing Installers - Plymouth",
+    "sector": "Windows & Doors",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 15,
+    "tenure_label": "15 months",
+    "score": 71,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook",
+      "google"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "SW",
+    "avatarBg": "#FDE8EC",
+    "avatarCol": "#7C0C2A",
+    "first_seen": "2026-04-07",
+    "is_new_this_week": false
+  },
+  {
+    "id": 39,
+    "name": "Shane Howells Ltd",
+    "sector": "Windows & Doors",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 15,
+    "tenure_label": "15 months",
+    "score": 71,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook",
+      "google"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "SH",
+    "avatarBg": "#FDE8EC",
+    "avatarCol": "#7C0C2A",
+    "first_seen": "2026-04-12",
+    "is_new_this_week": false
+  },
+  {
+    "id": 40,
+    "name": "Divine Windows and Doors",
+    "sector": "Windows & Doors",
+    "country": "IE",
+    "region": "ireland",
+    "region_label": "Dublin & Ireland",
+    "staff": "15",
+    "tenure_months": 23,
+    "tenure_label": "23 months",
+    "score": 71,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook",
+      "google"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "DW",
+    "avatarBg": "#FDE8EC",
+    "avatarCol": "#7C0C2A",
+    "first_seen": "2026-04-12",
+    "is_new_this_week": false
+  },
+  {
+    "id": 41,
+    "name": "Lancashire Double Glazing",
+    "sector": "Windows & Doors",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 10,
+    "tenure_label": "10 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "LD",
+    "avatarBg": "#FDE8EC",
+    "avatarCol": "#7C0C2A",
+    "first_seen": "2026-04-07",
+    "is_new_this_week": false
+  },
+  {
+    "id": 42,
+    "name": "Centaframe Windows and Doors",
+    "sector": "Windows & Doors",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 10,
+    "tenure_label": "10 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "CW",
+    "avatarBg": "#FDE8EC",
+    "avatarCol": "#7C0C2A",
+    "first_seen": "2026-04-07",
+    "is_new_this_week": false
+  },
+  {
+    "id": 43,
+    "name": "Misted Windows",
+    "sector": "Windows & Doors",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 6,
+    "tenure_label": "6 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "MW",
+    "avatarBg": "#FDE8EC",
+    "avatarCol": "#7C0C2A",
+    "first_seen": "2026-04-27",
+    "is_new_this_week": true
+  },
+  {
+    "id": 44,
+    "name": "Scott James sash windows specialists",
+    "sector": "Windows & Doors",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 10,
+    "tenure_label": "10 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "SJ",
+    "avatarBg": "#FDE8EC",
+    "avatarCol": "#7C0C2A",
+    "first_seen": "2026-04-19",
+    "is_new_this_week": false
+  },
+  {
+    "id": 45,
+    "name": "Three Counties Windows & Doors",
+    "sector": "Windows & Doors",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 7,
+    "tenure_label": "7 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "TC",
+    "avatarBg": "#FDE8EC",
+    "avatarCol": "#7C0C2A",
+    "first_seen": "2026-04-12",
+    "is_new_this_week": false
+  },
+  {
+    "id": 46,
+    "name": "Budget Designer HomeWorks",
+    "sector": "Windows & Doors",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 12,
+    "tenure_label": "12 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "BD",
+    "avatarBg": "#FDE8EC",
+    "avatarCol": "#7C0C2A",
+    "first_seen": "2026-04-19",
+    "is_new_this_week": false
+  },
+  {
+    "id": 47,
+    "name": "D\u00e9Dannan Door and Window Parts Ireland",
+    "sector": "Windows & Doors",
+    "country": "IE",
+    "region": "ireland",
+    "region_label": "Dublin & Ireland",
+    "staff": "15",
+    "tenure_months": 14,
+    "tenure_label": "14 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "DD",
+    "avatarBg": "#FDE8EC",
+    "avatarCol": "#7C0C2A",
+    "first_seen": "2026-04-12",
+    "is_new_this_week": false
+  },
+  {
+    "id": 48,
+    "name": "Revolution Doors",
+    "sector": "Windows & Doors",
+    "country": "IE",
+    "region": "ireland",
+    "region_label": "Dublin & Ireland",
+    "staff": "15",
+    "tenure_months": 10,
+    "tenure_label": "10 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "RD",
+    "avatarBg": "#FDE8EC",
+    "avatarCol": "#7C0C2A",
+    "first_seen": "2026-04-12",
+    "is_new_this_week": false
+  },
+  {
+    "id": 49,
+    "name": "CompareCompanies",
+    "sector": "Windows & Doors",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 5,
+    "tenure_label": "5 months",
+    "score": 55,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "C",
+    "avatarBg": "#FDE8EC",
+    "avatarCol": "#7C0C2A",
+    "first_seen": "2026-04-27",
+    "is_new_this_week": true
+  },
+  {
+    "id": 50,
+    "name": "Wilson Windows",
+    "sector": "Windows & Doors",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 4,
+    "tenure_label": "4 months",
+    "score": 50,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "WW",
+    "avatarBg": "#FDE8EC",
+    "avatarCol": "#7C0C2A",
+    "first_seen": "2026-04-27",
+    "is_new_this_week": true
+  },
+  {
+    "id": 51,
+    "name": "THE WINDOW DOCTOR",
+    "sector": "Windows & Doors",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 4,
+    "tenure_label": "4 months",
+    "score": 50,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "TW",
+    "avatarBg": "#FDE8EC",
+    "avatarCol": "#7C0C2A",
+    "first_seen": "2026-04-27",
+    "is_new_this_week": true
+  },
+  {
+    "id": 52,
+    "name": "Fenbro",
+    "sector": "Windows & Doors",
+    "country": "IE",
+    "region": "ireland",
+    "region_label": "Dublin & Ireland",
+    "staff": "15",
+    "tenure_months": 4,
+    "tenure_label": "4 months",
+    "score": 50,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "F",
+    "avatarBg": "#FDE8EC",
+    "avatarCol": "#7C0C2A",
+    "first_seen": "2026-04-19",
+    "is_new_this_week": false
+  },
+  {
+    "id": 53,
+    "name": "Deflo Ltd",
+    "sector": "Drainage",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 39,
+    "tenure_label": "39 months",
+    "score": 71,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook",
+      "google"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "DL",
+    "avatarBg": "#E8F4FD",
+    "avatarCol": "#0A5C84",
+    "first_seen": "2026-04-07",
+    "is_new_this_week": false
+  },
+  {
+    "id": 54,
+    "name": "Drain Doctor Nottingham & Mansfield",
+    "sector": "Drainage",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 6,
+    "tenure_label": "6 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "DD",
+    "avatarBg": "#E8F4FD",
+    "avatarCol": "#0A5C84",
+    "first_seen": "2026-04-07",
+    "is_new_this_week": false
+  },
+  {
+    "id": 55,
+    "name": "RJP Environmental",
+    "sector": "Drainage",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 6,
+    "tenure_label": "6 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "RE",
+    "avatarBg": "#E8F4FD",
+    "avatarCol": "#0A5C84",
+    "first_seen": "2026-04-12",
+    "is_new_this_week": false
+  },
+  {
+    "id": 56,
+    "name": "Electropoint UK",
+    "sector": "Pumps",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 28,
+    "tenure_label": "28 months",
+    "score": 71,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook",
+      "google"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "EU",
+    "avatarBg": "#F0E8FD",
+    "avatarCol": "#4A0A84",
+    "first_seen": "2026-04-12",
+    "is_new_this_week": false
+  },
+  {
+    "id": 57,
+    "name": "C.R.C Electrical & Renewables Limited",
+    "sector": "Pumps",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 6,
+    "tenure_label": "6 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "CE",
+    "avatarBg": "#F0E8FD",
+    "avatarCol": "#4A0A84",
+    "first_seen": "2026-04-12",
+    "is_new_this_week": false
+  },
+  {
+    "id": 58,
+    "name": "Greener Energy Group",
+    "sector": "Pumps",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 6,
+    "tenure_label": "6 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "GE",
+    "avatarBg": "#F0E8FD",
+    "avatarCol": "#4A0A84",
+    "first_seen": "2026-04-12",
+    "is_new_this_week": false
+  },
+  {
+    "id": 59,
+    "name": "Tanks For Everything",
+    "sector": "Pumps",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 4,
+    "tenure_label": "4 months",
+    "score": 50,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "TF",
+    "avatarBg": "#F0E8FD",
+    "avatarCol": "#4A0A84",
+    "first_seen": "2026-04-12",
+    "is_new_this_week": false
+  },
+  {
+    "id": 60,
+    "name": "Gold1",
+    "sector": "Plumbing",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 14,
+    "tenure_label": "14 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "G",
+    "avatarBg": "#EEEDFE",
+    "avatarCol": "#3C3489",
+    "first_seen": "2026-04-07",
+    "is_new_this_week": false
+  },
+  {
+    "id": 61,
+    "name": "Prime Pipe Emergency",
+    "sector": "Plumbing",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 5,
+    "tenure_label": "5 months",
+    "score": 55,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "PP",
+    "avatarBg": "#EEEDFE",
+    "avatarCol": "#3C3489",
+    "first_seen": "2026-04-12",
+    "is_new_this_week": false
+  },
+  {
+    "id": 62,
+    "name": "Rockwarm",
+    "sector": "Insulation",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 3,
+    "tenure_label": "3 months",
+    "score": 45,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "R",
+    "avatarBg": "#F1EFE8",
+    "avatarCol": "#444441",
+    "first_seen": "2026-04-12",
+    "is_new_this_week": false
+  }
 ];
 
-/* ── Sector-specific outreach templates ── */
-/* Each has {email: [subject, body], sms, call_opener}. Placeholders: {name}, {sector}, {tenure_months}, {first_name} */
-const TEMPLATES = {
-  Solar: {
-    email: {
-      subject: "Noticed {name}'s solar ad spend running {tenure_months} months",
-      body: `Hi {first_name},
-
-I noticed {name} has been spending on solar ads on Meta for around {tenure_months} months — that kind of sustained spend usually means you're seeing returns, but most installers still leak 40–60% of leads between the click and the booked survey.
-
-We increase conversion rates by 64% on average with speed-to-lead agents that sit waiting on your ads. The moment someone fills out a form or clicks to call, a live agent picks up inside 60 seconds, fully qualifies them against your criteria (postcode, property type, roof suitability, budget, timeline), and books the appointment straight into your calendar.
-
-For a solar installer spending at your level, even a 20% lift in booked surveys usually pays for the service several times over.
-
-Worth a 15-min call next week to walk through how it works?
-
-Best,
-[Your name]`
-    },
-    sms: "Hi {first_name} — saw {name}'s solar ad spend going {tenure_months} months. We book 64% more of your leads with speed-to-lead agents. 15 min this week?",
-    call: "Hi {first_name}, quick one — I noticed {name}'s solar ad spend on Meta has been consistent for about {tenure_months} months. When someone fills out one of your forms, how fast is a human getting back to them? We lift conversion 64% on average with speed-to-lead agents that qualify and book."
-  },
-  Plumbing: {
-    email: {
-      subject: "Noticed {name}'s ad spend running {tenure_months} months",
-      body: `Hi {first_name},
-
-I noticed {name} has been spending on Meta ads for around {tenure_months} months — that's rare in the plumbing trade, most firms never get past month 3. So you're clearly seeing returns, but most plumbers still lose half their ad leads because no one picks up fast enough when they call.
-
-We increase conversion rates by 64% on average with speed-to-lead agents that sit waiting on your ads. The moment someone submits a form or clicks to call, a live agent answers inside 60 seconds, fully qualifies them (postcode, job type, urgency, budget), and books the visit straight into your calendar.
-
-For a plumbing firm spending at your level, even a 20% lift in booked jobs usually pays for the service several times over.
-
-Open to a 15-min chat next week to walk through how it works?
-
-Best,
-[Your name]`
-    },
-    sms: "Hi {first_name} — noticed {name}'s ad spend still going at {tenure_months} months. We book 64% more of your leads with speed-to-lead agents. Quick chat?",
-    call: "Hi {first_name}, I noticed {name}'s Meta ad spend has been consistent for {tenure_months} months. When someone fills one of your forms, how fast does a human call them back? We lift conversion 64% on average with speed-to-lead agents that qualify and book."
-  },
-  Electrical: {
-    email: {
-      subject: "Noticed {name}'s ad spend running {tenure_months} months",
-      body: `Hi {first_name},
-
-I noticed {name} has been spending on Meta ads consistently for {tenure_months} months — that's a level of commitment most electrical competitors can't sustain. But most electricians we speak to are still losing half their ad leads to tyre-kickers and slow callbacks.
-
-We increase conversion rates by 64% on average with speed-to-lead agents that sit waiting on your ads. The moment someone submits a form or clicks to call, a live agent picks up inside 60 seconds, fully qualifies them (job type, urgency, budget, commercial vs. domestic), and books the visit straight into your calendar.
-
-For an electrical firm spending at your level, even a 20% lift in booked jobs usually pays for the service several times over.
-
-Worth 15 minutes next week to walk through how it works?
-
-Best,
-[Your name]`
-    },
-    sms: "Hi {first_name} — {name}'s ad spend at {tenure_months} months. We book 64% more of your leads with speed-to-lead agents. 15 min chat?",
-    call: "Hi {first_name}, I saw {name}'s Meta ad spend has been consistent for {tenure_months} months. When someone fills one of your forms, how fast is a human calling them back? We lift conversion 64% on average with speed-to-lead agents that qualify and book."
-  },
-  Alarms: {
-    email: {
-      subject: "Noticed {name}'s ad spend running {tenure_months} months",
-      body: `Hi {first_name},
-
-I noticed {name} has been spending on Meta ads for {tenure_months} months — a strong signal you've found an angle that works. But most security installers we speak to are still losing 40–60% of their leads because no one picks up fast enough when they enquire.
-
-We increase conversion rates by 64% on average with speed-to-lead agents that sit waiting on your ads. The moment someone submits a form or clicks to call, a live agent answers inside 60 seconds, fully qualifies them (property type, system preference, timeline, budget), and books the site-survey straight into your calendar.
-
-For a security firm spending at your level, even a 20% lift in booked surveys usually pays for the service several times over.
-
-Open to a 15-min walk-through next week?
-
-Best,
-[Your name]`
-    },
-    sms: "Hi {first_name} — {name}'s alarm ad spend at {tenure_months} months. We book 64% more of your leads with speed-to-lead agents. Quick chat?",
-    call: "Hi {first_name}, I saw {name}'s Meta ad spend has been consistent for {tenure_months} months. When an enquiry comes in, how fast is a human calling them back? We lift conversion 64% on average with speed-to-lead agents that qualify and book the survey."
-  },
-  Insulation: {
-    email: {
-      subject: "Noticed {name}'s ad spend running {tenure_months} months",
-      body: `Hi {first_name},
-
-I noticed {name} has been spending on Meta ads for {tenure_months} months — a rare run in an insulation market this crowded with grant-eligible messaging. But most insulation installers we speak to are still losing a huge chunk of their leads to grant-chasers and slow callbacks.
-
-We increase conversion rates by 64% on average with speed-to-lead agents that sit waiting on your ads. The moment someone submits a form or clicks to call, a live agent picks up inside 60 seconds, fully qualifies them (property type, EPC, grant eligibility, homeowner vs. tenant, timeline), and books the survey straight into your calendar.
-
-For an insulation installer spending at your level, even a 20% lift in qualified booked surveys usually pays for the service several times over.
-
-Worth 15 minutes next week to walk through how it works?
-
-Best,
-[Your name]`
-    },
-    sms: "Hi {first_name} — {name}'s insulation ad spend at {tenure_months} months. We book 64% more of your leads with speed-to-lead agents. Chat?",
-    call: "Hi {first_name}, I saw {name}'s Meta ad spend has been consistent for {tenure_months} months. When an enquiry comes in, how fast is a human calling them back and qualifying them? We lift conversion 64% on average with speed-to-lead agents that book the survey."
-  },
-  'Windows & Doors': {
-    email: {
-      subject: "Noticed {name}'s ad spend running {tenure_months} months",
-      body: `Hi {first_name},
-
-I noticed {name} has been spending on Meta ads for {tenure_months} months — unusual for windows & doors, because most of your competitors pause over winter. But most window installers we speak to are still losing 40–60% of their ad leads to slow callbacks and weak qualification.
-
-We increase conversion rates by 64% on average with speed-to-lead agents that sit waiting on your ads. The moment someone submits a form or clicks to call, a live agent picks up inside 60 seconds, fully qualifies them (property type, number of openings, material preference, timeline, budget), and books the survey straight into your calendar.
-
-For a window installer spending at your level, even a 20% lift in booked surveys usually pays for the service several times over.
-
-Open to 15 minutes next week to walk through how it works?
-
-Best,
-[Your name]`
-    },
-    sms: "Hi {first_name} — {name}'s windows ad spend at {tenure_months} months. We book 64% more of your leads with speed-to-lead agents. Chat?",
-    call: "Hi {first_name}, I saw {name}'s Meta ad spend has been consistent for {tenure_months} months. When an enquiry comes in, how fast is a human calling them back? We lift conversion 64% on average with speed-to-lead agents that qualify and book the survey."
-  },
-  Drainage: {
-    email: {
-      subject: "Noticed {name}'s ad spend running {tenure_months} months",
-      body: `Hi {first_name},
-
-I noticed {name} has been spending on Meta ads for {tenure_months} months — a strong baseline in drainage, where most firms pause and restart based on weather. But most drainage companies we speak to are still losing high-intent emergency leads because no one picks up fast enough when a blocked drain can't wait.
-
-We increase conversion rates by 64% on average with speed-to-lead agents that sit waiting on your ads. The moment someone submits a form or clicks to call, a live agent answers inside 60 seconds, fully qualifies them (domestic vs. commercial, emergency vs. planned, postcode, budget), and books the visit straight into your calendar.
-
-For a drainage firm spending at your level, even a 20% lift in booked jobs usually pays for the service several times over.
-
-Worth a 15-min call next week to walk through how it works?
-
-Best,
-[Your name]`
-    },
-    sms: "Hi {first_name} — {name}'s drainage ad spend at {tenure_months} months. We book 64% more of your leads with speed-to-lead agents. Chat?",
-    call: "Hi {first_name}, I saw {name}'s Meta ad spend has been consistent for {tenure_months} months. When an emergency enquiry comes in, how fast is a human calling them back? We lift conversion 64% on average with speed-to-lead agents that qualify and book."
-  },
-  Pumps: {
-    email: {
-      subject: "Noticed {name}'s ad spend running {tenure_months} months",
-      body: `Hi {first_name},
-
-I noticed {name} has been spending on Meta ads for {tenure_months} months — good consistency in a category where most firms rely purely on trade referrals. But most pump installers we speak to are still losing 50%+ of their leads between the click and the site-survey.
-
-We increase conversion rates by 64% on average with speed-to-lead agents that sit waiting on your ads. The moment someone submits a form or clicks to call, a live agent picks up inside 60 seconds, fully qualifies them (pump type, property, existing system, timeline, budget), and books the site-survey straight into your calendar.
-
-For a pump installer spending at your level, even a 20% lift in booked surveys usually pays for the service several times over.
-
-Open to 15 minutes next week to walk through how it works?
-
-Best,
-[Your name]`
-    },
-    sms: "Hi {first_name} — {name}'s pump ad spend at {tenure_months} months. We book 64% more of your leads with speed-to-lead agents. Quick chat?",
-    call: "Hi {first_name}, I saw {name}'s Meta ad spend has been consistent for {tenure_months} months. When an enquiry comes in, how fast is a human calling them back and qualifying them for a survey? We lift conversion 64% on average with speed-to-lead agents that book the visit."
-  },
-  default: {
-    email: {
-      subject: "Noticed {name}'s ad spend running {tenure_months} months",
-      body: `Hi {first_name},
-
-I noticed {name} has been spending on Meta ads for {tenure_months} months — that kind of sustained spend usually means you're seeing returns, but most businesses in your space are still losing 40–60% of their ad leads between the click and the booked job.
-
-We increase conversion rates by 64% on average with speed-to-lead agents that sit waiting on your ads. The moment someone submits a form or clicks to call, a live agent picks up inside 60 seconds, fully qualifies them against your criteria (postcode, job type, timeline, budget, intent), and books the appointment straight into your calendar.
-
-For a {sector} company spending at your level, even a 20% lift in booked jobs usually pays for the service several times over.
-
-Worth 15 minutes next week to walk through how it works?
-
-Best,
-[Your name]`
-    },
-    sms: "Hi {first_name} — {name}'s ad spend at {tenure_months} months. We book 64% more of your leads with speed-to-lead agents. 15 min chat?",
-    call: "Hi {first_name}, I saw {name}'s Meta ad spend has been consistent for {tenure_months} months. When someone fills one of your forms, how fast is a human calling them back? We lift conversion 64% on average with speed-to-lead agents that qualify and book."
-  }
-};
-
-/* ── LocalStorage helpers ── */
-const LS_STATUS_KEY = 'adwatch_status_v1';
-
-function loadStatus() {
-  try {
-    const raw = localStorage.getItem(LS_STATUS_KEY);
-    if (!raw) return {};
-    return JSON.parse(raw);
-  } catch(e) { return {}; }
-}
-
-function saveStatus(obj) {
-  try {
-    localStorage.setItem(LS_STATUS_KEY, JSON.stringify(obj));
-  } catch(e) { console.warn('Could not save status:', e); }
-}
-
-function getStatusFor(id) {
-  const all = loadStatus();
-  return all[id] || { status: 'not_contacted', notes: '', lastUpdated: null, contactedAt: null };
-}
-
-function setStatusFor(id, patch) {
-  const all = loadStatus();
-  const prev = all[id] || { status: 'not_contacted', notes: '', lastUpdated: null, contactedAt: null };
-  const next = { ...prev, ...patch, lastUpdated: new Date().toISOString() };
-  // If status changed to "contacted" or later for the first time, stamp contactedAt
-  if (patch.status && ['contacted','replied','booked','passed'].includes(patch.status) && !prev.contactedAt) {
-    next.contactedAt = new Date().toISOString();
-  }
-  all[id] = next;
-  saveStatus(all);
-  // Fire-and-forget push to Worker so the other device sees it.
-  pushRemoteStatus(id, patch);
-  return { prev, next };
-}
-
-/* ── Remote CRM sync (Cloudflare Worker + KV) ─────────────────────
-   Dashboard source-of-truth is localStorage (keeps it working offline).
-   Worker is the cross-device sync layer.
-     - On load: fetchRemoteStatus() → merge newer remote records into local.
-     - On any change: pushRemoteStatus() (fire-and-forget).
-     - Conflict resolution: last-write-wins by updatedAt (Worker) vs
-       lastUpdated (local, ISO string). Ties go to remote.
-     - If the Worker is unreachable, every action still works locally.
-*/
-const WORKER_URL = 'https://asw-status.lucky-voice-f07e.workers.dev/';
-let _syncStatusEl = null;
-
-function setSyncIndicator(state, detail) {
-  // state: 'ok' | 'warn' | 'syncing' | null
-  if (!_syncStatusEl) _syncStatusEl = document.getElementById('sync-indicator');
-  if (!_syncStatusEl) return;
-  if (!state) { _syncStatusEl.textContent = ''; _syncStatusEl.className = 'sync-indicator'; return; }
-  const dot = state === 'ok' ? '●' : state === 'warn' ? '●' : '◐';
-  _syncStatusEl.textContent = dot + ' ' + (detail || '');
-  _syncStatusEl.className = 'sync-indicator sync-' + state;
-}
-
-async function fetchRemoteStatus() {
-  try {
-    const r = await fetch(WORKER_URL, { cache: 'no-store' });
-    if (!r.ok) return null;
-    const { state } = await r.json();
-    return state || {};
-  } catch(e) { return null; }
-}
-
-async function pushRemoteStatus(companyId, patch) {
-  const body = { companyId: String(companyId) };
-  if (patch.status !== undefined) body.status = patch.status;
-  if (patch.notes !== undefined)  body.notes  = patch.notes;
-  // Nothing to send if the patch has neither field.
-  if (body.status === undefined && body.notes === undefined) return true;
-  try {
-    const r = await fetch(WORKER_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body)
-    });
-    if (r.ok) setSyncIndicator('ok', 'Synced');
-    else      setSyncIndicator('warn', 'Local only');
-    return r.ok;
-  } catch(e) {
-    setSyncIndicator('warn', 'Offline');
-    return false;
-  }
-}
-
-async function syncFromRemote({ silent } = {}) {
-  if (!silent) setSyncIndicator('syncing', 'Syncing…');
-  const remote = await fetchRemoteStatus();
-  if (remote === null) {
-    setSyncIndicator('warn', 'Offline');
-    return false;
-  }
-  const local = loadStatus();
-  let changed = false;
-  for (const [id, rec] of Object.entries(remote)) {
-    const prev = local[id];
-    const prevTs = prev?.lastUpdated ? new Date(prev.lastUpdated).getTime() : 0;
-    const remoteTs = Number(rec.updatedAt) || 0;
-    if (!prev || remoteTs > prevTs) {
-      const merged = {
-        status: rec.status || 'not_contacted',
-        notes:  rec.notes  || '',
-        lastUpdated: new Date(remoteTs || Date.now()).toISOString(),
-        contactedAt: prev?.contactedAt || null,
-      };
-      // Backfill contactedAt if status implies it and we don't have one yet.
-      if (!merged.contactedAt && ['contacted','replied','booked','passed'].includes(merged.status)) {
-        merged.contactedAt = merged.lastUpdated;
-      }
-      local[id] = merged;
-      changed = true;
-    }
-  }
-  if (changed) saveStatus(local);
-  setSyncIndicator('ok', 'Synced');
-  return changed;
-}
-
-// Poll for remote changes on tab focus + every 60s, so the VA on one device
-// sees Dave's changes within a minute (and vice versa).
-let _syncTimer = null;
-function startSyncHeartbeat() {
-  if (_syncTimer) return;
-  _syncTimer = setInterval(async () => {
-    const changed = await syncFromRemote({ silent: true });
-    if (changed) render();
-  }, 60000);
-  window.addEventListener('focus', async () => {
-    const changed = await syncFromRemote({ silent: true });
-    if (changed) render();
-  });
-}
-
-/* ── Undo state ── */
-let lastUndoable = null; // { companyId, prevRecord }
-
-function showToast(msg) {
-  document.getElementById('toast-msg').textContent = msg;
-  const toast = document.getElementById('toast');
-  toast.classList.add('show');
-  clearTimeout(toast._timer);
-  toast._timer = setTimeout(() => toast.classList.remove('show'), 5000);
-}
-
-function undoStatus() {
-  if (!lastUndoable) return;
-  const { companyId, prevRecord } = lastUndoable;
-  const all = loadStatus();
-  if (prevRecord === null) {
-    delete all[companyId];
-    // Worker has no DELETE; write back "not_contacted"/empty so the next
-    // sync doesn't resurrect the undone state.
-    pushRemoteStatus(companyId, { status: 'not_contacted', notes: '' });
-  } else {
-    all[companyId] = prevRecord;
-    pushRemoteStatus(companyId, { status: prevRecord.status, notes: prevRecord.notes || '' });
-  }
-  saveStatus(all);
-  lastUndoable = null;
-  document.getElementById('toast').classList.remove('show');
-  render();
-}
-
 /* ── State ── */
-let COMPANIES = [];
+let COMPANIES = [...SAMPLE_DATA];
 let activeSector = 'All';
-let modalCompany = null;
-let modalTemplateKind = 'email';
-
-/* ── Embedded fallback sample ── */
-const SAMPLE_DATA = [];  // will rarely be used — data/companies.json is the source
+let currentPrompt = '';
 
 /* ── Load data ── */
 async function loadData() {
@@ -973,23 +2840,12 @@ async function loadData() {
       const json = await resp.json();
       if (Array.isArray(json) && json.length > 0) {
         COMPANIES = json;
-      } else {
-        showWarnBanner("data/companies.json was empty. Contact whoever maintains the feed.");
+        console.log('Loaded', json.length, 'companies from data/companies.json');
       }
-    } else {
-      showWarnBanner("Could not load data/companies.json (HTTP " + resp.status + "). Showing the last known dataset.");
     }
   } catch(e) {
-    showWarnBanner("Offline or data file missing. Showing embedded sample only.");
-    COMPANIES = [...SAMPLE_DATA];
+    console.log('Using embedded data (data/companies.json not found).');
   }
-
-  if (COMPANIES.length === 0) COMPANIES = [...SAMPLE_DATA];
-
-  // Derive `region` if missing (so filters work even if feed doesn't set it)
-  COMPANIES.forEach(c => {
-    if (!c.region) c.region = (c.country === 'IE') ? 'ireland' : 'other';
-  });
 
   // Set last updated timestamp
   const el = document.getElementById('last-updated');
@@ -999,79 +2855,23 @@ async function loadData() {
   });
 
   initTabs();
-  renderTodayBanner();
   render();
-
-  // Pull latest CRM state from the Worker (cross-device sync) then re-render.
-  // Runs async so the first paint isn't blocked on the network.
-  syncFromRemote().then(changed => {
-    if (changed) { initTabs(); renderTodayBanner(); render(); }
-    startSyncHeartbeat();
-  });
-}
-
-function showWarnBanner(msg) {
-  const el = document.getElementById('warn-banner');
-  el.innerHTML = `<div class="warn-banner">⚠ ${escHtml(msg)}</div>`;
 }
 
 /* ── Tabs ── */
 function initTabs() {
-  const todayCount = todayLeadsCount();
-  const items = [
-    `<div class="tab today-tab${activeSector === '__today__' ? ' active' : ''}" onclick="setSector('__today__')">Today${todayCount > 0 ? `<span class="tab-count">(${todayCount})</span>` : ''}</div>`,
-    ...SECTORS.map(s =>
-      `<div class="tab${s === activeSector ? ' active' : ''}" onclick="setSector('${s}')">${s}</div>`
-    )
-  ];
-  document.getElementById('tabs').innerHTML = items.join('');
+  document.getElementById('tabs').innerHTML = SECTORS.map(s =>
+    `<div class="tab${s === activeSector ? ' active' : ''}" onclick="setSector('${s}')">${s}</div>`
+  ).join('');
 }
 
 function setSector(s) { activeSector = s; initTabs(); render(); }
 
-/* ── Today view logic ── */
-function todayLeadsCount() {
-  const all = loadStatus();
-  const now = Date.now();
-  let count = 0;
-  for (const c of COMPANIES) {
-    const s = all[c.id];
-    if (!s) continue;
-    // Due for follow-up: status=contacted, 3+ days since last update, not passed/booked
-    if (s.status === 'contacted' && s.lastUpdated) {
-      const age = (now - Date.parse(s.lastUpdated)) / (1000 * 60 * 60 * 24);
-      if (age >= 3) count++;
-    }
-  }
-  return count;
-}
-
-function renderTodayBanner() {
-  const count = todayLeadsCount();
-  const banner = document.getElementById('today-banner');
-  if (count > 0) {
-    banner.style.display = 'flex';
-    banner.innerHTML = `
-      <span>📋</span>
-      <span><strong>${count}</strong> ${count === 1 ? 'lead is' : 'leads are'} due for follow-up today (contacted 3+ days ago).</span>
-      <a onclick="setSector('__today__')">View</a>`;
-  } else {
-    banner.style.display = 'none';
-  }
-}
-
-function companyNeedsFollowupToday(c) {
-  const s = getStatusFor(c.id);
-  if (s.status !== 'contacted' || !s.lastUpdated) return false;
-  const age = (Date.now() - Date.parse(s.lastUpdated)) / (1000 * 60 * 60 * 24);
-  return age >= 3;
-}
-
 /* ── Helpers ── */
-function scoreClass(s) { return s >= 70 ? 'score-hot' : s >= 55 ? 'score-warm' : 'score-watch'; }
-function scoreLabel(s) { return s >= 70 ? 'Hot' : s >= 55 ? 'Warm' : 'Watch'; }
-function sparkColor(s) { return s >= 70 ? '#1D9E75' : s >= 55 ? '#BA7517' : '#888780'; }
-function pctClass(s)   { return s >= 70 ? '' : s >= 55 ? ' warm' : ' watch'; }
+function scoreClass(s) { return s >= 85 ? 'score-hot' : s >= 65 ? 'score-warm' : 'score-watch'; }
+function scoreLabel(s) { return s >= 85 ? 'Hot' : s >= 65 ? 'Warm' : 'Watch'; }
+function sparkColor(s) { return s >= 85 ? '#1D9E75' : s >= 65 ? '#BA7517' : '#888780'; }
+function pctClass(s)   { return s >= 85 ? '' : s >= 65 ? ' warm' : ' watch'; }
 
 function pct(data) {
   if (!data || data.length < 2) return 0;
@@ -1083,36 +2883,15 @@ function pct(data) {
 
 function staffLabel(s) {
   const n = parseInt(s);
-  if (isNaN(n)) return s || '';
+  if (isNaN(n)) return s;
+  if (n >= 50) return '50+ staff';
+  if (n >= 20) return `${n} staff`;
   return `${n} staff`;
 }
 
 function platformPill(key, active) {
-  const labels = { google: 'Google', meta: 'Meta', facebook: 'Facebook', instagram: 'Instagram', tiktok: 'TikTok' };
-  if (!labels[key]) return '';
+  const labels = { google: 'Google', meta: 'Meta', tiktok: 'TikTok' };
   return `<span class="platform-pill${active ? ' active' : ''}">${labels[key]}</span>`;
-}
-
-function firstName(name) {
-  if (!name || name === 'Unknown') return 'there';
-  return String(name).trim().split(/\s+/)[0];
-}
-
-function fillTemplate(str, c) {
-  return String(str || '')
-    .replaceAll('{name}', c.name)
-    .replaceAll('{first_name}', firstName(c.contact?.name))
-    .replaceAll('{sector}', c.sector)
-    .replaceAll('{tenure_months}', String(c.tenure_months || '?'));
-}
-
-function templateFor(sector) {
-  return TEMPLATES[sector] || TEMPLATES.default;
-}
-
-function daysSince(iso) {
-  if (!iso) return null;
-  return Math.floor((Date.now() - Date.parse(iso)) / (1000 * 60 * 60 * 24));
 }
 
 /* ── Sparklines ── */
@@ -1128,207 +2907,375 @@ function drawSpark(id, data, color) {
   svg.innerHTML = `<polyline points="${pts}" fill="none" stroke="${color}" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>`;
 }
 
-/* ── Status pill: cycle on change ── */
-function changeStatus(id, newStatus) {
-  const prev = loadStatus()[id] || null;
-  const { next } = setStatusFor(id, { status: newStatus });
-  lastUndoable = { companyId: id, prevRecord: prev };
-  const label = STATUS_OPTIONS.find(o => o.value === newStatus)?.label || newStatus;
-  const company = COMPANIES.find(c => c.id === id);
-  showToast(`${company?.name || 'Company'} → ${label}`);
-  renderTodayBanner();
-  initTabs();
-  render();
+/* ──────────────────────────────────────────────────────────────────
+   Manifest fetch — powers the "Copy email draft" flow
+   ──────────────────────────────────────────────────────────────────
+   The Worker publishes a manifest.json listing per-sector video URLs
+   and the featured competitor name. We fetch it once on page load and
+   use it to build outreach email drafts that match EXACTLY what the
+   Worker would send (same subject, body, video link).
+*/
+let MANIFEST = null;
+async function loadManifest() {
+  try {
+    const resp = await fetch('https://asw-video.lucky-voice-f07e.workers.dev/manifest');
+    if (resp.ok) MANIFEST = await resp.json();
+  } catch (e) { console.warn('Manifest fetch failed:', e); }
 }
 
-function toggleNotes(id) {
-  const panel = document.getElementById('notes-' + id);
-  const btn = document.getElementById('notes-btn-' + id);
-  if (!panel) return;
-  panel.classList.toggle('open');
-  if (panel.classList.contains('open')) {
-    const ta = panel.querySelector('textarea');
-    if (ta) ta.focus();
-  }
+// Dashboard sector labels → Worker sector slugs. Must match scoring.SECTOR_CONFIG
+// labels and worker/asw-video/index.js VALID_SECTORS. Alarms intentionally omitted.
+const _SECTOR_SLUG_TMP = {};  // placeholder, SECTOR_SLUG defined below
+
+// Descriptor mirrors worker/asw-video/index.js COMPETITOR_DESCRIPTOR so the
+// draft reads identically to a Worker-sent message.
+const COMPETITOR_DESCRIPTOR = {
+  solar: 'solar',
+  plumbing: 'plumbing',
+  electrical: 'electrical',
+  insulation: 'insulation',
+  windows_doors: 'windows & doors',
+  drainage: 'drainage',
+  pumps: 'heating & pump'
+};
+
+function buildEmailDraft(company) {
+  const slug = SECTOR_SLUG[company.sector];
+  if (!slug) return null;
+  const m = (MANIFEST || {})[slug];
+  if (!m || !m.url) return { error: 'No video live for this sector yet — run upload-all.mjs.' };
+
+  const featured = m.featured || 'a top competitor in your sector';
+  const sectorName = COMPETITOR_DESCRIPTOR[slug] || slug;
+  const descriptor = COMPETITOR_DESCRIPTOR[slug] || sectorName;
+  const firstName = (company.contact && company.contact.name && company.contact.name !== 'Unknown')
+    ? company.contact.name.split(/\s+/)[0]
+    : 'there';
+  const companyBit = company.name ? ` at ${company.name}` : '';
+  const likeYou = companyBit ? ` like you${companyBit}` : '';
+
+  const subject = `What ${featured} is doing with their ${sectorName} leads (45-second video)`;
+
+  // Plain-text version — fallback when the target mail client refuses HTML paste
+  const textBody =
+`Hi ${firstName},
+
+I pulled together a 45-second video showing exactly what a well-established ${descriptor} competitor — ${featured} — is doing with their paid leads right now, and what a better version of that workflow looks like.
+
+Watch it here: ${m.url}
+
+The short version: most ${sectorName} advertisers in the UK and Ireland still let leads sit for 24+ hours after the form submit. The video shows a side-by-side of what that looks like vs an instant AI assistant that qualifies and books the survey in under a minute.
+
+We built the second half for installers${likeYou}. If you'd like a version of the same workflow running on your site this week, reply "send me one" and I'll spin up a demo with your branding and lead scenarios.
+
+Dave O'Dowd
+Apex Emerald AI
+apex-emerald-ai.com`;
+
+  // HTML version — matches worker/asw-video/index.js buildEmail(). When pasted
+  // into Gmail/Apple Mail compose, the green "Watch" button renders inline.
+  const htmlBody =
+`<div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;font-size:15px;line-height:1.5;color:#0f172a;max-width:620px;">
+<p>Hi ${firstName},</p>
+<p>I pulled together a 45-second video showing exactly what a well-established ${descriptor} competitor — <strong>${featured}</strong> — is doing with their paid leads right now, and what a better version of that workflow looks like.</p>
+<p style="margin:24px 0;"><a href="${m.url}" style="background:#10b981;color:#fff;text-decoration:none;padding:12px 20px;border-radius:8px;font-weight:600;display:inline-block;">▶ Watch the 45-second video</a></p>
+<p>The short version: most ${sectorName} advertisers in the UK and Ireland still let leads sit for 24+ hours after the form submit. The video shows a side-by-side of what that looks like vs an instant AI assistant that qualifies and books the survey in under a minute.</p>
+<p>We built the second half for installers${likeYou}. If you'd like a version of the same workflow running on your site this week, reply <em>"send me one"</em> and I'll spin up a demo with your branding and lead scenarios.</p>
+<p>Dave O'Dowd<br/>Apex Emerald AI<br/><a href="https://apex-emerald-ai.com" style="color:#10b981;">apex-emerald-ai.com</a></p>
+</div>`;
+
+  return { subject, textBody, htmlBody, videoUrl: m.url, mobileUrl: m.mobileUrl };
 }
 
-function saveNotes(id) {
-  const ta = document.querySelector('#notes-' + id + ' textarea');
-  if (!ta) return;
-  setStatusFor(id, { notes: ta.value });
-  const btn = document.getElementById('notes-btn-' + id);
+/* ──────────────────────────────────────────────────────────────────
+   Send video (Worker /send)
+   ──────────────────────────────────────────────────────────────────
+   Wires the dashboard directly to the Cloudflare Worker that dispatches
+   the sector-matched video email via Resend. The Worker gates /send on
+   an X-Api-Key header — we prompt Dave for it once per browser session
+   and cache it in sessionStorage (not localStorage; keys stay out of
+   persistent browser storage).
+*/
+const WORKER_URL = 'https://asw-video.lucky-voice-f07e.workers.dev/send';
+const DEFAULT_BCC = 'janalei@apexemeraldai.com';
+
+// Dashboard sector labels → Worker sector slugs. Must match scoring.SECTOR_CONFIG
+// labels and worker/asw-video/index.js VALID_SECTORS. Alarms intentionally omitted.
+const SECTOR_SLUG = {
+  'Solar':             'solar',
+  'Plumbing':          'plumbing',
+  'Electrical':        'electrical',
+  'Insulation':        'insulation',
+  'Windows & Doors':   'windows_doors',
+  'Drainage':          'drainage',
+  'Pumps':             'pumps'
+};
+
+let _cachedApiKey = null;
+function getApiKey() {
+  if (_cachedApiKey) return _cachedApiKey;
+  try { _cachedApiKey = sessionStorage.getItem('asw_worker_key') || null; } catch (e) {}
+  if (_cachedApiKey) return _cachedApiKey;
+  const entered = prompt('Worker API key (one-time this session):');
+  if (!entered) return null;
+  _cachedApiKey = entered.trim();
+  try { sessionStorage.setItem('asw_worker_key', _cachedApiKey); } catch (e) {}
+  return _cachedApiKey;
+}
+
+function _setSendButtonState(id, { text, disabled, cls, statusText, statusCls }) {
+  const btn = document.getElementById(`send-btn-${id}`);
+  const status = document.getElementById(`send-status-${id}`);
   if (btn) {
-    btn.classList.toggle('has-notes', ta.value.trim().length > 0);
-    btn.textContent = ta.value.trim().length > 0 ? '📝 Notes' : '＋ Notes';
+    if (text !== undefined) btn.textContent = text;
+    if (disabled !== undefined) btn.disabled = disabled;
+    btn.classList.remove('sent', 'skipped');
+    if (cls) btn.classList.add(cls);
   }
-  const meta = document.getElementById('notes-meta-' + id);
-  if (meta) meta.textContent = 'Saved just now';
+  if (status) {
+    status.className = 'send-status' + (statusCls ? ' ' + statusCls : '');
+    status.textContent = statusText || '';
+  }
 }
 
-/* ── Template modal ── */
-function openTemplates(companyId) {
+async function sendVideo(companyId) {
   const c = COMPANIES.find(x => x.id === companyId);
   if (!c) return;
-  modalCompany = c;
-  modalTemplateKind = 'email';
-  renderTemplateModal();
+  const slug = SECTOR_SLUG[c.sector];
+  if (!slug) {
+    alert(`Can't map sector "${c.sector}" to a Worker slug. Nothing sent.`);
+    return;
+  }
+
+  // Most advertisers arrive without an enriched contact email — until the
+  // enrichment pipeline is wired up, prompt for one at send-time. Email
+  // entered here is used for THIS send only (not persisted to companies.json).
+  let toEmail = (c.contact && c.contact.email) ? c.contact.email : null;
+  if (!toEmail) {
+    toEmail = prompt(`No email on file for ${c.name}. Paste the prospect's email to send the ${c.sector} video:`);
+    if (!toEmail) return;
+    toEmail = toEmail.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(toEmail)) {
+      alert(`That doesn't look like a valid email address: ${toEmail}`);
+      return;
+    }
+  }
+
+  const key = getApiKey();
+  if (!key) return;
+
+  const firstName = (c.contact && c.contact.name && c.contact.name !== 'Unknown')
+    ? c.contact.name.split(/\s+/)[0]
+    : '';
+  const confirmMsg =
+    `Send the ${c.sector} video to:\n\n` +
+    `  ${toEmail}\n` +
+    `  (${c.name})\n\n` +
+    `BCC: ${DEFAULT_BCC}\n\n` +
+    `Worker will refuse a re-send within 60 days. Proceed?`;
+  if (!confirm(confirmMsg)) return;
+
+  // Stash for use below
+  c.__resolvedEmail = toEmail;
+
+  _setSendButtonState(companyId, { text: 'Sending…', disabled: true, statusText: '' });
+
+  try {
+    const resp = await fetch(WORKER_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-Api-Key': key },
+      body: JSON.stringify({
+        sector: slug,
+        toEmail: c.__resolvedEmail,
+        toName: (c.contact && c.contact.name && c.contact.name !== 'Unknown') ? c.contact.name : (firstName || 'there'),
+        toCompany: c.name,
+        bccEmail: DEFAULT_BCC
+      })
+    });
+    const body = await resp.json().catch(() => ({}));
+
+    if (resp.status === 401) {
+      _cachedApiKey = null;
+      try { sessionStorage.removeItem('asw_worker_key'); } catch (e) {}
+      _setSendButtonState(companyId, {
+        text: 'Send video', disabled: false,
+        statusText: 'Auth failed — click again to re-enter key', statusCls: 'err'
+      });
+      return;
+    }
+    if (body && body.skipped) {
+      _setSendButtonState(companyId, {
+        text: 'Already sent', disabled: true, cls: 'skipped',
+        statusText: 'Locked out for 60 days per (sector, recipient)', statusCls: 'skipped'
+      });
+      return;
+    }
+    if (body && body.ok) {
+      const shortId = (body.resendId || '').slice(0, 8);
+      _setSendButtonState(companyId, {
+        text: 'Sent ✓', disabled: true, cls: 'sent',
+        statusText: 'Delivered' + (shortId ? ' · ' + shortId : ''), statusCls: 'ok'
+      });
+      return;
+    }
+    _setSendButtonState(companyId, {
+      text: 'Send video', disabled: false,
+      statusText: 'Failed: ' + ((body && body.error) || resp.status), statusCls: 'err'
+    });
+  } catch (err) {
+    _setSendButtonState(companyId, {
+      text: 'Send video', disabled: false,
+      statusText: 'Network error: ' + (err && err.message || err), statusCls: 'err'
+    });
+  }
+}
+
+/* ── Prompts ── */
+function emailPrompt(c) {
+  return `Draft a cold outreach email to ${c.contact.name} at ${c.name}, a ${c.sector} company in ${c.region_label} spending on ${(c.platforms||[]).join(', ')} ads for ${c.tenure_label}. Their audience is ${c.audience}. Keywords they bid on: ${c.keywords}. Lead with a specific observation about their ad activity. Keep it under 150 words. Subject line should reference something specific — never use a generic opener.`;
+}
+
+function sequencePrompt(c) {
+  return `Build the full 3-part outreach sequence for ${c.name}:\n\n(1) Cold email — day 1: specific opening referencing their ad activity on ${(c.platforms||[]).join(', ')}, one-sentence hook, single ask for a 15-minute call. Under 150 words.\n\n(2) LinkedIn connection request — day 3: under 300 characters, references the email you sent.\n\n(3) Call script — day 7: strong opening line proving research, 3 qualifying questions, close to book a call.\n\nDecision maker: ${c.contact.name}, ${c.contact.role}.\nCompany: ${c.sector} in ${c.region_label}, advertising on ${(c.platforms||[]).join(', ')} for ${c.tenure_label}, targeting ${c.audience}.`;
+}
+
+/* ── Prompt modal ── */
+function sendPrompt(type, companyId) {
+  const c = COMPANIES.find(x => x.id === companyId);
+  if (!c) return;
+  const prompt = type === 'email' ? emailPrompt(c) : sequencePrompt(c);
+  currentPrompt = prompt;
+  window._currentHtml = null;  // AI prompts are plain-text only
+  document.getElementById('modal-title').textContent = type === 'email' ? 'Email draft prompt' : '3-part outreach sequence prompt';
+  document.getElementById('modal-body').textContent = prompt;
+  document.getElementById('btn-copy').textContent = 'Copy prompt';
+  document.getElementById('btn-copy').classList.remove('copied');
   document.getElementById('modal-overlay').classList.add('open');
 }
 
-function renderTemplateModal() {
-  if (!modalCompany) return;
-  const c = modalCompany;
-  const tmpl = templateFor(c.sector);
-
-  document.getElementById('modal-title').textContent = `Outreach templates — ${c.name}`;
-  document.getElementById('modal-sub').textContent = `${c.sector} · ${c.region_label || c.country} · ${c.tenure_label}`;
-
-  document.getElementById('modal-tmpl-tabs').innerHTML = `
-    <div class="tmpl-tabs">
-      <div class="tab-sm${modalTemplateKind==='email' ? ' active' : ''}" onclick="setTemplateKind('email')">Email</div>
-      <div class="tab-sm${modalTemplateKind==='sms' ? ' active' : ''}" onclick="setTemplateKind('sms')">SMS</div>
-      <div class="tab-sm${modalTemplateKind==='call' ? ' active' : ''}" onclick="setTemplateKind('call')">Call opener</div>
-    </div>`;
-
-  let body = '';
-  if (modalTemplateKind === 'email') {
-    body = `Subject: ${fillTemplate(tmpl.email.subject, c)}\n\n${fillTemplate(tmpl.email.body, c)}`;
-  } else if (modalTemplateKind === 'sms') {
-    body = fillTemplate(tmpl.sms, c);
-  } else {
-    body = fillTemplate(tmpl.call, c);
+/* ── Ready-to-send email draft ──
+   Opens the same modal but populates it with the EXACT email body the Worker
+   would send for this sector. VA copies, opens their mail client, pastes into
+   a new message, types the verified recipient address, hits send.
+*/
+function showEmailDraft(companyId) {
+  const c = COMPANIES.find(x => x.id === companyId);
+  if (!c) return;
+  const draft = buildEmailDraft(c);
+  if (!draft) {
+    alert(`Can't build a draft — sector "${c.sector}" has no Worker mapping.`);
+    return;
   }
+  if (draft.error) {
+    alert(draft.error);
+    return;
+  }
+  // Stash the plain-text version for the fallback copy path. The rich version
+  // lives on window._currentHtml so copyPrompt() can put both MIME types on
+  // the clipboard (Gmail/Apple Mail then paste the styled button intact).
+  currentPrompt = `SUBJECT: ${draft.subject}\n\n${draft.textBody}`;
+  window._currentHtml = draft.htmlBody;
+  window._currentSubject = draft.subject;
 
-  document.getElementById('modal-body').textContent = body;
+  document.getElementById('modal-title').textContent = `Email draft — ${c.name}`;
+  // Render the HTML preview so Dave/VA see the actual formatted email
+  // (including the green Watch button) before copying.
+  document.getElementById('modal-body').innerHTML =
+    `<div style="font-size:12px;color:#696860;margin-bottom:8px;">SUBJECT:</div>
+     <div style="font-weight:600;margin-bottom:16px;padding:6px 10px;background:#f7f6f3;border-radius:6px;">${escHtml(draft.subject)}</div>
+     <div style="font-size:12px;color:#696860;margin-bottom:8px;">BODY (preview — will paste with button into Gmail):</div>
+     <div style="border:1px solid #e8e7e4;border-radius:6px;padding:16px;background:#fff;">${draft.htmlBody}</div>`;
+  document.getElementById('btn-copy').textContent = 'Copy email';
+  document.getElementById('btn-copy').classList.remove('copied');
+  document.getElementById('modal-overlay').classList.add('open');
 }
-
-function setTemplateKind(k) { modalTemplateKind = k; renderTemplateModal(); }
 
 function closeModal(event) {
   if (event.target === document.getElementById('modal-overlay')) closeModalDirect();
 }
-function closeModalDirect() { document.getElementById('modal-overlay').classList.remove('open'); }
+function closeModalDirect() {
+  document.getElementById('modal-overlay').classList.remove('open');
+}
 
-async function copyModalBody() {
-  const text = document.getElementById('modal-body').textContent;
+async function copyPrompt() {
+  const btn = document.getElementById('btn-copy');
+  const html = window._currentHtml;
   try {
-    await navigator.clipboard.writeText(text);
-    const btn = document.getElementById('btn-copy');
+    if (html && typeof ClipboardItem !== 'undefined' && navigator.clipboard && navigator.clipboard.write) {
+      // Rich copy — Gmail/Apple Mail paste this with the green button intact.
+      const item = new ClipboardItem({
+        'text/html': new Blob([html], { type: 'text/html' }),
+        'text/plain': new Blob([currentPrompt], { type: 'text/plain' })
+      });
+      await navigator.clipboard.write([item]);
+    } else {
+      // Fallback: plain-text only (AI prompts, or browsers without ClipboardItem)
+      await navigator.clipboard.writeText(currentPrompt);
+    }
     btn.textContent = '✓ Copied';
     btn.classList.add('copied');
-    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
-  } catch(e) { console.error('Copy failed:', e); }
-}
-
-/* ── Changelog modal ── */
-function openChangelog() { document.getElementById('changelog-overlay').classList.add('open'); }
-function closeChangelog(event) {
-  if (event.target === document.getElementById('changelog-overlay')) closeChangelogDirect();
-}
-function closeChangelogDirect() { document.getElementById('changelog-overlay').classList.remove('open'); }
-
-/* ── Contact chip rendering ── */
-function contactChips(c) {
-  const contact = c.contact || {};
-  const chips = [];
-
-  // Call
-  if (contact.phone) {
-    const telClean = String(contact.phone).replace(/[^+0-9]/g, '');
-    chips.push(`<a class="chip chip-call" href="tel:${escAttr(telClean)}" title="Call ${escAttr(contact.phone)}">📞 Call</a>`);
-  } else {
-    chips.push(`<span class="chip chip-disabled" title="Phone not yet enriched">📞 Call</span>`);
-  }
-
-  // Email — pre-filled with template subject
-  if (contact.email) {
-    const tmpl = templateFor(c.sector);
-    const subj = encodeURIComponent(fillTemplate(tmpl.email.subject, c));
-    const body = encodeURIComponent(fillTemplate(tmpl.email.body, c));
-    chips.push(`<a class="chip chip-email" href="mailto:${escAttr(contact.email)}?subject=${subj}&body=${body}" title="Email ${escAttr(contact.email)}">✉ Email</a>`);
-  } else {
-    chips.push(`<span class="chip chip-disabled" title="Email not yet enriched">✉ Email</span>`);
-  }
-
-  // Website
-  if (contact.website) {
-    const url = /^https?:/.test(contact.website) ? contact.website : `https://${contact.website}`;
-    chips.push(`<a class="chip" href="${escAttr(url)}" target="_blank" rel="noopener" title="Visit website">🌐 Site</a>`);
-  }
-
-  // Socials
-  const socials = contact.socials || {};
-  const socialLabels = { facebook: '📘 FB', instagram: '📷 IG', linkedin: '💼 LI', tiktok: '🎵 TT', youtube: '📺 YT', twitter: '🐦 X' };
-  for (const [k, v] of Object.entries(socials)) {
-    if (v && socialLabels[k]) {
-      const url = /^https?:/.test(v) ? v : `https://${v}`;
-      chips.push(`<a class="chip" href="${escAttr(url)}" target="_blank" rel="noopener" title="${socialLabels[k]}">${socialLabels[k]}</a>`);
+    setTimeout(() => {
+      btn.textContent = html ? 'Copy email' : 'Copy prompt';
+      btn.classList.remove('copied');
+    }, 2000);
+  } catch(e) {
+    console.error('Copy failed:', e);
+    // Last-ditch: try plain text
+    try {
+      await navigator.clipboard.writeText(currentPrompt);
+      btn.textContent = '✓ Copied (text only)';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = html ? 'Copy email' : 'Copy prompt'; btn.classList.remove('copied'); }, 2500);
+    } catch (e2) {
+      alert('Copy failed. Select the text in the modal and use Cmd+C manually.');
     }
   }
-
-  // LinkedIn (legacy `li` field)
-  if (!socials.linkedin && contact.li) {
-    const url = /^https?:/.test(contact.li) ? contact.li : `https://${contact.li}`;
-    chips.push(`<a class="chip" href="${escAttr(url)}" target="_blank" rel="noopener" title="LinkedIn">💼 LI</a>`);
-  }
-
-  // Outreach templates button — always available
-  chips.push(`<button class="btn-tmpl" onclick="openTemplates(${c.id})" title="Copy outreach templates">📋 Templates</button>`);
-
-  return chips.join('');
 }
 
 /* ── Render ── */
 function render() {
   const sort     = document.getElementById('sort-sel').value;
-  const statusF  = document.getElementById('status-sel').value;
-  const country  = document.getElementById('country-sel').value;
+  const region   = document.getElementById('region-sel').value;
   const platform = document.getElementById('platform-sel').value;
+  const newFilter = (document.getElementById('new-sel') || {}).value || 'all';
 
   let data = [...COMPANIES];
+  if (activeSector !== 'All') data = data.filter(c => c.sector === activeSector);
+  if (region !== 'all')       data = data.filter(c => c.region === region);
+  if (platform !== 'all')     data = data.filter(c => (c.platforms || []).includes(platform));
+  if (newFilter === 'new')        data = data.filter(c => c.is_new_this_week);
+  else if (newFilter === 'returning') data = data.filter(c => !c.is_new_this_week);
 
-  if (activeSector === '__today__') {
-    data = data.filter(companyNeedsFollowupToday);
-  } else if (activeSector !== 'All') {
-    data = data.filter(c => c.sector === activeSector);
+  // Fresh-spenders banner — always reflects the full dataset for the active sector,
+  // regardless of the new/returning filter, so the banner stays useful.
+  const bannerSlot = document.getElementById('new-banner-slot');
+  if (bannerSlot) {
+    const scoped = activeSector === 'All' ? COMPANIES : COMPANIES.filter(c => c.sector === activeSector);
+    const newCount = scoped.filter(c => c.is_new_this_week).length;
+    bannerSlot.innerHTML = newCount > 0
+      ? `<div class="new-banner"><span class="count">${newCount}</span> new advertiser${newCount === 1 ? '' : 's'} this week${activeSector === 'All' ? ' across all sectors' : ' in ' + activeSector}. Filter above to see just the fresh ones.</div>`
+      : '';
   }
 
-  if (statusF !== 'all') {
-    data = data.filter(c => getStatusFor(c.id).status === statusF);
-  }
-  if (country !== 'all') data = data.filter(c => c.country === country);
-  if (platform !== 'all') data = data.filter(c => (c.platforms || []).includes(platform));
-
-  const statusOrder = { not_contacted: 0, contacted: 1, replied: 2, booked: 3, passed: 4 };
-  if (sort === 'score')        data.sort((a, b) => (b.score||0) - (a.score||0));
-  else if (sort === 'spend')   data.sort((a, b) => (b.tenure_months||0) - (a.tenure_months||0));
-  else if (sort === 'staff')   data.sort((a, b) => (parseInt(b.staff)||0) - (parseInt(a.staff)||0));
-  else if (sort === 'status')  data.sort((a, b) =>
-    (statusOrder[getStatusFor(a.id).status] ?? 99) - (statusOrder[getStatusFor(b.id).status] ?? 99));
+  if (sort === 'score')       data.sort((a, b) => b.score - a.score);
+  else if (sort === 'spend')  data.sort((a, b) => b.tenure_months - a.tenure_months);
+  else                         data.sort((a, b) => parseInt(b.staff) - parseInt(a.staff));
 
   /* ── Metrics (always from full dataset) ── */
   const all = COMPANIES;
-  const statuses = loadStatus();
   document.getElementById('m-total').textContent = all.length;
-  document.getElementById('m-hot').textContent = all.filter(c => (c.score||0) >= 70).length;
+  document.getElementById('m-hot').textContent = all.filter(c => c.score >= 85).length;
   const avgT = all.length ? (all.reduce((s, c) => s + (c.tenure_months || 0), 0) / all.length).toFixed(1) : '0';
   document.getElementById('m-tenure').textContent = avgT + 'm';
-  const bookedCount = Object.values(statuses).filter(s => s.status === 'booked').length;
-  document.getElementById('m-booked').textContent = bookedCount;
+  document.getElementById('m-sectors').textContent = [...new Set(all.map(c => c.sector))].length;
   document.getElementById('result-count').textContent = data.length + ' companies';
 
   /* ── Cards ── */
   if (data.length === 0) {
-    let msg = 'No companies match this filter';
-    let sub = 'Try adjusting the region, status, or platform filters, or select a different sector.';
-    if (activeSector === '__today__') {
-      msg = '🎉 Inbox zero';
-      sub = "No leads are due for follow-up today. They'll show up here 3 days after you mark them Contacted.";
-    }
     document.getElementById('grid').innerHTML = `
       <div class="empty-state">
-        <h3>${escHtml(msg)}</h3>
-        <p>${escHtml(sub)}</p>
+        <h3>No companies match this filter</h3>
+        <p>Try adjusting the region or platform filters, or select a different sector tab.</p>
       </div>`;
     return;
   }
@@ -1336,64 +3283,39 @@ function render() {
   document.getElementById('grid').innerHTML = data.map(c => {
     const p = pct(c.spend);
     const pSign = p >= 0 ? '+' : '';
-    const status = getStatusFor(c.id);
-    const statusLabel = STATUS_OPTIONS.find(o => o.value === status.status)?.label || 'Not contacted';
-    const contactName = c.contact?.name || 'Unknown';
-    const isUnknown = !contactName || contactName === 'Unknown';
-    const contactRole = c.contact?.role || 'Contact unknown';
-    const hasNotes = !!(status.notes && status.notes.trim());
-
-    // Last-contact info
-    let lastContactInfo = '';
-    const days = daysSince(status.lastUpdated);
-    if (status.status === 'contacted' && days !== null) {
-      const cls = days >= 3 ? 'last-contact-info overdue' : 'last-contact-info';
-      lastContactInfo = `<span class="${cls}">Contacted ${days === 0 ? 'today' : days + 'd ago'}${days >= 3 ? ' · follow up' : ''}</span>`;
-    } else if (status.status === 'replied' && days !== null) {
-      lastContactInfo = `<span class="last-contact-info">Replied ${days === 0 ? 'today' : days + 'd ago'}</span>`;
-    } else if (status.status === 'booked') {
-      lastContactInfo = `<span class="last-contact-info" style="color: var(--color-purple); font-weight: 500;">📅 Booked</span>`;
-    }
-
-    const cardClass = [
-      'card',
-      (c.score||0) >= 70 ? 'card-hot' : '',
-      status.status === 'passed' ? 'card-passed' : '',
-      status.status === 'booked' ? 'card-booked' : '',
-    ].filter(Boolean).join(' ');
-
     return `
-<div class="${cardClass}">
+<div class="card${c.score >= 85 ? ' card-hot' : ''}">
   <div class="card-top">
-    <div class="avatar" style="background:${escAttr(c.avatarBg || '#E1F5EE')};color:${escAttr(c.avatarCol || '#085041')}">${escHtml(c.avatar || '?')}</div>
+    <div class="avatar" style="background:${c.avatarBg};color:${c.avatarCol}">${c.avatar}</div>
     <div class="card-meta">
       <div class="card-name">
         ${escHtml(c.name)}
         ${c.country === 'IE' ? '<span class="ie-badge">IE</span>' : ''}
+        ${c.is_new_this_week ? '<span class="new-badge">NEW</span>' : ''}
         ${c.hot_trigger ? `<span class="trigger-tag">${escHtml(c.hot_trigger)}</span>` : ''}
       </div>
-      <div class="card-sub">${escHtml(c.sector)} · ${escHtml(c.region_label || c.country)} · ${staffLabel(c.staff)}</div>
+      <div class="card-sub">${escHtml(c.sector)} · ${escHtml(c.region_label)} · ${staffLabel(c.staff)}</div>
     </div>
-    <div class="score-badge ${scoreClass(c.score||0)}">${scoreLabel(c.score||0)} ${c.score||0}</div>
+    <div class="score-badge ${scoreClass(c.score)}">${scoreLabel(c.score)} ${c.score}</div>
   </div>
 
   <div class="card-body">
     <div class="info-block">
       <div class="info-label">Ad tenure</div>
-      <div class="info-val">${escHtml(c.tenure_label || '—')}</div>
+      <div class="info-val">${escHtml(c.tenure_label)}</div>
     </div>
     <div class="info-block">
       <div class="info-label">Audience</div>
-      <div class="info-val" style="font-size:11px">${escHtml(c.audience || '—')}</div>
+      <div class="info-val" style="font-size:11px">${escHtml(c.audience)}</div>
     </div>
     <div class="info-block">
       <div class="info-label">Top keywords</div>
-      <div class="info-val" style="font-size:11px">${escHtml(c.keywords || '—')}</div>
+      <div class="info-val" style="font-size:11px">${escHtml(c.keywords)}</div>
     </div>
   </div>
 
   <div class="platforms">
-    ${['google','meta','facebook','instagram','tiktok'].map(p => platformPill(p, (c.platforms||[]).includes(p))).filter(Boolean).join('')}
+    ${['google','meta','tiktok'].map(p => platformPill(p, (c.platforms||[]).includes(p))).join('')}
   </div>
 
   <div class="sparkline-row">
@@ -1401,43 +3323,33 @@ function render() {
     <div class="sparkline-wrap">
       <svg id="spk-${c.id}" viewBox="0 0 120 28" preserveAspectRatio="none"></svg>
     </div>
-    <span class="sparkline-pct${pctClass(c.score||0)}">${pSign}${p}%</span>
+    <span class="sparkline-pct${pctClass(c.score)}">${pSign}${p}%</span>
   </div>
 
   <div class="contact-row">
     <div class="contact-info">
-      <div class="contact-name${isUnknown ? ' unknown' : ''}">${escHtml(contactName)}</div>
-      <div class="contact-role">${escHtml(contactRole)}</div>
+      <div class="contact-name">${escHtml(c.contact.name)}</div>
+      <div class="contact-role">${escHtml(c.contact.role)}</div>
     </div>
-    <div class="chips">
-      ${contactChips(c)}
+    <div class="contact-links">
+      <button class="btn-email" onclick="showEmailDraft(${c.id})" title="Open the ready-to-send email body for ${escHtml(c.sector)} — copy + paste into Gmail">Copy email</button>
+      <button class="btn-reach" onclick="sendPrompt('sequence', ${c.id})">Reach out ↗</button>
+      <button id="send-btn-${c.id}" class="btn-send-video" onclick="sendVideo(${c.id})" title="${c.contact && c.contact.email ? 'Send the ' + escHtml(c.sector) + ' video to ' + escHtml(c.contact.email) : 'Prompts for an email — not enriched yet'}">Send video${c.contact && c.contact.email ? '' : ' …'}</button>
     </div>
   </div>
-
-  <div class="status-row">
-    <select class="status-select status-${status.status}" onchange="changeStatus(${c.id}, this.value)">
-      ${STATUS_OPTIONS.map(o => `<option value="${o.value}"${o.value === status.status ? ' selected' : ''}>${o.label}</option>`).join('')}
-    </select>
-    <button class="btn-notes${hasNotes ? ' has-notes' : ''}" id="notes-btn-${c.id}" onclick="toggleNotes(${c.id})">${hasNotes ? '📝 Notes' : '＋ Notes'}</button>
-    ${lastContactInfo}
-  </div>
-
-  <div class="notes-panel" id="notes-${c.id}">
-    <textarea placeholder="Private notes — saved automatically (to this browser). Call outcomes, objections, follow-up timing, etc." oninput="saveNotes(${c.id})">${escHtml(status.notes || '')}</textarea>
-    <div class="notes-meta" id="notes-meta-${c.id}">${status.lastUpdated ? 'Last saved ' + new Date(status.lastUpdated).toLocaleString('en-GB') : 'Not yet saved'}</div>
-  </div>
+  <div id="send-status-${c.id}" class="send-status"></div>
 </div>`;
   }).join('');
 
   // Draw sparklines after DOM update
   requestAnimationFrame(() => {
-    data.forEach(c => drawSpark(c.id, c.spend, sparkColor(c.score||0)));
+    data.forEach(c => drawSpark(c.id, c.spend, sparkColor(c.score)));
   });
 }
 
-/* ── XSS guards ── */
+/* ── XSS guard ── */
 function escHtml(str) {
-  if (str === null || str === undefined) return '';
+  if (!str) return '';
   return String(str)
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
@@ -1445,18 +3357,10 @@ function escHtml(str) {
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#39;');
 }
-function escAttr(str) { return escHtml(str); }
 
 /* ── Boot ── */
 loadData();
-
-// Keyboard shortcuts
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') {
-    closeModalDirect();
-    closeChangelogDirect();
-  }
-});
+loadManifest();
 </script>
 </body>
 </html>
