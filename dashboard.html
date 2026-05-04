@@ -134,6 +134,31 @@
   }
   .card-sub { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
 
+  /* Hyperlink on the company name when we captured a Facebook page URL.
+     Underline-on-hover only — keeps the card looking calm at rest. */
+  .name-link {
+    color: inherit; text-decoration: none;
+    border-bottom: 1px dotted transparent;
+    transition: border-color 120ms ease;
+  }
+  .name-link:hover { border-bottom-color: currentColor; }
+  .link-arrow {
+    font-size: 10px; opacity: 0.55;
+    margin-left: 2px; vertical-align: super;
+  }
+  .name-link:hover .link-arrow { opacity: 0.9; }
+  /* Source confidence badge — only shown when the URL came from the Google
+     fallback rung. Tells the user "verify this one before you act on it". */
+  .src-badge {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    font-size: 9px; font-weight: 700;
+    flex-shrink: 0;
+    cursor: help;
+  }
+  .src-google { background: #FEF3C7; color: #78350F; }
+
   /* Score badge */
   .score-badge {
     font-size: 12px; font-weight: 500;
@@ -463,164 +488,8 @@ const SAMPLE_DATA = [
     "region": "other",
     "region_label": "UK",
     "staff": "15",
-    "tenure_months": 34,
-    "tenure_label": "34 months",
-    "score": 71,
-    "hot_trigger": null,
-    "platforms": [
-      "facebook",
-      "google"
-    ],
-    "audience": "Homeowners",
-    "keywords": "",
-    "spend": [
-      2,
-      2,
-      2,
-      2,
-      2,
-      2,
-      2
-    ],
-    "contact": {
-      "name": "Unknown",
-      "role": "Director",
-      "email": null,
-      "li": ""
-    },
-    "avatar": "IS",
-    "avatarBg": "#E1F5EE",
-    "avatarCol": "#085041",
-    "first_seen": "2026-04-07",
-    "is_new_this_week": false
-  },
-  {
-    "id": 2,
-    "name": "Allstate Solar & Allstate Home Improvements",
-    "sector": "Solar",
-    "country": "UK",
-    "region": "other",
-    "region_label": "UK",
-    "staff": "15",
-    "tenure_months": 96,
-    "tenure_label": "96 months",
-    "score": 71,
-    "hot_trigger": null,
-    "platforms": [
-      "facebook",
-      "google"
-    ],
-    "audience": "Homeowners",
-    "keywords": "",
-    "spend": [
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3
-    ],
-    "contact": {
-      "name": "Unknown",
-      "role": "Director",
-      "email": null,
-      "li": ""
-    },
-    "avatar": "AS",
-    "avatarBg": "#E1F5EE",
-    "avatarCol": "#085041",
-    "first_seen": "2026-04-07",
-    "is_new_this_week": false
-  },
-  {
-    "id": 3,
-    "name": "Prosolar",
-    "sector": "Solar",
-    "country": "IE",
-    "region": "ireland",
-    "region_label": "Dublin & Ireland",
-    "staff": "15",
-    "tenure_months": 19,
-    "tenure_label": "19 months",
-    "score": 71,
-    "hot_trigger": null,
-    "platforms": [
-      "facebook",
-      "google"
-    ],
-    "audience": "Homeowners",
-    "keywords": "",
-    "spend": [
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3
-    ],
-    "contact": {
-      "name": "Unknown",
-      "role": "Director",
-      "email": null,
-      "li": ""
-    },
-    "avatar": "P",
-    "avatarBg": "#E1F5EE",
-    "avatarCol": "#085041",
-    "first_seen": "2026-04-12",
-    "is_new_this_week": false
-  },
-  {
-    "id": 4,
-    "name": "SPV Lights",
-    "sector": "Solar",
-    "country": "UK",
-    "region": "other",
-    "region_label": "UK",
-    "staff": "15",
-    "tenure_months": 21,
-    "tenure_label": "21 months",
-    "score": 68,
-    "hot_trigger": null,
-    "platforms": [
-      "facebook",
-      "google"
-    ],
-    "audience": "Homeowners",
-    "keywords": "",
-    "spend": [
-      2,
-      2,
-      2,
-      2,
-      2,
-      2,
-      2
-    ],
-    "contact": {
-      "name": "Unknown",
-      "role": "Director",
-      "email": null,
-      "li": ""
-    },
-    "avatar": "SL",
-    "avatarBg": "#E1F5EE",
-    "avatarCol": "#085041",
-    "first_seen": "2026-04-07",
-    "is_new_this_week": false
-  },
-  {
-    "id": 5,
-    "name": "Momentum Productions with aosu Life",
-    "sector": "Solar",
-    "country": "UK",
-    "region": "other",
-    "region_label": "UK",
-    "staff": "15",
-    "tenure_months": 17,
-    "tenure_label": "17 months",
+    "tenure_months": 35,
+    "tenure_label": "35 months",
     "score": 60,
     "hot_trigger": null,
     "platforms": [
@@ -643,22 +512,107 @@ const SAMPLE_DATA = [
       "email": null,
       "li": ""
     },
-    "avatar": "MP",
+    "avatar": "IS",
     "avatarBg": "#E1F5EE",
     "avatarCol": "#085041",
+    "page_url": "https://www.facebook.com/installsolarpanels",
+    "page_id": "installsolarpanels",
+    "page_url_source": "card",
     "first_seen": "2026-04-07",
     "is_new_this_week": false
   },
   {
-    "id": 6,
+    "id": 2,
+    "name": "Momentum Productions",
+    "sector": "Solar",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 17,
+    "tenure_label": "17 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "MP",
+    "avatarBg": "#E1F5EE",
+    "avatarCol": "#085041",
+    "page_url": "https://www.facebook.com/CaptureTheMomentum",
+    "page_id": "CaptureTheMomentum",
+    "page_url_source": "card",
+    "first_seen": "2026-05-04",
+    "is_new_this_week": true
+  },
+  {
+    "id": 3,
+    "name": "SPV Lights",
+    "sector": "Solar",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 21,
+    "tenure_label": "21 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "SL",
+    "avatarBg": "#E1F5EE",
+    "avatarCol": "#085041",
+    "page_url": "https://www.facebook.com/spvlights",
+    "page_id": "spvlights",
+    "page_url_source": "card",
+    "first_seen": "2026-04-07",
+    "is_new_this_week": false
+  },
+  {
+    "id": 4,
     "name": "Bringnox Official",
     "sector": "Solar",
     "country": "UK",
     "region": "other",
     "region_label": "UK",
     "staff": "15",
-    "tenure_months": 13,
-    "tenure_label": "13 months",
+    "tenure_months": 14,
+    "tenure_label": "14 months",
     "score": 60,
     "hot_trigger": null,
     "platforms": [
@@ -684,19 +638,22 @@ const SAMPLE_DATA = [
     "avatar": "BO",
     "avatarBg": "#E1F5EE",
     "avatarCol": "#085041",
+    "page_url": "https://www.facebook.com/61569350681767",
+    "page_id": "61569350681767",
+    "page_url_source": "card",
     "first_seen": "2026-04-07",
     "is_new_this_week": false
   },
   {
-    "id": 7,
+    "id": 5,
     "name": "Evergreen Power UK SOLAR",
     "sector": "Solar",
     "country": "UK",
     "region": "other",
     "region_label": "UK",
     "staff": "15",
-    "tenure_months": 6,
-    "tenure_label": "6 months",
+    "tenure_months": 7,
+    "tenure_label": "7 months",
     "score": 60,
     "hot_trigger": null,
     "platforms": [
@@ -705,13 +662,13 @@ const SAMPLE_DATA = [
     "audience": "Homeowners",
     "keywords": "",
     "spend": [
-      4,
-      4,
-      4,
-      4,
-      4,
-      4,
-      4
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
     ],
     "contact": {
       "name": "Unknown",
@@ -722,11 +679,55 @@ const SAMPLE_DATA = [
     "avatar": "EP",
     "avatarBg": "#E1F5EE",
     "avatarCol": "#085041",
+    "page_url": "https://www.facebook.com/evergreenpoweruksolar",
+    "page_id": "evergreenpoweruksolar",
+    "page_url_source": "card",
     "first_seen": "2026-04-01",
     "is_new_this_week": false
   },
   {
-    "id": 8,
+    "id": 6,
+    "name": "Allstate Solar & Allstate Home Improvements",
+    "sector": "Solar",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 97,
+    "tenure_label": "97 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "AS",
+    "avatarBg": "#E1F5EE",
+    "avatarCol": "#085041",
+    "page_url": "https://www.facebook.com/allstatesolar",
+    "page_id": "allstatesolar",
+    "page_url_source": "card",
+    "first_seen": "2026-04-07",
+    "is_new_this_week": false
+  },
+  {
+    "id": 7,
     "name": "Anglia Safety Electrical & Testing",
     "sector": "Solar",
     "country": "UK",
@@ -743,13 +744,13 @@ const SAMPLE_DATA = [
     "audience": "Homeowners",
     "keywords": "",
     "spend": [
-      4,
-      4,
-      4,
-      4,
-      4,
-      4,
-      4
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
     ],
     "contact": {
       "name": "Unknown",
@@ -760,19 +761,22 @@ const SAMPLE_DATA = [
     "avatar": "AS",
     "avatarBg": "#E1F5EE",
     "avatarCol": "#085041",
+    "page_url": "https://www.facebook.com/100065261569905",
+    "page_id": "100065261569905",
+    "page_url_source": "card",
     "first_seen": "2026-04-07",
     "is_new_this_week": false
   },
   {
-    "id": 9,
-    "name": "Activ8 Energies",
+    "id": 8,
+    "name": "Current Renewables",
     "sector": "Solar",
-    "country": "IE",
-    "region": "ireland",
-    "region_label": "Dublin & Ireland",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
     "staff": "15",
-    "tenure_months": 10,
-    "tenure_label": "10 months",
+    "tenure_months": 6,
+    "tenure_label": "6 months",
     "score": 60,
     "hot_trigger": null,
     "platforms": [
@@ -781,13 +785,13 @@ const SAMPLE_DATA = [
     "audience": "Homeowners",
     "keywords": "",
     "spend": [
-      4,
-      4,
-      4,
-      4,
-      4,
-      4,
-      4
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
     ],
     "contact": {
       "name": "Unknown",
@@ -795,10 +799,54 @@ const SAMPLE_DATA = [
       "email": null,
       "li": ""
     },
-    "avatar": "AE",
+    "avatar": "CR",
     "avatarBg": "#E1F5EE",
     "avatarCol": "#085041",
-    "first_seen": "2026-04-12",
+    "page_url": "https://www.facebook.com/CurrentRenewables",
+    "page_id": "CurrentRenewables",
+    "page_url_source": "card",
+    "first_seen": "2026-05-04",
+    "is_new_this_week": true
+  },
+  {
+    "id": 9,
+    "name": "Unilong",
+    "sector": "Solar",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 18,
+    "tenure_label": "18 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "U",
+    "avatarBg": "#E1F5EE",
+    "avatarCol": "#085041",
+    "page_url": "https://www.facebook.com/Unilong263",
+    "page_id": "Unilong263",
+    "page_url_source": "card",
+    "first_seen": "2026-04-20",
     "is_new_this_week": false
   },
   {
@@ -819,13 +867,13 @@ const SAMPLE_DATA = [
     "audience": "Homeowners",
     "keywords": "",
     "spend": [
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
     ],
     "contact": {
       "name": "Unknown",
@@ -836,11 +884,55 @@ const SAMPLE_DATA = [
     "avatar": "NM",
     "avatarBg": "#E1F5EE",
     "avatarCol": "#085041",
+    "page_url": "https://www.facebook.com/NorthMidlandsCreditUnion",
+    "page_id": "NorthMidlandsCreditUnion",
+    "page_url_source": "card",
     "first_seen": "2026-04-07",
     "is_new_this_week": false
   },
   {
     "id": 11,
+    "name": "Prosolar",
+    "sector": "Solar",
+    "country": "IE",
+    "region": "ireland",
+    "region_label": "Dublin & Ireland",
+    "staff": "15",
+    "tenure_months": 19,
+    "tenure_label": "19 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "P",
+    "avatarBg": "#E1F5EE",
+    "avatarCol": "#085041",
+    "page_url": "https://www.facebook.com/prosolarie",
+    "page_id": "prosolarie",
+    "page_url_source": "card",
+    "first_seen": "2026-04-12",
+    "is_new_this_week": false
+  },
+  {
+    "id": 12,
     "name": "NES Ireland Solar PV",
     "sector": "Solar",
     "country": "IE",
@@ -857,13 +949,13 @@ const SAMPLE_DATA = [
     "audience": "Homeowners",
     "keywords": "",
     "spend": [
-      2,
-      2,
-      2,
-      2,
-      2,
-      2,
-      2
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
     ],
     "contact": {
       "name": "Unknown",
@@ -874,134 +966,23 @@ const SAMPLE_DATA = [
     "avatar": "NI",
     "avatarBg": "#E1F5EE",
     "avatarCol": "#085041",
+    "page_url": "https://www.facebook.com/61575810773227",
+    "page_id": "61575810773227",
+    "page_url_source": "card",
     "first_seen": "2026-04-27",
-    "is_new_this_week": true
-  },
-  {
-    "id": 12,
-    "name": "Devon Electrical Contractors Ltd",
-    "sector": "Solar",
-    "country": "UK",
-    "region": "other",
-    "region_label": "UK",
-    "staff": "15",
-    "tenure_months": 4,
-    "tenure_label": "4 months",
-    "score": 50,
-    "hot_trigger": null,
-    "platforms": [
-      "facebook"
-    ],
-    "audience": "Homeowners",
-    "keywords": "",
-    "spend": [
-      5,
-      5,
-      5,
-      5,
-      5,
-      5,
-      5
-    ],
-    "contact": {
-      "name": "Unknown",
-      "role": "Director",
-      "email": null,
-      "li": ""
-    },
-    "avatar": "DE",
-    "avatarBg": "#E1F5EE",
-    "avatarCol": "#085041",
-    "first_seen": "2026-04-27",
-    "is_new_this_week": true
+    "is_new_this_week": false
   },
   {
     "id": 13,
-    "name": "Caldor Solar",
-    "sector": "Solar",
-    "country": "UK",
-    "region": "other",
-    "region_label": "UK",
-    "staff": "15",
-    "tenure_months": 4,
-    "tenure_label": "4 months",
-    "score": 50,
-    "hot_trigger": null,
-    "platforms": [
-      "facebook"
-    ],
-    "audience": "Homeowners",
-    "keywords": "",
-    "spend": [
-      5,
-      5,
-      5,
-      5,
-      5,
-      5,
-      5
-    ],
-    "contact": {
-      "name": "Unknown",
-      "role": "Director",
-      "email": null,
-      "li": ""
-    },
-    "avatar": "CS",
-    "avatarBg": "#E1F5EE",
-    "avatarCol": "#085041",
-    "first_seen": "2026-04-27",
-    "is_new_this_week": true
-  },
-  {
-    "id": 14,
-    "name": "hsscu",
-    "sector": "Solar",
-    "country": "IE",
-    "region": "ireland",
-    "region_label": "Dublin & Ireland",
-    "staff": "15",
-    "tenure_months": 4,
-    "tenure_label": "4 months",
-    "score": 50,
-    "hot_trigger": null,
-    "platforms": [
-      "facebook"
-    ],
-    "audience": "Homeowners",
-    "keywords": "",
-    "spend": [
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3
-    ],
-    "contact": {
-      "name": "Unknown",
-      "role": "Director",
-      "email": null,
-      "li": ""
-    },
-    "avatar": "H",
-    "avatarBg": "#E1F5EE",
-    "avatarCol": "#085041",
-    "first_seen": "2026-04-27",
-    "is_new_this_week": true
-  },
-  {
-    "id": 15,
     "name": "Solid Power Ltd",
     "sector": "Solar",
     "country": "IE",
     "region": "ireland",
     "region_label": "Dublin & Ireland",
     "staff": "15",
-    "tenure_months": 4,
-    "tenure_label": "4 months",
-    "score": 50,
+    "tenure_months": 5,
+    "tenure_label": "5 months",
+    "score": 55,
     "hot_trigger": null,
     "platforms": [
       "facebook"
@@ -1026,16 +1007,101 @@ const SAMPLE_DATA = [
     "avatar": "SP",
     "avatarBg": "#E1F5EE",
     "avatarCol": "#085041",
+    "page_url": "https://www.facebook.com/infosolidpower",
+    "page_id": "infosolidpower",
+    "page_url_source": "card",
     "first_seen": "2026-04-27",
-    "is_new_this_week": true
+    "is_new_this_week": false
+  },
+  {
+    "id": 14,
+    "name": "Devon Electrical Contractors Ltd",
+    "sector": "Solar",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 4,
+    "tenure_label": "4 months",
+    "score": 50,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "DE",
+    "avatarBg": "#E1F5EE",
+    "avatarCol": "#085041",
+    "page_url": "https://www.facebook.com/DevonElectricalContractorsLtd",
+    "page_id": "DevonElectricalContractorsLtd",
+    "page_url_source": "card",
+    "first_seen": "2026-04-27",
+    "is_new_this_week": false
+  },
+  {
+    "id": 15,
+    "name": "Caldor Solar",
+    "sector": "Solar",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 4,
+    "tenure_label": "4 months",
+    "score": 50,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "CS",
+    "avatarBg": "#E1F5EE",
+    "avatarCol": "#085041",
+    "page_url": "https://www.facebook.com/CaldorSolar",
+    "page_id": "CaldorSolar",
+    "page_url_source": "card",
+    "first_seen": "2026-04-27",
+    "is_new_this_week": false
   },
   {
     "id": 16,
-    "name": "Pat Shortt with Sun Arc Solar Systems",
+    "name": "M E Solar Ltd",
     "sector": "Solar",
-    "country": "IE",
-    "region": "ireland",
-    "region_label": "Dublin & Ireland",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
     "staff": "15",
     "tenure_months": 4,
     "tenure_label": "4 months",
@@ -1061,14 +1127,99 @@ const SAMPLE_DATA = [
       "email": null,
       "li": ""
     },
-    "avatar": "PS",
+    "avatar": "ME",
     "avatarBg": "#E1F5EE",
     "avatarCol": "#085041",
-    "first_seen": "2026-04-27",
+    "page_url": "https://www.facebook.com/mesolaruk",
+    "page_id": "mesolaruk",
+    "page_url_source": "card",
+    "first_seen": "2026-05-04",
     "is_new_this_week": true
   },
   {
     "id": 17,
+    "name": "Menu",
+    "sector": "Solar",
+    "country": "IE",
+    "region": "ireland",
+    "region_label": "Dublin & Ireland",
+    "staff": "15",
+    "tenure_months": 4,
+    "tenure_label": "4 months",
+    "score": 50,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "M",
+    "avatarBg": "#E1F5EE",
+    "avatarCol": "#085041",
+    "page_url": null,
+    "page_id": null,
+    "page_url_source": null,
+    "first_seen": "2026-05-04",
+    "is_new_this_week": true
+  },
+  {
+    "id": 18,
+    "name": "Pat Shortt",
+    "sector": "Solar",
+    "country": "IE",
+    "region": "ireland",
+    "region_label": "Dublin & Ireland",
+    "staff": "15",
+    "tenure_months": 4,
+    "tenure_label": "4 months",
+    "score": 50,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "PS",
+    "avatarBg": "#E1F5EE",
+    "avatarCol": "#085041",
+    "page_url": "https://www.facebook.com/patshorttofficial",
+    "page_id": "patshorttofficial",
+    "page_url_source": "card",
+    "first_seen": "2026-05-04",
+    "is_new_this_week": true
+  },
+  {
+    "id": 19,
     "name": "All Solar Works",
     "sector": "Solar",
     "country": "UK",
@@ -1085,6 +1236,47 @@ const SAMPLE_DATA = [
     "audience": "Homeowners",
     "keywords": "",
     "spend": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "AS",
+    "avatarBg": "#E1F5EE",
+    "avatarCol": "#085041",
+    "page_url": "https://www.facebook.com/Allsolarworks",
+    "page_id": "Allsolarworks",
+    "page_url_source": "card",
+    "first_seen": "2026-04-27",
+    "is_new_this_week": false
+  },
+  {
+    "id": 20,
+    "name": "Goodwill Electrical",
+    "sector": "Solar",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 3,
+    "tenure_label": "3 months",
+    "score": 45,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
       2,
       2,
       2,
@@ -1099,14 +1291,99 @@ const SAMPLE_DATA = [
       "email": null,
       "li": ""
     },
-    "avatar": "AS",
+    "avatar": "GE",
     "avatarBg": "#E1F5EE",
     "avatarCol": "#085041",
-    "first_seen": "2026-04-27",
+    "page_url": "https://www.facebook.com/GoodwillElectrical",
+    "page_id": "GoodwillElectrical",
+    "page_url_source": "card",
+    "first_seen": "2026-05-04",
     "is_new_this_week": true
   },
   {
-    "id": 18,
+    "id": 21,
+    "name": "JDM Earth Limited - EV Charging, Electrical Services, Smart Homes",
+    "sector": "Solar",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 3,
+    "tenure_label": "3 months",
+    "score": 45,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "JE",
+    "avatarBg": "#E1F5EE",
+    "avatarCol": "#085041",
+    "page_url": "https://www.facebook.com/JDMEarth",
+    "page_id": "JDMEarth",
+    "page_url_source": "card",
+    "first_seen": "2026-05-04",
+    "is_new_this_week": true
+  },
+  {
+    "id": 22,
+    "name": "Eco Renewables Group Limited",
+    "sector": "Solar",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 3,
+    "tenure_label": "3 months",
+    "score": 45,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "ER",
+    "avatarBg": "#E1F5EE",
+    "avatarCol": "#085041",
+    "page_url": "https://www.facebook.com/EcoRenewablesGroupLtd",
+    "page_id": "EcoRenewablesGroupLtd",
+    "page_url_source": "card",
+    "first_seen": "2026-05-04",
+    "is_new_this_week": true
+  },
+  {
+    "id": 23,
     "name": "Electric Ireland",
     "sector": "Solar",
     "country": "IE",
@@ -1123,13 +1400,13 @@ const SAMPLE_DATA = [
     "audience": "Homeowners",
     "keywords": "",
     "spend": [
-      4,
-      4,
-      4,
-      4,
-      4,
-      4,
-      4
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
     ],
     "contact": {
       "name": "Unknown",
@@ -1140,213 +1417,23 @@ const SAMPLE_DATA = [
     "avatar": "EI",
     "avatarBg": "#E1F5EE",
     "avatarCol": "#085041",
+    "page_url": "https://www.facebook.com/ElectricIreland",
+    "page_id": "ElectricIreland",
+    "page_url_source": "card",
     "first_seen": "2026-04-27",
-    "is_new_this_week": true
-  },
-  {
-    "id": 19,
-    "name": "DP Electrical Specialists Limited",
-    "sector": "Electrical",
-    "country": "UK",
-    "region": "other",
-    "region_label": "UK",
-    "staff": "15",
-    "tenure_months": 27,
-    "tenure_label": "27 months",
-    "score": 71,
-    "hot_trigger": null,
-    "platforms": [
-      "facebook",
-      "google"
-    ],
-    "audience": "Homeowners",
-    "keywords": "",
-    "spend": [
-      5,
-      5,
-      5,
-      5,
-      5,
-      5,
-      5
-    ],
-    "contact": {
-      "name": "Unknown",
-      "role": "Director",
-      "email": null,
-      "li": ""
-    },
-    "avatar": "DE",
-    "avatarBg": "#E6F1FB",
-    "avatarCol": "#0C447C",
-    "first_seen": "2026-04-07",
-    "is_new_this_week": false
-  },
-  {
-    "id": 20,
-    "name": "Lightwave",
-    "sector": "Electrical",
-    "country": "UK",
-    "region": "other",
-    "region_label": "UK",
-    "staff": "15",
-    "tenure_months": 13,
-    "tenure_label": "13 months",
-    "score": 71,
-    "hot_trigger": null,
-    "platforms": [
-      "facebook",
-      "google"
-    ],
-    "audience": "Homeowners",
-    "keywords": "",
-    "spend": [
-      4,
-      4,
-      4,
-      4,
-      4,
-      4,
-      4
-    ],
-    "contact": {
-      "name": "Unknown",
-      "role": "Director",
-      "email": null,
-      "li": ""
-    },
-    "avatar": "L",
-    "avatarBg": "#E6F1FB",
-    "avatarCol": "#0C447C",
-    "first_seen": "2026-04-12",
-    "is_new_this_week": false
-  },
-  {
-    "id": 21,
-    "name": "CS Electrics",
-    "sector": "Electrical",
-    "country": "UK",
-    "region": "other",
-    "region_label": "UK",
-    "staff": "15",
-    "tenure_months": 57,
-    "tenure_label": "57 months",
-    "score": 71,
-    "hot_trigger": null,
-    "platforms": [
-      "facebook",
-      "google"
-    ],
-    "audience": "Homeowners",
-    "keywords": "",
-    "spend": [
-      4,
-      4,
-      4,
-      4,
-      4,
-      4,
-      4
-    ],
-    "contact": {
-      "name": "Unknown",
-      "role": "Director",
-      "email": null,
-      "li": ""
-    },
-    "avatar": "CE",
-    "avatarBg": "#E6F1FB",
-    "avatarCol": "#0C447C",
-    "first_seen": "2026-04-12",
-    "is_new_this_week": false
-  },
-  {
-    "id": 22,
-    "name": "OpenRent",
-    "sector": "Electrical",
-    "country": "UK",
-    "region": "other",
-    "region_label": "UK",
-    "staff": "15",
-    "tenure_months": 12,
-    "tenure_label": "12 months",
-    "score": 60,
-    "hot_trigger": null,
-    "platforms": [
-      "facebook"
-    ],
-    "audience": "Homeowners",
-    "keywords": "",
-    "spend": [
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3
-    ],
-    "contact": {
-      "name": "Unknown",
-      "role": "Director",
-      "email": null,
-      "li": ""
-    },
-    "avatar": "O",
-    "avatarBg": "#E6F1FB",
-    "avatarCol": "#0C447C",
-    "first_seen": "2026-04-07",
-    "is_new_this_week": false
-  },
-  {
-    "id": 23,
-    "name": "James' Marketing ToolBox",
-    "sector": "Electrical",
-    "country": "UK",
-    "region": "other",
-    "region_label": "UK",
-    "staff": "15",
-    "tenure_months": 13,
-    "tenure_label": "13 months",
-    "score": 60,
-    "hot_trigger": null,
-    "platforms": [
-      "facebook"
-    ],
-    "audience": "Homeowners",
-    "keywords": "",
-    "spend": [
-      5,
-      5,
-      5,
-      5,
-      5,
-      5,
-      5
-    ],
-    "contact": {
-      "name": "Unknown",
-      "role": "Director",
-      "email": null,
-      "li": ""
-    },
-    "avatar": "JM",
-    "avatarBg": "#E6F1FB",
-    "avatarCol": "#0C447C",
-    "first_seen": "2026-04-19",
     "is_new_this_week": false
   },
   {
     "id": 24,
-    "name": "Dec-Elec Electrical Contractors",
-    "sector": "Electrical",
-    "country": "UK",
-    "region": "other",
-    "region_label": "UK",
+    "name": "Activ8 Energies",
+    "sector": "Solar",
+    "country": "IE",
+    "region": "ireland",
+    "region_label": "Dublin & Ireland",
     "staff": "15",
-    "tenure_months": 7,
-    "tenure_label": "7 months",
-    "score": 60,
+    "tenure_months": 3,
+    "tenure_label": "3 months",
+    "score": 45,
     "hot_trigger": null,
     "platforms": [
       "facebook"
@@ -1354,13 +1441,13 @@ const SAMPLE_DATA = [
     "audience": "Homeowners",
     "keywords": "",
     "spend": [
-      5,
-      5,
-      5,
-      5,
-      5,
-      5,
-      5
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
     ],
     "contact": {
       "name": "Unknown",
@@ -1368,23 +1455,26 @@ const SAMPLE_DATA = [
       "email": null,
       "li": ""
     },
-    "avatar": "DE",
-    "avatarBg": "#E6F1FB",
-    "avatarCol": "#0C447C",
-    "first_seen": "2026-04-27",
-    "is_new_this_week": true
+    "avatar": "AE",
+    "avatarBg": "#E1F5EE",
+    "avatarCol": "#085041",
+    "page_url": "https://www.facebook.com/Activ8Energies",
+    "page_id": "Activ8Energies",
+    "page_url_source": "card",
+    "first_seen": "2026-04-12",
+    "is_new_this_week": false
   },
   {
     "id": 25,
-    "name": "Merrin Electrical LTD",
-    "sector": "Electrical",
-    "country": "UK",
-    "region": "other",
-    "region_label": "UK",
+    "name": "Solar Nexus",
+    "sector": "Solar",
+    "country": "IE",
+    "region": "ireland",
+    "region_label": "Dublin & Ireland",
     "staff": "15",
-    "tenure_months": 13,
-    "tenure_label": "13 months",
-    "score": 60,
+    "tenure_months": 3,
+    "tenure_label": "3 months",
+    "score": 45,
     "hot_trigger": null,
     "platforms": [
       "facebook"
@@ -1392,13 +1482,13 @@ const SAMPLE_DATA = [
     "audience": "Homeowners",
     "keywords": "",
     "spend": [
-      4,
-      4,
-      4,
-      4,
-      4,
-      4,
-      4
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
     ],
     "contact": {
       "name": "Unknown",
@@ -1406,1313 +1496,17 @@ const SAMPLE_DATA = [
       "email": null,
       "li": ""
     },
-    "avatar": "ME",
-    "avatarBg": "#E6F1FB",
-    "avatarCol": "#0C447C",
-    "first_seen": "2026-04-12",
-    "is_new_this_week": false
+    "avatar": "SN",
+    "avatarBg": "#E1F5EE",
+    "avatarCol": "#085041",
+    "page_url": "https://www.facebook.com/SolarNexusIreland",
+    "page_id": "SolarNexusIreland",
+    "page_url_source": "card",
+    "first_seen": "2026-05-04",
+    "is_new_this_week": true
   },
   {
     "id": 26,
-    "name": "lyes_electrical_ltd",
-    "sector": "Electrical",
-    "country": "UK",
-    "region": "other",
-    "region_label": "UK",
-    "staff": "15",
-    "tenure_months": 32,
-    "tenure_label": "32 months",
-    "score": 60,
-    "hot_trigger": null,
-    "platforms": [
-      "facebook"
-    ],
-    "audience": "Homeowners",
-    "keywords": "",
-    "spend": [
-      5,
-      5,
-      5,
-      5,
-      5,
-      5,
-      5
-    ],
-    "contact": {
-      "name": "Unknown",
-      "role": "Director",
-      "email": null,
-      "li": ""
-    },
-    "avatar": "L",
-    "avatarBg": "#E6F1FB",
-    "avatarCol": "#0C447C",
-    "first_seen": "2026-04-12",
-    "is_new_this_week": false
-  },
-  {
-    "id": 27,
-    "name": "Everyday Welding Supplies",
-    "sector": "Electrical",
-    "country": "IE",
-    "region": "ireland",
-    "region_label": "Dublin & Ireland",
-    "staff": "15",
-    "tenure_months": 9,
-    "tenure_label": "9 months",
-    "score": 60,
-    "hot_trigger": null,
-    "platforms": [
-      "facebook"
-    ],
-    "audience": "Homeowners",
-    "keywords": "",
-    "spend": [
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3
-    ],
-    "contact": {
-      "name": "Unknown",
-      "role": "Director",
-      "email": null,
-      "li": ""
-    },
-    "avatar": "EW",
-    "avatarBg": "#E6F1FB",
-    "avatarCol": "#0C447C",
-    "first_seen": "2026-04-12",
-    "is_new_this_week": false
-  },
-  {
-    "id": 28,
-    "name": "City & Guilds Electrical",
-    "sector": "Electrical",
-    "country": "UK",
-    "region": "other",
-    "region_label": "UK",
-    "staff": "15",
-    "tenure_months": 4,
-    "tenure_label": "4 months",
-    "score": 50,
-    "hot_trigger": null,
-    "platforms": [
-      "facebook"
-    ],
-    "audience": "Homeowners",
-    "keywords": "",
-    "spend": [
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3
-    ],
-    "contact": {
-      "name": "Unknown",
-      "role": "Director",
-      "email": null,
-      "li": ""
-    },
-    "avatar": "C&",
-    "avatarBg": "#E6F1FB",
-    "avatarCol": "#0C447C",
-    "first_seen": "2026-04-27",
-    "is_new_this_week": true
-  },
-  {
-    "id": 29,
-    "name": "Rointe Ireland",
-    "sector": "Electrical",
-    "country": "IE",
-    "region": "ireland",
-    "region_label": "Dublin & Ireland",
-    "staff": "15",
-    "tenure_months": 4,
-    "tenure_label": "4 months",
-    "score": 50,
-    "hot_trigger": null,
-    "platforms": [
-      "facebook"
-    ],
-    "audience": "Homeowners",
-    "keywords": "",
-    "spend": [
-      5,
-      5,
-      5,
-      5,
-      5,
-      5,
-      5
-    ],
-    "contact": {
-      "name": "Unknown",
-      "role": "Director",
-      "email": null,
-      "li": ""
-    },
-    "avatar": "RI",
-    "avatarBg": "#E6F1FB",
-    "avatarCol": "#0C447C",
-    "first_seen": "2026-04-12",
-    "is_new_this_week": false
-  },
-  {
-    "id": 30,
-    "name": "Treacy Solar",
-    "sector": "Electrical",
-    "country": "IE",
-    "region": "ireland",
-    "region_label": "Dublin & Ireland",
-    "staff": "15",
-    "tenure_months": 3,
-    "tenure_label": "3 months",
-    "score": 45,
-    "hot_trigger": null,
-    "platforms": [
-      "facebook"
-    ],
-    "audience": "Homeowners",
-    "keywords": "",
-    "spend": [
-      2,
-      2,
-      2,
-      2,
-      2,
-      2,
-      2
-    ],
-    "contact": {
-      "name": "Unknown",
-      "role": "Director",
-      "email": null,
-      "li": ""
-    },
-    "avatar": "TS",
-    "avatarBg": "#E6F1FB",
-    "avatarCol": "#0C447C",
-    "first_seen": "2026-04-19",
-    "is_new_this_week": false
-  },
-  {
-    "id": 31,
-    "name": "Lincolnshire Walnut Blasting carbon removal",
-    "sector": "Alarms",
-    "country": "UK",
-    "region": "other",
-    "region_label": "UK",
-    "staff": "15",
-    "tenure_months": 47,
-    "tenure_label": "47 months",
-    "score": 71,
-    "hot_trigger": null,
-    "platforms": [
-      "facebook",
-      "google"
-    ],
-    "audience": "Homeowners",
-    "keywords": "",
-    "spend": [
-      5,
-      5,
-      5,
-      5,
-      5,
-      5,
-      5
-    ],
-    "contact": {
-      "name": "Unknown",
-      "role": "Director",
-      "email": null,
-      "li": ""
-    },
-    "avatar": "LW",
-    "avatarBg": "#FAEEDA",
-    "avatarCol": "#633806",
-    "first_seen": "2026-04-12",
-    "is_new_this_week": false
-  },
-  {
-    "id": 32,
-    "name": "Blackwood CCTV",
-    "sector": "Alarms",
-    "country": "UK",
-    "region": "other",
-    "region_label": "UK",
-    "staff": "15",
-    "tenure_months": 10,
-    "tenure_label": "10 months",
-    "score": 60,
-    "hot_trigger": null,
-    "platforms": [
-      "facebook"
-    ],
-    "audience": "Homeowners",
-    "keywords": "",
-    "spend": [
-      4,
-      4,
-      4,
-      4,
-      4,
-      4,
-      4
-    ],
-    "contact": {
-      "name": "Unknown",
-      "role": "Director",
-      "email": null,
-      "li": ""
-    },
-    "avatar": "BC",
-    "avatarBg": "#FAEEDA",
-    "avatarCol": "#633806",
-    "first_seen": "2026-04-07",
-    "is_new_this_week": false
-  },
-  {
-    "id": 33,
-    "name": "Corten Steel Ireland",
-    "sector": "Alarms",
-    "country": "IE",
-    "region": "ireland",
-    "region_label": "Dublin & Ireland",
-    "staff": "15",
-    "tenure_months": 6,
-    "tenure_label": "6 months",
-    "score": 60,
-    "hot_trigger": null,
-    "platforms": [
-      "facebook"
-    ],
-    "audience": "Homeowners",
-    "keywords": "",
-    "spend": [
-      5,
-      5,
-      5,
-      5,
-      5,
-      5,
-      5
-    ],
-    "contact": {
-      "name": "Unknown",
-      "role": "Director",
-      "email": null,
-      "li": ""
-    },
-    "avatar": "CS",
-    "avatarBg": "#FAEEDA",
-    "avatarCol": "#633806",
-    "first_seen": "2026-04-19",
-    "is_new_this_week": false
-  },
-  {
-    "id": 34,
-    "name": "ugclasha with aosu Life",
-    "sector": "Alarms",
-    "country": "UK",
-    "region": "other",
-    "region_label": "UK",
-    "staff": "15",
-    "tenure_months": 5,
-    "tenure_label": "5 months",
-    "score": 55,
-    "hot_trigger": null,
-    "platforms": [
-      "facebook"
-    ],
-    "audience": "Homeowners",
-    "keywords": "",
-    "spend": [
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3
-    ],
-    "contact": {
-      "name": "Unknown",
-      "role": "Director",
-      "email": null,
-      "li": ""
-    },
-    "avatar": "UW",
-    "avatarBg": "#FAEEDA",
-    "avatarCol": "#633806",
-    "first_seen": "2026-04-12",
-    "is_new_this_week": false
-  },
-  {
-    "id": 35,
-    "name": "Network Security.ie",
-    "sector": "Alarms",
-    "country": "IE",
-    "region": "ireland",
-    "region_label": "Dublin & Ireland",
-    "staff": "15",
-    "tenure_months": 3,
-    "tenure_label": "3 months",
-    "score": 45,
-    "hot_trigger": null,
-    "platforms": [
-      "facebook"
-    ],
-    "audience": "Homeowners",
-    "keywords": "",
-    "spend": [
-      2,
-      2,
-      2,
-      2,
-      2,
-      2,
-      2
-    ],
-    "contact": {
-      "name": "Unknown",
-      "role": "Director",
-      "email": null,
-      "li": ""
-    },
-    "avatar": "NS",
-    "avatarBg": "#FAEEDA",
-    "avatarCol": "#633806",
-    "first_seen": "2026-04-19",
-    "is_new_this_week": false
-  },
-  {
-    "id": 36,
-    "name": "Dolmen Insurance",
-    "sector": "Alarms",
-    "country": "IE",
-    "region": "ireland",
-    "region_label": "Dublin & Ireland",
-    "staff": "15",
-    "tenure_months": 3,
-    "tenure_label": "3 months",
-    "score": 45,
-    "hot_trigger": null,
-    "platforms": [
-      "facebook"
-    ],
-    "audience": "Homeowners",
-    "keywords": "",
-    "spend": [
-      5,
-      5,
-      5,
-      5,
-      5,
-      5,
-      5
-    ],
-    "contact": {
-      "name": "Unknown",
-      "role": "Director",
-      "email": null,
-      "li": ""
-    },
-    "avatar": "DI",
-    "avatarBg": "#FAEEDA",
-    "avatarCol": "#633806",
-    "first_seen": "2026-04-27",
-    "is_new_this_week": true
-  },
-  {
-    "id": 37,
-    "name": "Crestshield Windows",
-    "sector": "Windows & Doors",
-    "country": "UK",
-    "region": "other",
-    "region_label": "UK",
-    "staff": "15",
-    "tenure_months": 69,
-    "tenure_label": "69 months",
-    "score": 71,
-    "hot_trigger": null,
-    "platforms": [
-      "facebook",
-      "google"
-    ],
-    "audience": "Homeowners",
-    "keywords": "",
-    "spend": [
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3
-    ],
-    "contact": {
-      "name": "Unknown",
-      "role": "Director",
-      "email": null,
-      "li": ""
-    },
-    "avatar": "CW",
-    "avatarBg": "#FDE8EC",
-    "avatarCol": "#7C0C2A",
-    "first_seen": "2026-04-07",
-    "is_new_this_week": false
-  },
-  {
-    "id": 38,
-    "name": "Sunrise Windows - Double Glazing Installers - Plymouth",
-    "sector": "Windows & Doors",
-    "country": "UK",
-    "region": "other",
-    "region_label": "UK",
-    "staff": "15",
-    "tenure_months": 15,
-    "tenure_label": "15 months",
-    "score": 71,
-    "hot_trigger": null,
-    "platforms": [
-      "facebook",
-      "google"
-    ],
-    "audience": "Homeowners",
-    "keywords": "",
-    "spend": [
-      2,
-      2,
-      2,
-      2,
-      2,
-      2,
-      2
-    ],
-    "contact": {
-      "name": "Unknown",
-      "role": "Director",
-      "email": null,
-      "li": ""
-    },
-    "avatar": "SW",
-    "avatarBg": "#FDE8EC",
-    "avatarCol": "#7C0C2A",
-    "first_seen": "2026-04-07",
-    "is_new_this_week": false
-  },
-  {
-    "id": 39,
-    "name": "Shane Howells Ltd",
-    "sector": "Windows & Doors",
-    "country": "UK",
-    "region": "other",
-    "region_label": "UK",
-    "staff": "15",
-    "tenure_months": 15,
-    "tenure_label": "15 months",
-    "score": 71,
-    "hot_trigger": null,
-    "platforms": [
-      "facebook",
-      "google"
-    ],
-    "audience": "Homeowners",
-    "keywords": "",
-    "spend": [
-      5,
-      5,
-      5,
-      5,
-      5,
-      5,
-      5
-    ],
-    "contact": {
-      "name": "Unknown",
-      "role": "Director",
-      "email": null,
-      "li": ""
-    },
-    "avatar": "SH",
-    "avatarBg": "#FDE8EC",
-    "avatarCol": "#7C0C2A",
-    "first_seen": "2026-04-12",
-    "is_new_this_week": false
-  },
-  {
-    "id": 40,
-    "name": "Divine Windows and Doors",
-    "sector": "Windows & Doors",
-    "country": "IE",
-    "region": "ireland",
-    "region_label": "Dublin & Ireland",
-    "staff": "15",
-    "tenure_months": 23,
-    "tenure_label": "23 months",
-    "score": 71,
-    "hot_trigger": null,
-    "platforms": [
-      "facebook",
-      "google"
-    ],
-    "audience": "Homeowners",
-    "keywords": "",
-    "spend": [
-      4,
-      4,
-      4,
-      4,
-      4,
-      4,
-      4
-    ],
-    "contact": {
-      "name": "Unknown",
-      "role": "Director",
-      "email": null,
-      "li": ""
-    },
-    "avatar": "DW",
-    "avatarBg": "#FDE8EC",
-    "avatarCol": "#7C0C2A",
-    "first_seen": "2026-04-12",
-    "is_new_this_week": false
-  },
-  {
-    "id": 41,
-    "name": "Lancashire Double Glazing",
-    "sector": "Windows & Doors",
-    "country": "UK",
-    "region": "other",
-    "region_label": "UK",
-    "staff": "15",
-    "tenure_months": 10,
-    "tenure_label": "10 months",
-    "score": 60,
-    "hot_trigger": null,
-    "platforms": [
-      "facebook"
-    ],
-    "audience": "Homeowners",
-    "keywords": "",
-    "spend": [
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3
-    ],
-    "contact": {
-      "name": "Unknown",
-      "role": "Director",
-      "email": null,
-      "li": ""
-    },
-    "avatar": "LD",
-    "avatarBg": "#FDE8EC",
-    "avatarCol": "#7C0C2A",
-    "first_seen": "2026-04-07",
-    "is_new_this_week": false
-  },
-  {
-    "id": 42,
-    "name": "Centaframe Windows and Doors",
-    "sector": "Windows & Doors",
-    "country": "UK",
-    "region": "other",
-    "region_label": "UK",
-    "staff": "15",
-    "tenure_months": 10,
-    "tenure_label": "10 months",
-    "score": 60,
-    "hot_trigger": null,
-    "platforms": [
-      "facebook"
-    ],
-    "audience": "Homeowners",
-    "keywords": "",
-    "spend": [
-      5,
-      5,
-      5,
-      5,
-      5,
-      5,
-      5
-    ],
-    "contact": {
-      "name": "Unknown",
-      "role": "Director",
-      "email": null,
-      "li": ""
-    },
-    "avatar": "CW",
-    "avatarBg": "#FDE8EC",
-    "avatarCol": "#7C0C2A",
-    "first_seen": "2026-04-07",
-    "is_new_this_week": false
-  },
-  {
-    "id": 43,
-    "name": "Misted Windows",
-    "sector": "Windows & Doors",
-    "country": "UK",
-    "region": "other",
-    "region_label": "UK",
-    "staff": "15",
-    "tenure_months": 6,
-    "tenure_label": "6 months",
-    "score": 60,
-    "hot_trigger": null,
-    "platforms": [
-      "facebook"
-    ],
-    "audience": "Homeowners",
-    "keywords": "",
-    "spend": [
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3
-    ],
-    "contact": {
-      "name": "Unknown",
-      "role": "Director",
-      "email": null,
-      "li": ""
-    },
-    "avatar": "MW",
-    "avatarBg": "#FDE8EC",
-    "avatarCol": "#7C0C2A",
-    "first_seen": "2026-04-27",
-    "is_new_this_week": true
-  },
-  {
-    "id": 44,
-    "name": "Scott James sash windows specialists",
-    "sector": "Windows & Doors",
-    "country": "UK",
-    "region": "other",
-    "region_label": "UK",
-    "staff": "15",
-    "tenure_months": 10,
-    "tenure_label": "10 months",
-    "score": 60,
-    "hot_trigger": null,
-    "platforms": [
-      "facebook"
-    ],
-    "audience": "Homeowners",
-    "keywords": "",
-    "spend": [
-      5,
-      5,
-      5,
-      5,
-      5,
-      5,
-      5
-    ],
-    "contact": {
-      "name": "Unknown",
-      "role": "Director",
-      "email": null,
-      "li": ""
-    },
-    "avatar": "SJ",
-    "avatarBg": "#FDE8EC",
-    "avatarCol": "#7C0C2A",
-    "first_seen": "2026-04-19",
-    "is_new_this_week": false
-  },
-  {
-    "id": 45,
-    "name": "Three Counties Windows & Doors",
-    "sector": "Windows & Doors",
-    "country": "UK",
-    "region": "other",
-    "region_label": "UK",
-    "staff": "15",
-    "tenure_months": 7,
-    "tenure_label": "7 months",
-    "score": 60,
-    "hot_trigger": null,
-    "platforms": [
-      "facebook"
-    ],
-    "audience": "Homeowners",
-    "keywords": "",
-    "spend": [
-      5,
-      5,
-      5,
-      5,
-      5,
-      5,
-      5
-    ],
-    "contact": {
-      "name": "Unknown",
-      "role": "Director",
-      "email": null,
-      "li": ""
-    },
-    "avatar": "TC",
-    "avatarBg": "#FDE8EC",
-    "avatarCol": "#7C0C2A",
-    "first_seen": "2026-04-12",
-    "is_new_this_week": false
-  },
-  {
-    "id": 46,
-    "name": "Budget Designer HomeWorks",
-    "sector": "Windows & Doors",
-    "country": "UK",
-    "region": "other",
-    "region_label": "UK",
-    "staff": "15",
-    "tenure_months": 12,
-    "tenure_label": "12 months",
-    "score": 60,
-    "hot_trigger": null,
-    "platforms": [
-      "facebook"
-    ],
-    "audience": "Homeowners",
-    "keywords": "",
-    "spend": [
-      2,
-      2,
-      2,
-      2,
-      2,
-      2,
-      2
-    ],
-    "contact": {
-      "name": "Unknown",
-      "role": "Director",
-      "email": null,
-      "li": ""
-    },
-    "avatar": "BD",
-    "avatarBg": "#FDE8EC",
-    "avatarCol": "#7C0C2A",
-    "first_seen": "2026-04-19",
-    "is_new_this_week": false
-  },
-  {
-    "id": 47,
-    "name": "D\u00e9Dannan Door and Window Parts Ireland",
-    "sector": "Windows & Doors",
-    "country": "IE",
-    "region": "ireland",
-    "region_label": "Dublin & Ireland",
-    "staff": "15",
-    "tenure_months": 14,
-    "tenure_label": "14 months",
-    "score": 60,
-    "hot_trigger": null,
-    "platforms": [
-      "facebook"
-    ],
-    "audience": "Homeowners",
-    "keywords": "",
-    "spend": [
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3
-    ],
-    "contact": {
-      "name": "Unknown",
-      "role": "Director",
-      "email": null,
-      "li": ""
-    },
-    "avatar": "DD",
-    "avatarBg": "#FDE8EC",
-    "avatarCol": "#7C0C2A",
-    "first_seen": "2026-04-12",
-    "is_new_this_week": false
-  },
-  {
-    "id": 48,
-    "name": "Revolution Doors",
-    "sector": "Windows & Doors",
-    "country": "IE",
-    "region": "ireland",
-    "region_label": "Dublin & Ireland",
-    "staff": "15",
-    "tenure_months": 10,
-    "tenure_label": "10 months",
-    "score": 60,
-    "hot_trigger": null,
-    "platforms": [
-      "facebook"
-    ],
-    "audience": "Homeowners",
-    "keywords": "",
-    "spend": [
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3
-    ],
-    "contact": {
-      "name": "Unknown",
-      "role": "Director",
-      "email": null,
-      "li": ""
-    },
-    "avatar": "RD",
-    "avatarBg": "#FDE8EC",
-    "avatarCol": "#7C0C2A",
-    "first_seen": "2026-04-12",
-    "is_new_this_week": false
-  },
-  {
-    "id": 49,
-    "name": "CompareCompanies",
-    "sector": "Windows & Doors",
-    "country": "UK",
-    "region": "other",
-    "region_label": "UK",
-    "staff": "15",
-    "tenure_months": 5,
-    "tenure_label": "5 months",
-    "score": 55,
-    "hot_trigger": null,
-    "platforms": [
-      "facebook"
-    ],
-    "audience": "Homeowners",
-    "keywords": "",
-    "spend": [
-      5,
-      5,
-      5,
-      5,
-      5,
-      5,
-      5
-    ],
-    "contact": {
-      "name": "Unknown",
-      "role": "Director",
-      "email": null,
-      "li": ""
-    },
-    "avatar": "C",
-    "avatarBg": "#FDE8EC",
-    "avatarCol": "#7C0C2A",
-    "first_seen": "2026-04-27",
-    "is_new_this_week": true
-  },
-  {
-    "id": 50,
-    "name": "Wilson Windows",
-    "sector": "Windows & Doors",
-    "country": "UK",
-    "region": "other",
-    "region_label": "UK",
-    "staff": "15",
-    "tenure_months": 4,
-    "tenure_label": "4 months",
-    "score": 50,
-    "hot_trigger": null,
-    "platforms": [
-      "facebook"
-    ],
-    "audience": "Homeowners",
-    "keywords": "",
-    "spend": [
-      2,
-      2,
-      2,
-      2,
-      2,
-      2,
-      2
-    ],
-    "contact": {
-      "name": "Unknown",
-      "role": "Director",
-      "email": null,
-      "li": ""
-    },
-    "avatar": "WW",
-    "avatarBg": "#FDE8EC",
-    "avatarCol": "#7C0C2A",
-    "first_seen": "2026-04-27",
-    "is_new_this_week": true
-  },
-  {
-    "id": 51,
-    "name": "THE WINDOW DOCTOR",
-    "sector": "Windows & Doors",
-    "country": "UK",
-    "region": "other",
-    "region_label": "UK",
-    "staff": "15",
-    "tenure_months": 4,
-    "tenure_label": "4 months",
-    "score": 50,
-    "hot_trigger": null,
-    "platforms": [
-      "facebook"
-    ],
-    "audience": "Homeowners",
-    "keywords": "",
-    "spend": [
-      5,
-      5,
-      5,
-      5,
-      5,
-      5,
-      5
-    ],
-    "contact": {
-      "name": "Unknown",
-      "role": "Director",
-      "email": null,
-      "li": ""
-    },
-    "avatar": "TW",
-    "avatarBg": "#FDE8EC",
-    "avatarCol": "#7C0C2A",
-    "first_seen": "2026-04-27",
-    "is_new_this_week": true
-  },
-  {
-    "id": 52,
-    "name": "Fenbro",
-    "sector": "Windows & Doors",
-    "country": "IE",
-    "region": "ireland",
-    "region_label": "Dublin & Ireland",
-    "staff": "15",
-    "tenure_months": 4,
-    "tenure_label": "4 months",
-    "score": 50,
-    "hot_trigger": null,
-    "platforms": [
-      "facebook"
-    ],
-    "audience": "Homeowners",
-    "keywords": "",
-    "spend": [
-      2,
-      2,
-      2,
-      2,
-      2,
-      2,
-      2
-    ],
-    "contact": {
-      "name": "Unknown",
-      "role": "Director",
-      "email": null,
-      "li": ""
-    },
-    "avatar": "F",
-    "avatarBg": "#FDE8EC",
-    "avatarCol": "#7C0C2A",
-    "first_seen": "2026-04-19",
-    "is_new_this_week": false
-  },
-  {
-    "id": 53,
-    "name": "Deflo Ltd",
-    "sector": "Drainage",
-    "country": "UK",
-    "region": "other",
-    "region_label": "UK",
-    "staff": "15",
-    "tenure_months": 39,
-    "tenure_label": "39 months",
-    "score": 71,
-    "hot_trigger": null,
-    "platforms": [
-      "facebook",
-      "google"
-    ],
-    "audience": "Homeowners",
-    "keywords": "",
-    "spend": [
-      2,
-      2,
-      2,
-      2,
-      2,
-      2,
-      2
-    ],
-    "contact": {
-      "name": "Unknown",
-      "role": "Director",
-      "email": null,
-      "li": ""
-    },
-    "avatar": "DL",
-    "avatarBg": "#E8F4FD",
-    "avatarCol": "#0A5C84",
-    "first_seen": "2026-04-07",
-    "is_new_this_week": false
-  },
-  {
-    "id": 54,
-    "name": "Drain Doctor Nottingham & Mansfield",
-    "sector": "Drainage",
-    "country": "UK",
-    "region": "other",
-    "region_label": "UK",
-    "staff": "15",
-    "tenure_months": 6,
-    "tenure_label": "6 months",
-    "score": 60,
-    "hot_trigger": null,
-    "platforms": [
-      "facebook"
-    ],
-    "audience": "Homeowners",
-    "keywords": "",
-    "spend": [
-      5,
-      5,
-      5,
-      5,
-      5,
-      5,
-      5
-    ],
-    "contact": {
-      "name": "Unknown",
-      "role": "Director",
-      "email": null,
-      "li": ""
-    },
-    "avatar": "DD",
-    "avatarBg": "#E8F4FD",
-    "avatarCol": "#0A5C84",
-    "first_seen": "2026-04-07",
-    "is_new_this_week": false
-  },
-  {
-    "id": 55,
-    "name": "RJP Environmental",
-    "sector": "Drainage",
-    "country": "UK",
-    "region": "other",
-    "region_label": "UK",
-    "staff": "15",
-    "tenure_months": 6,
-    "tenure_label": "6 months",
-    "score": 60,
-    "hot_trigger": null,
-    "platforms": [
-      "facebook"
-    ],
-    "audience": "Homeowners",
-    "keywords": "",
-    "spend": [
-      2,
-      2,
-      2,
-      2,
-      2,
-      2,
-      2
-    ],
-    "contact": {
-      "name": "Unknown",
-      "role": "Director",
-      "email": null,
-      "li": ""
-    },
-    "avatar": "RE",
-    "avatarBg": "#E8F4FD",
-    "avatarCol": "#0A5C84",
-    "first_seen": "2026-04-12",
-    "is_new_this_week": false
-  },
-  {
-    "id": 56,
-    "name": "Electropoint UK",
-    "sector": "Pumps",
-    "country": "UK",
-    "region": "other",
-    "region_label": "UK",
-    "staff": "15",
-    "tenure_months": 28,
-    "tenure_label": "28 months",
-    "score": 71,
-    "hot_trigger": null,
-    "platforms": [
-      "facebook",
-      "google"
-    ],
-    "audience": "Homeowners",
-    "keywords": "",
-    "spend": [
-      2,
-      2,
-      2,
-      2,
-      2,
-      2,
-      2
-    ],
-    "contact": {
-      "name": "Unknown",
-      "role": "Director",
-      "email": null,
-      "li": ""
-    },
-    "avatar": "EU",
-    "avatarBg": "#F0E8FD",
-    "avatarCol": "#4A0A84",
-    "first_seen": "2026-04-12",
-    "is_new_this_week": false
-  },
-  {
-    "id": 57,
-    "name": "C.R.C Electrical & Renewables Limited",
-    "sector": "Pumps",
-    "country": "UK",
-    "region": "other",
-    "region_label": "UK",
-    "staff": "15",
-    "tenure_months": 6,
-    "tenure_label": "6 months",
-    "score": 60,
-    "hot_trigger": null,
-    "platforms": [
-      "facebook"
-    ],
-    "audience": "Homeowners",
-    "keywords": "",
-    "spend": [
-      4,
-      4,
-      4,
-      4,
-      4,
-      4,
-      4
-    ],
-    "contact": {
-      "name": "Unknown",
-      "role": "Director",
-      "email": null,
-      "li": ""
-    },
-    "avatar": "CE",
-    "avatarBg": "#F0E8FD",
-    "avatarCol": "#4A0A84",
-    "first_seen": "2026-04-12",
-    "is_new_this_week": false
-  },
-  {
-    "id": 58,
-    "name": "Greener Energy Group",
-    "sector": "Pumps",
-    "country": "UK",
-    "region": "other",
-    "region_label": "UK",
-    "staff": "15",
-    "tenure_months": 6,
-    "tenure_label": "6 months",
-    "score": 60,
-    "hot_trigger": null,
-    "platforms": [
-      "facebook"
-    ],
-    "audience": "Homeowners",
-    "keywords": "",
-    "spend": [
-      4,
-      4,
-      4,
-      4,
-      4,
-      4,
-      4
-    ],
-    "contact": {
-      "name": "Unknown",
-      "role": "Director",
-      "email": null,
-      "li": ""
-    },
-    "avatar": "GE",
-    "avatarBg": "#F0E8FD",
-    "avatarCol": "#4A0A84",
-    "first_seen": "2026-04-12",
-    "is_new_this_week": false
-  },
-  {
-    "id": 59,
-    "name": "Tanks For Everything",
-    "sector": "Pumps",
-    "country": "UK",
-    "region": "other",
-    "region_label": "UK",
-    "staff": "15",
-    "tenure_months": 4,
-    "tenure_label": "4 months",
-    "score": 50,
-    "hot_trigger": null,
-    "platforms": [
-      "facebook"
-    ],
-    "audience": "Homeowners",
-    "keywords": "",
-    "spend": [
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3
-    ],
-    "contact": {
-      "name": "Unknown",
-      "role": "Director",
-      "email": null,
-      "li": ""
-    },
-    "avatar": "TF",
-    "avatarBg": "#F0E8FD",
-    "avatarCol": "#4A0A84",
-    "first_seen": "2026-04-12",
-    "is_new_this_week": false
-  },
-  {
-    "id": 60,
     "name": "Gold1",
     "sector": "Plumbing",
     "country": "UK",
@@ -2729,13 +1523,13 @@ const SAMPLE_DATA = [
     "audience": "Homeowners",
     "keywords": "",
     "spend": [
-      4,
-      4,
-      4,
-      4,
-      4,
-      4,
-      4
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
     ],
     "contact": {
       "name": "Unknown",
@@ -2746,11 +1540,14 @@ const SAMPLE_DATA = [
     "avatar": "G",
     "avatarBg": "#EEEDFE",
     "avatarCol": "#3C3489",
+    "page_url": "https://www.facebook.com/61568330529589",
+    "page_id": "61568330529589",
+    "page_url_source": "card",
     "first_seen": "2026-04-07",
     "is_new_this_week": false
   },
   {
-    "id": 61,
+    "id": 27,
     "name": "Prime Pipe Emergency",
     "sector": "Plumbing",
     "country": "UK",
@@ -2784,11 +1581,2064 @@ const SAMPLE_DATA = [
     "avatar": "PP",
     "avatarBg": "#EEEDFE",
     "avatarCol": "#3C3489",
+    "page_url": "https://www.facebook.com/61583258072403",
+    "page_id": "61583258072403",
+    "page_url_source": "card",
     "first_seen": "2026-04-12",
     "is_new_this_week": false
   },
   {
+    "id": 28,
+    "name": "OpenRent",
+    "sector": "Electrical",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 12,
+    "tenure_label": "12 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "O",
+    "avatarBg": "#E6F1FB",
+    "avatarCol": "#0C447C",
+    "page_url": "https://www.facebook.com/OpenRent",
+    "page_id": "OpenRent",
+    "page_url_source": "card",
+    "first_seen": "2026-04-07",
+    "is_new_this_week": false
+  },
+  {
+    "id": 29,
+    "name": "Plug it in",
+    "sector": "Electrical",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 19,
+    "tenure_label": "19 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "PI",
+    "avatarBg": "#E6F1FB",
+    "avatarCol": "#0C447C",
+    "page_url": "https://www.facebook.com/plugitin1",
+    "page_id": "plugitin1",
+    "page_url_source": "card",
+    "first_seen": "2026-04-07",
+    "is_new_this_week": false
+  },
+  {
+    "id": 30,
+    "name": "DP Electrical Specialists Limited",
+    "sector": "Electrical",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 27,
+    "tenure_label": "27 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "DE",
+    "avatarBg": "#E6F1FB",
+    "avatarCol": "#0C447C",
+    "page_url": "https://www.facebook.com/dpelectrical78",
+    "page_id": "dpelectrical78",
+    "page_url_source": "card",
+    "first_seen": "2026-04-07",
+    "is_new_this_week": false
+  },
+  {
+    "id": 31,
+    "name": "Lightwave",
+    "sector": "Electrical",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 13,
+    "tenure_label": "13 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "L",
+    "avatarBg": "#E6F1FB",
+    "avatarCol": "#0C447C",
+    "page_url": "https://www.facebook.com/LightwaveRF",
+    "page_id": "LightwaveRF",
+    "page_url_source": "card",
+    "first_seen": "2026-04-12",
+    "is_new_this_week": false
+  },
+  {
+    "id": 32,
+    "name": "James' Marketing ToolBox",
+    "sector": "Electrical",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 14,
+    "tenure_label": "14 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "JM",
+    "avatarBg": "#E6F1FB",
+    "avatarCol": "#0C447C",
+    "page_url": "https://www.facebook.com/jamestoolbox",
+    "page_id": "jamestoolbox",
+    "page_url_source": "card",
+    "first_seen": "2026-04-19",
+    "is_new_this_week": false
+  },
+  {
+    "id": 33,
+    "name": "Dec-Elec Electrical Contractors",
+    "sector": "Electrical",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 8,
+    "tenure_label": "8 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "DE",
+    "avatarBg": "#E6F1FB",
+    "avatarCol": "#0C447C",
+    "page_url": "https://www.facebook.com/decelec1",
+    "page_id": "decelec1",
+    "page_url_source": "card",
+    "first_seen": "2026-04-27",
+    "is_new_this_week": false
+  },
+  {
+    "id": 34,
+    "name": "Merrin Electrical LTD",
+    "sector": "Electrical",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 13,
+    "tenure_label": "13 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "ME",
+    "avatarBg": "#E6F1FB",
+    "avatarCol": "#0C447C",
+    "page_url": "https://www.facebook.com/merrinelectricalltd",
+    "page_id": "merrinelectricalltd",
+    "page_url_source": "card",
+    "first_seen": "2026-04-12",
+    "is_new_this_week": false
+  },
+  {
+    "id": 35,
+    "name": "CS Electrics",
+    "sector": "Electrical",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 57,
+    "tenure_label": "57 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "CE",
+    "avatarBg": "#E6F1FB",
+    "avatarCol": "#0C447C",
+    "page_url": "https://www.facebook.com/cselectrics0",
+    "page_id": "cselectrics0",
+    "page_url_source": "card",
+    "first_seen": "2026-04-12",
+    "is_new_this_week": false
+  },
+  {
+    "id": 36,
+    "name": "Everyday Welding Supplies",
+    "sector": "Electrical",
+    "country": "IE",
+    "region": "ireland",
+    "region_label": "Dublin & Ireland",
+    "staff": "15",
+    "tenure_months": 9,
+    "tenure_label": "9 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "EW",
+    "avatarBg": "#E6F1FB",
+    "avatarCol": "#0C447C",
+    "page_url": "https://www.facebook.com/everydayweldingsupplies",
+    "page_id": "everydayweldingsupplies",
+    "page_url_source": "card",
+    "first_seen": "2026-04-12",
+    "is_new_this_week": false
+  },
+  {
+    "id": 37,
+    "name": "City & Guilds Electrical",
+    "sector": "Electrical",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 5,
+    "tenure_label": "5 months",
+    "score": 55,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "C&",
+    "avatarBg": "#E6F1FB",
+    "avatarCol": "#0C447C",
+    "page_url": "https://www.facebook.com/cityandguildselectrical",
+    "page_id": "cityandguildselectrical",
+    "page_url_source": "card",
+    "first_seen": "2026-04-27",
+    "is_new_this_week": false
+  },
+  {
+    "id": 38,
+    "name": "Rointe Ireland",
+    "sector": "Electrical",
+    "country": "IE",
+    "region": "ireland",
+    "region_label": "Dublin & Ireland",
+    "staff": "15",
+    "tenure_months": 4,
+    "tenure_label": "4 months",
+    "score": 50,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "RI",
+    "avatarBg": "#E6F1FB",
+    "avatarCol": "#0C447C",
+    "page_url": "https://www.facebook.com/RointeIreland",
+    "page_id": "RointeIreland",
+    "page_url_source": "card",
+    "first_seen": "2026-04-12",
+    "is_new_this_week": false
+  },
+  {
+    "id": 39,
+    "name": "Treacy Solar",
+    "sector": "Electrical",
+    "country": "IE",
+    "region": "ireland",
+    "region_label": "Dublin & Ireland",
+    "staff": "15",
+    "tenure_months": 3,
+    "tenure_label": "3 months",
+    "score": 45,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "TS",
+    "avatarBg": "#E6F1FB",
+    "avatarCol": "#0C447C",
+    "page_url": "https://www.facebook.com/61550520132909",
+    "page_id": "61550520132909",
+    "page_url_source": "card",
+    "first_seen": "2026-04-19",
+    "is_new_this_week": false
+  },
+  {
+    "id": 40,
+    "name": "Lincolnshire Walnut Blasting carbon removal",
+    "sector": "Alarms",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 47,
+    "tenure_label": "47 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "LW",
+    "avatarBg": "#FAEEDA",
+    "avatarCol": "#633806",
+    "page_url": "https://www.facebook.com/Lincswalnutblasting",
+    "page_id": "Lincswalnutblasting",
+    "page_url_source": "card",
+    "first_seen": "2026-04-12",
+    "is_new_this_week": false
+  },
+  {
+    "id": 41,
+    "name": "Creative Low Carbon",
+    "sector": "Alarms",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 7,
+    "tenure_label": "7 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "CL",
+    "avatarBg": "#FAEEDA",
+    "avatarCol": "#633806",
+    "page_url": "https://www.facebook.com/61570354942196",
+    "page_id": "61570354942196",
+    "page_url_source": "card",
+    "first_seen": "2026-04-19",
+    "is_new_this_week": false
+  },
+  {
+    "id": 42,
+    "name": "Kingwwy cool",
+    "sector": "Alarms",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 7,
+    "tenure_label": "7 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "KC",
+    "avatarBg": "#FAEEDA",
+    "avatarCol": "#633806",
+    "page_url": "https://www.facebook.com/100085141010930",
+    "page_id": "100085141010930",
+    "page_url_source": "card",
+    "first_seen": "2026-04-19",
+    "is_new_this_week": false
+  },
+  {
+    "id": 43,
+    "name": "Corten Steel Ireland",
+    "sector": "Alarms",
+    "country": "IE",
+    "region": "ireland",
+    "region_label": "Dublin & Ireland",
+    "staff": "15",
+    "tenure_months": 6,
+    "tenure_label": "6 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "CS",
+    "avatarBg": "#FAEEDA",
+    "avatarCol": "#633806",
+    "page_url": "https://www.facebook.com/100094655093501",
+    "page_id": "100094655093501",
+    "page_url_source": "card",
+    "first_seen": "2026-04-19",
+    "is_new_this_week": false
+  },
+  {
+    "id": 44,
+    "name": "aosu Life",
+    "sector": "Alarms",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 5,
+    "tenure_label": "5 months",
+    "score": 55,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "AL",
+    "avatarBg": "#FAEEDA",
+    "avatarCol": "#633806",
+    "page_url": "https://www.facebook.com/aosulife",
+    "page_id": "aosulife",
+    "page_url_source": "card",
+    "first_seen": "2026-05-04",
+    "is_new_this_week": true
+  },
+  {
+    "id": 45,
+    "name": "Network Security.ie",
+    "sector": "Alarms",
+    "country": "IE",
+    "region": "ireland",
+    "region_label": "Dublin & Ireland",
+    "staff": "15",
+    "tenure_months": 3,
+    "tenure_label": "3 months",
+    "score": 45,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "NS",
+    "avatarBg": "#FAEEDA",
+    "avatarCol": "#633806",
+    "page_url": "https://www.facebook.com/100063559794818",
+    "page_id": "100063559794818",
+    "page_url_source": "card",
+    "first_seen": "2026-04-19",
+    "is_new_this_week": false
+  },
+  {
+    "id": 46,
+    "name": "Dolmen Insurance",
+    "sector": "Alarms",
+    "country": "IE",
+    "region": "ireland",
+    "region_label": "Dublin & Ireland",
+    "staff": "15",
+    "tenure_months": 3,
+    "tenure_label": "3 months",
+    "score": 45,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "DI",
+    "avatarBg": "#FAEEDA",
+    "avatarCol": "#633806",
+    "page_url": "https://www.facebook.com/dolmeninsurance",
+    "page_id": "dolmeninsurance",
+    "page_url_source": "card",
+    "first_seen": "2026-04-27",
+    "is_new_this_week": false
+  },
+  {
+    "id": 47,
+    "name": "Crestshield Windows",
+    "sector": "Windows & Doors",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 69,
+    "tenure_label": "69 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "CW",
+    "avatarBg": "#FDE8EC",
+    "avatarCol": "#7C0C2A",
+    "page_url": "https://www.facebook.com/www.crestshieldwindows.co.uk",
+    "page_id": "www.crestshieldwindows.co.uk",
+    "page_url_source": "card",
+    "first_seen": "2026-04-07",
+    "is_new_this_week": false
+  },
+  {
+    "id": 48,
+    "name": "Lancashire Double Glazing",
+    "sector": "Windows & Doors",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 10,
+    "tenure_label": "10 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "LD",
+    "avatarBg": "#FDE8EC",
+    "avatarCol": "#7C0C2A",
+    "page_url": "https://www.facebook.com/lancashiredoubleglazingldg",
+    "page_id": "lancashiredoubleglazingldg",
+    "page_url_source": "card",
+    "first_seen": "2026-04-07",
+    "is_new_this_week": false
+  },
+  {
+    "id": 49,
+    "name": "Crosby's Double Glazing Specialists",
+    "sector": "Windows & Doors",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 75,
+    "tenure_label": "75 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "CD",
+    "avatarBg": "#FDE8EC",
+    "avatarCol": "#7C0C2A",
+    "page_url": "https://www.facebook.com/crosbysdoubleglazing",
+    "page_id": "crosbysdoubleglazing",
+    "page_url_source": "card",
+    "first_seen": "2026-05-04",
+    "is_new_this_week": true
+  },
+  {
+    "id": 50,
+    "name": "Sunrise Windows - Double Glazing Installers - Plymouth",
+    "sector": "Windows & Doors",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 15,
+    "tenure_label": "15 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "SW",
+    "avatarBg": "#FDE8EC",
+    "avatarCol": "#7C0C2A",
+    "page_url": "https://www.facebook.com/SunriseWindowsPlymouth",
+    "page_id": "SunriseWindowsPlymouth",
+    "page_url_source": "card",
+    "first_seen": "2026-04-07",
+    "is_new_this_week": false
+  },
+  {
+    "id": 51,
+    "name": "Centaframe Windows and Doors",
+    "sector": "Windows & Doors",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 10,
+    "tenure_label": "10 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "CW",
+    "avatarBg": "#FDE8EC",
+    "avatarCol": "#7C0C2A",
+    "page_url": "https://www.facebook.com/Centaframe",
+    "page_id": "Centaframe",
+    "page_url_source": "card",
+    "first_seen": "2026-04-07",
+    "is_new_this_week": false
+  },
+  {
+    "id": 52,
+    "name": "CompareCompanies",
+    "sector": "Windows & Doors",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 6,
+    "tenure_label": "6 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "C",
+    "avatarBg": "#FDE8EC",
+    "avatarCol": "#7C0C2A",
+    "page_url": "https://www.facebook.com/comparecompanies",
+    "page_id": "comparecompanies",
+    "page_url_source": "card",
+    "first_seen": "2026-04-27",
+    "is_new_this_week": false
+  },
+  {
+    "id": 53,
+    "name": "Shane Howells Ltd",
+    "sector": "Windows & Doors",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 15,
+    "tenure_label": "15 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "SH",
+    "avatarBg": "#FDE8EC",
+    "avatarCol": "#7C0C2A",
+    "page_url": "https://www.facebook.com/shanehowellswindows",
+    "page_id": "shanehowellswindows",
+    "page_url_source": "card",
+    "first_seen": "2026-04-12",
+    "is_new_this_week": false
+  },
+  {
+    "id": 54,
+    "name": "Misted Windows",
+    "sector": "Windows & Doors",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 6,
+    "tenure_label": "6 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "MW",
+    "avatarBg": "#FDE8EC",
+    "avatarCol": "#7C0C2A",
+    "page_url": "https://www.facebook.com/mistedwindowsUK",
+    "page_id": "mistedwindowsUK",
+    "page_url_source": "card",
+    "first_seen": "2026-04-27",
+    "is_new_this_week": false
+  },
+  {
+    "id": 55,
+    "name": "Budget Designer HomeWorks",
+    "sector": "Windows & Doors",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 12,
+    "tenure_label": "12 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "BD",
+    "avatarBg": "#FDE8EC",
+    "avatarCol": "#7C0C2A",
+    "page_url": "https://www.facebook.com/budget.designer.homeworks",
+    "page_id": "budget.designer.homeworks",
+    "page_url_source": "card",
+    "first_seen": "2026-04-19",
+    "is_new_this_week": false
+  },
+  {
+    "id": 56,
+    "name": "D\u00e9Dannan Door and Window Parts Ireland",
+    "sector": "Windows & Doors",
+    "country": "IE",
+    "region": "ireland",
+    "region_label": "Dublin & Ireland",
+    "staff": "15",
+    "tenure_months": 14,
+    "tenure_label": "14 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "DD",
+    "avatarBg": "#FDE8EC",
+    "avatarCol": "#7C0C2A",
+    "page_url": "https://www.facebook.com/100090560806701",
+    "page_id": "100090560806701",
+    "page_url_source": "card",
+    "first_seen": "2026-04-12",
+    "is_new_this_week": false
+  },
+  {
+    "id": 57,
+    "name": "Revolution Doors",
+    "sector": "Windows & Doors",
+    "country": "IE",
+    "region": "ireland",
+    "region_label": "Dublin & Ireland",
+    "staff": "15",
+    "tenure_months": 11,
+    "tenure_label": "11 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "RD",
+    "avatarBg": "#FDE8EC",
+    "avatarCol": "#7C0C2A",
+    "page_url": "https://www.facebook.com/RevolutionDoor",
+    "page_id": "RevolutionDoor",
+    "page_url_source": "card",
+    "first_seen": "2026-04-12",
+    "is_new_this_week": false
+  },
+  {
+    "id": 58,
+    "name": "THE WINDOW DOCTOR",
+    "sector": "Windows & Doors",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 5,
+    "tenure_label": "5 months",
+    "score": 55,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "TW",
+    "avatarBg": "#FDE8EC",
+    "avatarCol": "#7C0C2A",
+    "page_url": "https://www.facebook.com/deanecubitt",
+    "page_id": "deanecubitt",
+    "page_url_source": "card",
+    "first_seen": "2026-04-27",
+    "is_new_this_week": false
+  },
+  {
+    "id": 59,
+    "name": "North Somerset Times",
+    "sector": "Windows & Doors",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 5,
+    "tenure_label": "5 months",
+    "score": 55,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "NS",
+    "avatarBg": "#FDE8EC",
+    "avatarCol": "#7C0C2A",
+    "page_url": "https://www.facebook.com/NSomTimes",
+    "page_id": "NSomTimes",
+    "page_url_source": "card",
+    "first_seen": "2026-05-04",
+    "is_new_this_week": true
+  },
+  {
+    "id": 60,
+    "name": "Wilson Windows",
+    "sector": "Windows & Doors",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 4,
+    "tenure_label": "4 months",
+    "score": 50,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "WW",
+    "avatarBg": "#FDE8EC",
+    "avatarCol": "#7C0C2A",
+    "page_url": "https://www.facebook.com/WilsonWindowRepairs",
+    "page_id": "WilsonWindowRepairs",
+    "page_url_source": "card",
+    "first_seen": "2026-04-27",
+    "is_new_this_week": false
+  },
+  {
+    "id": 61,
+    "name": "Basingstoke Gazette",
+    "sector": "Windows & Doors",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 4,
+    "tenure_label": "4 months",
+    "score": 50,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "BG",
+    "avatarBg": "#FDE8EC",
+    "avatarCol": "#7C0C2A",
+    "page_url": "https://www.facebook.com/basingstokegazette",
+    "page_id": "basingstokegazette",
+    "page_url_source": "card",
+    "first_seen": "2026-05-04",
+    "is_new_this_week": true
+  },
+  {
     "id": 62,
+    "name": "Fenbro",
+    "sector": "Windows & Doors",
+    "country": "IE",
+    "region": "ireland",
+    "region_label": "Dublin & Ireland",
+    "staff": "15",
+    "tenure_months": 4,
+    "tenure_label": "4 months",
+    "score": 50,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "F",
+    "avatarBg": "#FDE8EC",
+    "avatarCol": "#7C0C2A",
+    "page_url": "https://www.facebook.com/fenbropl",
+    "page_id": "fenbropl",
+    "page_url_source": "card",
+    "first_seen": "2026-04-19",
+    "is_new_this_week": false
+  },
+  {
+    "id": 63,
+    "name": "Eco Installations Scotland",
+    "sector": "Windows & Doors",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 3,
+    "tenure_label": "3 months",
+    "score": 45,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "EI",
+    "avatarBg": "#FDE8EC",
+    "avatarCol": "#7C0C2A",
+    "page_url": "https://www.facebook.com/61564394356402",
+    "page_id": "61564394356402",
+    "page_url_source": "card",
+    "first_seen": "2026-05-04",
+    "is_new_this_week": true
+  },
+  {
+    "id": 64,
+    "name": "Progress Windows Ltd",
+    "sector": "Windows & Doors",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 3,
+    "tenure_label": "3 months",
+    "score": 45,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "PW",
+    "avatarBg": "#FDE8EC",
+    "avatarCol": "#7C0C2A",
+    "page_url": "https://www.facebook.com/progresswindowshinckley",
+    "page_id": "progresswindowshinckley",
+    "page_url_source": "card",
+    "first_seen": "2026-05-04",
+    "is_new_this_week": true
+  },
+  {
+    "id": 65,
+    "name": "Polar Trade Depot",
+    "sector": "Windows & Doors",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 3,
+    "tenure_label": "3 months",
+    "score": 45,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "PT",
+    "avatarBg": "#FDE8EC",
+    "avatarCol": "#7C0C2A",
+    "page_url": "https://www.facebook.com/PolarTradeDepot",
+    "page_id": "PolarTradeDepot",
+    "page_url_source": "card",
+    "first_seen": "2026-05-04",
+    "is_new_this_week": true
+  },
+  {
+    "id": 66,
+    "name": "Garden Rooms by CG Joinery",
+    "sector": "Windows & Doors",
+    "country": "IE",
+    "region": "ireland",
+    "region_label": "Dublin & Ireland",
+    "staff": "15",
+    "tenure_months": 3,
+    "tenure_label": "3 months",
+    "score": 45,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "GR",
+    "avatarBg": "#FDE8EC",
+    "avatarCol": "#7C0C2A",
+    "page_url": "https://www.facebook.com/cgjoineryltd",
+    "page_id": "cgjoineryltd",
+    "page_url_source": "card",
+    "first_seen": "2026-05-04",
+    "is_new_this_week": true
+  },
+  {
+    "id": 67,
+    "name": "Ashgrove Conservatories and Sunrooms Ltd",
+    "sector": "Windows & Doors",
+    "country": "IE",
+    "region": "ireland",
+    "region_label": "Dublin & Ireland",
+    "staff": "15",
+    "tenure_months": 3,
+    "tenure_label": "3 months",
+    "score": 45,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "AC",
+    "avatarBg": "#FDE8EC",
+    "avatarCol": "#7C0C2A",
+    "page_url": "https://www.facebook.com/AshgroveConservatories",
+    "page_id": "AshgroveConservatories",
+    "page_url_source": "card",
+    "first_seen": "2026-05-04",
+    "is_new_this_week": true
+  },
+  {
+    "id": 68,
+    "name": "Deflo Ltd",
+    "sector": "Drainage",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 39,
+    "tenure_label": "39 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "DL",
+    "avatarBg": "#E8F4FD",
+    "avatarCol": "#0A5C84",
+    "page_url": "https://www.facebook.com/deflopembrokeshire",
+    "page_id": "deflopembrokeshire",
+    "page_url_source": "card",
+    "first_seen": "2026-04-07",
+    "is_new_this_week": false
+  },
+  {
+    "id": 69,
+    "name": "Drain Doctor Nottingham & Mansfield",
+    "sector": "Drainage",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 6,
+    "tenure_label": "6 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "DD",
+    "avatarBg": "#E8F4FD",
+    "avatarCol": "#0A5C84",
+    "page_url": "https://www.facebook.com/61566837545026",
+    "page_id": "61566837545026",
+    "page_url_source": "card",
+    "first_seen": "2026-04-07",
+    "is_new_this_week": false
+  },
+  {
+    "id": 70,
+    "name": "RJP Environmental",
+    "sector": "Drainage",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 6,
+    "tenure_label": "6 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "RE",
+    "avatarBg": "#E8F4FD",
+    "avatarCol": "#0A5C84",
+    "page_url": "https://www.facebook.com/rjpenvironmental",
+    "page_id": "rjpenvironmental",
+    "page_url_source": "card",
+    "first_seen": "2026-04-12",
+    "is_new_this_week": false
+  },
+  {
+    "id": 71,
+    "name": "Electropoint UK",
+    "sector": "Pumps",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 29,
+    "tenure_label": "29 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "EU",
+    "avatarBg": "#F0E8FD",
+    "avatarCol": "#4A0A84",
+    "page_url": "https://www.facebook.com/electropointUK",
+    "page_id": "electropointUK",
+    "page_url_source": "card",
+    "first_seen": "2026-04-12",
+    "is_new_this_week": false
+  },
+  {
+    "id": 72,
+    "name": "C.R.C Electrical & Renewables Limited",
+    "sector": "Pumps",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 6,
+    "tenure_label": "6 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "CE",
+    "avatarBg": "#F0E8FD",
+    "avatarCol": "#4A0A84",
+    "page_url": "https://www.facebook.com/C.R.CElectricalandRenewablesLimited",
+    "page_id": "C.R.CElectricalandRenewablesLimited",
+    "page_url_source": "card",
+    "first_seen": "2026-04-12",
+    "is_new_this_week": false
+  },
+  {
+    "id": 73,
+    "name": "Greener Energy Group",
+    "sector": "Pumps",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 7,
+    "tenure_label": "7 months",
+    "score": 60,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "GE",
+    "avatarBg": "#F0E8FD",
+    "avatarCol": "#4A0A84",
+    "page_url": "https://www.facebook.com/GreenerEnergyGroup",
+    "page_id": "GreenerEnergyGroup",
+    "page_url_source": "card",
+    "first_seen": "2026-04-12",
+    "is_new_this_week": false
+  },
+  {
+    "id": 74,
+    "name": "German Mods UK",
+    "sector": "Pumps",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 5,
+    "tenure_label": "5 months",
+    "score": 55,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "GM",
+    "avatarBg": "#F0E8FD",
+    "avatarCol": "#4A0A84",
+    "page_url": "https://www.facebook.com/germanmodsuk",
+    "page_id": "germanmodsuk",
+    "page_url_source": "card",
+    "first_seen": "2026-04-19",
+    "is_new_this_week": false
+  },
+  {
+    "id": 75,
+    "name": "Tanks For Everything",
+    "sector": "Pumps",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 4,
+    "tenure_label": "4 months",
+    "score": 50,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "TF",
+    "avatarBg": "#F0E8FD",
+    "avatarCol": "#4A0A84",
+    "page_url": "https://www.facebook.com/tanksforeverythinguk",
+    "page_id": "tanksforeverythinguk",
+    "page_url_source": "card",
+    "first_seen": "2026-04-12",
+    "is_new_this_week": false
+  },
+  {
+    "id": 76,
+    "name": "ARC Technical",
+    "sector": "Pumps",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 4,
+    "tenure_label": "4 months",
+    "score": 50,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "AT",
+    "avatarBg": "#F0E8FD",
+    "avatarCol": "#4A0A84",
+    "page_url": "https://www.facebook.com/arc.technical",
+    "page_id": "arc.technical",
+    "page_url_source": "card",
+    "first_seen": "2026-04-19",
+    "is_new_this_week": false
+  },
+  {
+    "id": 77,
+    "name": "Dragon Renewable Energy Ltd",
+    "sector": "Pumps",
+    "country": "UK",
+    "region": "other",
+    "region_label": "UK",
+    "staff": "15",
+    "tenure_months": 3,
+    "tenure_label": "3 months",
+    "score": 45,
+    "hot_trigger": null,
+    "platforms": [
+      "facebook"
+    ],
+    "audience": "Homeowners",
+    "keywords": "",
+    "spend": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    "contact": {
+      "name": "Unknown",
+      "role": "Director",
+      "email": null,
+      "li": ""
+    },
+    "avatar": "DR",
+    "avatarBg": "#F0E8FD",
+    "avatarCol": "#4A0A84",
+    "page_url": "https://www.facebook.com/100093687825287",
+    "page_id": "100093687825287",
+    "page_url_source": "card",
+    "first_seen": "2026-05-04",
+    "is_new_this_week": true
+  },
+  {
+    "id": 78,
     "name": "Rockwarm",
     "sector": "Insulation",
     "country": "UK",
@@ -2822,6 +3672,9 @@ const SAMPLE_DATA = [
     "avatar": "R",
     "avatarBg": "#F1EFE8",
     "avatarCol": "#444441",
+    "page_url": "https://www.facebook.com/rockwarmltd",
+    "page_id": "rockwarmltd",
+    "page_url_source": "card",
     "first_seen": "2026-04-12",
     "is_new_this_week": false
   }
@@ -3289,7 +4142,10 @@ function render() {
     <div class="avatar" style="background:${c.avatarBg};color:${c.avatarCol}">${c.avatar}</div>
     <div class="card-meta">
       <div class="card-name">
-        ${escHtml(c.name)}
+        ${c.page_url
+          ? `<a href="${escHtml(c.page_url)}" target="_blank" rel="noopener noreferrer" class="name-link" title="Open ${c.page_url_source === 'google' ? 'Google-fallback ' : ''}page in new tab">${escHtml(c.name)}<span class="link-arrow">&#x2197;</span></a>${c.page_url_source === 'google' ? '<span class="src-badge src-google" title="Resolved via Google search — spot-check">?</span>' : ''}`
+          : escHtml(c.name)
+        }
         ${c.country === 'IE' ? '<span class="ie-badge">IE</span>' : ''}
         ${c.is_new_this_week ? '<span class="new-badge">NEW</span>' : ''}
         ${c.hot_trigger ? `<span class="trigger-tag">${escHtml(c.hot_trigger)}</span>` : ''}
