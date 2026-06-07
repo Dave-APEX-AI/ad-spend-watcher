@@ -25,6 +25,7 @@ into its own `caillte-social` repo at any time (see `engines/SETUP.md` → "Extr
 | `content/lead-magnet-missed-call-audit.md` | The free "what are missed calls costing you" audit |
 | `audit/index.html` | The **owned, capture-enabled** missed-call calculator (our CTA) |
 | `../worker/caillte-leads/` | Free Cloudflare Worker that catches the audit's leads |
+| `PUBLISHING.md` | How to publish to IG/FB + free scheduling & automation |
 | `engines/SETUP.md` | How to wire the engines + what's free vs paid |
 | `engines/arcads-pack/` | Vendored Arcads UGC-video skill pack (MIT, Phase-2, **paid**) |
 
