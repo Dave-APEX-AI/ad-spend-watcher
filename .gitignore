@@ -4,6 +4,9 @@ config/credentials.json
 *.env
 .env
 .env.*
+# ...but keep the documented example templates
+!.env.example
+!**/.env.example
 
 # Cloudflare Workers local state
 .wrangler/
