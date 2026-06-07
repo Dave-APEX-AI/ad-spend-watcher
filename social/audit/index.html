@@ -123,10 +123,15 @@
 
 <script>
   // ── CONFIG ──────────────────────────────────────────────────────────────
-  // Where captured leads go. Deploy worker/caillte-leads and paste its URL here.
-  // Leave "" to fall back to a mailto: capture (no backend needed, less reliable).
-  const LEAD_ENDPOINT = ""; // e.g. "https://caillte-leads.<you>.workers.dev/lead"
-  const FALLBACK_EMAIL = "hello@caillteai.com";
+  // EASIEST (recommended): leads land in your email, no backend to deploy.
+  //   1. Go to https://web3forms.com  2. Enter the inbox you want leads sent to
+  //   3. They email you a free access key  4. Paste it below. Done.
+  const WEB3FORMS_KEY = "";   // e.g. "a1b2c3d4-1234-5678-9abc-def012345678"
+  const LEAD_TO_EMAIL = "hello@caillteai.com";  // inbox (used for the mailto fallback)
+
+  // OPTIONAL alternative: a Cloudflare Worker that stores leads to KV for a
+  // CSV-exportable list (worker/caillte-leads). Leave "" if you're using email above.
+  const LEAD_ENDPOINT = "";   // e.g. "https://caillte-leads.<you>.workers.dev/lead"
   const WEEKS_PER_YEAR = 50;
   // ────────────────────────────────────────────────────────────────────────
 
@@ -171,24 +176,43 @@
       page: location.href, ts: Date.now()
     };
 
+    const summary = `Losing ~${gbp(r.lostYear)}/yr (${gbp(r.lostMonth)}/mo)`;
     try {
-      if (LEAD_ENDPOINT) {
+      if (WEB3FORMS_KEY) {
+        // Email delivery — leads land straight in your inbox, no backend.
+        const res = await fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          headers: {"Content-Type":"application/json", "Accept":"application/json"},
+          body: JSON.stringify({
+            access_key: WEB3FORMS_KEY,
+            subject: "New missed-call audit lead — " + (lead.name || email || phone),
+            from_name: "CaillteAI Missed-Call Audit",
+            email, // sets reply-to to the lead
+            message:
+              `${summary}\n\nName:  ${lead.name}\nEmail: ${email}\nPhone: ${phone}\n` +
+              `Trade: ${lead.trade}\nSource: ${lead.utm_source} / ${lead.utm_campaign}\nPage:  ${lead.page}\n\n` +
+              `Inputs — job £${r.job}, ${r.miss} missed/day, ${r.days} days/wk, ${Math.round(r.conv*100)}% convert`
+          })
+        });
+        const j = await res.json().catch(() => ({}));
+        if (!j.success) throw new Error("web3forms");
+      } else if (LEAD_ENDPOINT) {
         const res = await fetch(LEAD_ENDPOINT, {
           method: "POST", headers: {"Content-Type":"application/json"}, body: JSON.stringify(lead)
         });
         if (!res.ok) throw new Error("bad status " + res.status);
       } else {
-        // Fallback: open a pre-filled email so the lead still reaches you.
+        // Last-resort fallback: open a pre-filled email so the lead still reaches you.
         const body = encodeURIComponent(
           `New missed-call audit lead\n\nName: ${lead.name}\nEmail: ${email}\nPhone: ${phone}\n` +
-          `Losing ~${gbp(r.lostYear)}/yr (${gbp(r.lostMonth)}/mo)\nTrade: ${lead.trade}\nSource: ${lead.utm_source}`);
-        window.location.href = `mailto:${FALLBACK_EMAIL}?subject=Missed-call%20audit%20lead&body=${body}`;
+          `${summary}\nTrade: ${lead.trade}\nSource: ${lead.utm_source}`);
+        window.location.href = `mailto:${LEAD_TO_EMAIL}?subject=Missed-call%20audit%20lead&body=${body}`;
       }
       $("capture").style.display = "none";
       $("done").style.display = "block";
     } catch(err){
       btn.disabled = false; btn.textContent = "Send my missed-call report →";
-      $("err").textContent = "Something went wrong — try again, or email " + FALLBACK_EMAIL;
+      $("err").textContent = "Something went wrong — try again, or email " + LEAD_TO_EMAIL;
       $("err").style.display = "block";
     }
   });

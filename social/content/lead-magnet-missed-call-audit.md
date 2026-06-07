@@ -61,9 +61,13 @@ number is pre-sold for the demo later. It feeds the list without feeling like se
 
 ## Going live (one-time setup)
 
-1. **Deploy the lead Worker** — `worker/caillte-leads/README.md` (free, ~5 min). Get its
-   URL, set `LEAD_ENDPOINT` in `social/audit/index.html`. (If skipped, the form falls back
-   to a pre-filled email so leads still reach you.)
+1. **Pick where leads land:**
+   - **Email (easiest — no backend):** get a free access key at https://web3forms.com
+     (enter your inbox → they email you the key), paste it into `WEB3FORMS_KEY` in
+     `social/audit/index.html`. Leads arrive in your inbox. **Done.**
+   - **Or a stored CRM list:** deploy `worker/caillte-leads/` (README, ~5 min, free) and
+     set `LEAD_ENDPOINT` instead — gives a CSV-exportable list in Cloudflare KV.
+   - If neither is set, the form falls back to a pre-filled email so no lead is lost.
 2. **Host the page** — either:
    - drop `social/audit/` onto caillteai.com (replace/redirect `/challenges`), or
    - serve it from this repo's GitHub Pages.
