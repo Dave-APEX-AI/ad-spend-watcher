@@ -8,10 +8,14 @@ the no-hard-sell rule, and gives every post a natural soft CTA.
 > "Find out what missed calls are *actually* costing your trade business — in 60 seconds,
 > free, no call required."
 
-## Two builds (start cheap)
+## The asset
 
-### v1 — The Calculator (ship first, £0)
-A dead-simple web page (lives great on the existing GitHub Pages / `caillteai.com`):
+### v1 — The Calculator (ALREADY LIVE on caillteai.com ✅)
+Dave already has a missed-call cost calculator on the CaillteAI website. **We don't build
+a new one — every social CTA points to the existing page.** Audit URL: `<AUDIT_URL>`
+(set this once; it's the bio link + every "link in bio" reference below).
+
+For reference, the live calculator does roughly this:
 
 **Inputs (4 sliders/fields):**
 1. Average job value (£)
@@ -53,8 +57,13 @@ In GROW mode a demo ask is too heavy for a cold trades audience. The audit is *v
 on its own*, ungated to view, and self-qualifies: anyone who finishes it and sees a scary
 number is pre-sold for the demo later. It feeds the list without feeling like selling.
 
-## Build note
+## Wiring the existing page (the only setup needed)
 
-The calculator is a single static HTML/JS page — no backend, no cost. It can sit at
-`caillteai.com/audit` or as a page in this repo's Pages site. (Happy to build it on
-request — say the word and I'll scaffold `social/audit/index.html`.)
+The calculator already exists on `caillteai.com`. To make it convert from social:
+1. Set `<AUDIT_URL>` above to the exact page URL, then use it as the **bio link** and the
+   target of every "link in bio" CTA. Tag it `?utm_source=instagram` (and `=facebook`) so
+   we can see which posts drive audits.
+2. Make sure the page captures an **email or WhatsApp** to get the "full breakdown" — that
+   capture is what turns a viewer into a lead (the DM keyword "CAILLTE" feeds the same list).
+3. Optional polish I can add on request: a short pre-filled link per trade
+   (`?trade=plumber`) so the calculator opens warm from a plumbing-specific post.

@@ -36,8 +36,8 @@ Free missed-call audit 👇
 
 ## Link in bio
 
-Single link → the **missed-call audit** (see `content/lead-magnet-missed-call-audit.md`).
-Until that's live, point to `caillteai.com` with a `?utm_source=instagram` tag.
+Single link → the **existing missed-call audit/calculator on caillteai.com**
+(`<AUDIT_URL>?utm_source=instagram`). It's already live — this is the one CTA we push.
 Use a free link-hub only if you need >1 link (keep it to: Audit · Watch a demo · Website).
 
 ## Category / contact (FB & IG Professional)
