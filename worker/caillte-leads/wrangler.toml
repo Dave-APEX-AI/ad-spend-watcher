@@ -1,0 +1,13 @@
+name = "caillte-leads"
+main = "index.js"
+compatibility_date = "2024-11-01"
+
+# KV namespace for stored leads. Create it once, then paste the id below:
+#   npx wrangler kv namespace create LEADS_KV
+[[kv_namespaces]]
+binding = "LEADS_KV"
+id = "PASTE_KV_NAMESPACE_ID"
+
+# ADMIN_TOKEN is a SECRET (not stored here). Set it with:
+#   npx wrangler secret put ADMIN_TOKEN
+# Then export leads via:  GET /leads?token=<that token>

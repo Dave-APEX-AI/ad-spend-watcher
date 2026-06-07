@@ -10,12 +10,14 @@ the no-hard-sell rule, and gives every post a natural soft CTA.
 
 ## The asset
 
-### v1 — The Calculator (ALREADY LIVE on caillteai.com ✅)
-Dave already has a missed-call cost calculator on the CaillteAI website. **We don't build
-a new one — every social CTA points to the existing page.** Audit URL: `<AUDIT_URL>`
-(set this once; it's the bio link + every "link in bio" reference below).
+### v1 — The Calculator (BUILT & OWNED — `social/audit/index.html`) ✅
+The existing page at `caillteai.com/challenges` shows a number but **captures nothing** —
+every lead leaks. So we built our own capture-enabled version: `social/audit/index.html`,
+backed by the free `worker/caillte-leads` Cloudflare Worker. Deploy steps in that worker's
+README; once hosted, set `<AUDIT_URL>` to its address (bio link + every CTA below), and
+point the old `/challenges` page's button at it (or replace it).
 
-For reference, the live calculator does roughly this:
+What it does:
 
 **Inputs (4 sliders/fields):**
 1. Average job value (£)
@@ -57,13 +59,17 @@ In GROW mode a demo ask is too heavy for a cold trades audience. The audit is *v
 on its own*, ungated to view, and self-qualifies: anyone who finishes it and sees a scary
 number is pre-sold for the demo later. It feeds the list without feeling like selling.
 
-## Wiring the existing page (the only setup needed)
+## Going live (one-time setup)
 
-The calculator already exists on `caillteai.com`. To make it convert from social:
-1. Set `<AUDIT_URL>` above to the exact page URL, then use it as the **bio link** and the
-   target of every "link in bio" CTA. Tag it `?utm_source=instagram` (and `=facebook`) so
-   we can see which posts drive audits.
-2. Make sure the page captures an **email or WhatsApp** to get the "full breakdown" — that
-   capture is what turns a viewer into a lead (the DM keyword "CAILLTE" feeds the same list).
-3. Optional polish I can add on request: a short pre-filled link per trade
-   (`?trade=plumber`) so the calculator opens warm from a plumbing-specific post.
+1. **Deploy the lead Worker** — `worker/caillte-leads/README.md` (free, ~5 min). Get its
+   URL, set `LEAD_ENDPOINT` in `social/audit/index.html`. (If skipped, the form falls back
+   to a pre-filled email so leads still reach you.)
+2. **Host the page** — either:
+   - drop `social/audit/` onto caillteai.com (replace/redirect `/challenges`), or
+   - serve it from this repo's GitHub Pages.
+   Then set `<AUDIT_URL>` (in this file + `PROFILE.md`) to its address.
+3. **Use it as the bio link** with tracking: `<AUDIT_URL>?utm_source=instagram`
+   (`=facebook` on FB) so you see which posts drive audits.
+4. **Built-in extras** (already supported by the page):
+   - per-trade warm open: `?trade=plumber` tags the lead with their trade.
+   - the DM keyword "CAILLTE" feeds the same list (manual send, or auto-DM later).
