@@ -1,7 +1,20 @@
 # CaillteAI — Instagram & Facebook Growth Strategy
 
-**Action mode: GROW.** Optimise every post for reach → saves/shares → follows.
-Soft CTA only (free missed-call audit). We build the audience first, monetise second.
+**Action mode: GROW — and SHIP NOW.** Optimise every post for reach → saves/shares →
+follows. Soft CTA only (free missed-call audit). Build the audience first, monetise second.
+
+> ## ⚡ Operating principle: aggressive timelines, ship ASAP
+> Default to the fastest path to *live*, not the tidiest plan. Done-today beats
+> perfect-next-week. Concretely:
+> - **Launch is measured in hours, not weeks.** First post goes up the same day the
+>   assets exist. See `content/launch-sprint.md` — the 72-hour go-live plan.
+> - **Front-load everything.** Batch a week of content in one sitting; never wait on a
+>   "content day" that's three days out.
+> - **Bias to publish.** An 8/10 post live today > a 10/10 post next week. Ship, watch,
+>   iterate in public.
+> - **No idle backlog.** If an asset is rendered, it gets scheduled the same day.
+> - Every plan states a deadline in **hours/days**, and the next concrete action is always
+>   something doable *right now*.
 
 ## The thesis
 
@@ -79,26 +92,30 @@ Soft CTA: free missed-call audit  →  DM keyword "CAILLTE"  →  list + demo
 The audit (`content/lead-magnet-missed-call-audit.md`) is the *only* offer we push,
 and gently. It captures intent without breaking GROW mode.
 
-## 90-day targets (directional, not vanity-locked)
+## Targets (aggressive — front-loaded, not vanity-locked)
 
-| Metric | Day 30 | Day 60 | Day 90 |
-|--------|--------|--------|--------|
-| Posting consistency | 1 reel/day held | held | held |
-| Followers | +500–1.5k | +2–4k | +5–8k |
-| Median reel views | 1–3k | 3–8k | 8k–20k+ |
-| Saves/reel (carousels) | 20+ | 50+ | 100+ |
-| Audit completions | 10 | 40 | 120 |
-| Booked demos from social | 1–3 | 5–10 | 15–25 |
+| Metric | **72 hrs** | Day 7 | Day 30 | Day 90 |
+|--------|-----------|-------|--------|--------|
+| Live & posting | profile live + 3 posts up | **2 posts/day** held | held | held |
+| Followers | first 50 | +150–400 | +1–2.5k | +6–10k |
+| Median reel views | 300–1k | 1–3k | 3–8k | 10–25k+ |
+| Saves/reel (carousels) | 5+ | 20+ | 50+ | 100+ |
+| Audit completions | first 1–3 | 10+ | 40+ | 150+ |
+| Booked demos from social | — | 1–2 | 5–10 | 20–30 |
 
-Leading indicators we actually steer on: **hold rate (first 3s), saves, shares, profile
-visits → follows.** Track weekly via `caillte-daily-snapshot`.
+Pace is deliberately hot: **2 posts/day** from Day 7 (1 reel + 1 carousel/static), not 1.
+Leading indicators we steer on daily: **hold rate (first 3s), saves, shares, profile
+visits → follows** via `caillte-daily-snapshot`.
 
-## Weekly operating rhythm
+## Operating rhythm (compressed)
 
-- **Sun (15 min):** plan the week → `caillte-content-calendar`.
-- **Mon–Fri (20 min/day):** produce 1 reel + the day's carousel; schedule; post.
-- **Daily (5 min):** `caillte-daily-snapshot` → reply to comments, log numbers.
-- **Fri (10 min):** review what hit, double down next week.
+- **Today:** run `content/launch-sprint.md` — profile live + first 3 posts up. No waiting.
+- **Daily (15 min):** `caillte-daily-snapshot` → post the day's 1–2 pieces, reply to every
+  comment in the first 60 min, log numbers.
+- **One batch night/week (45 min):** render + schedule the whole next week in Meta Business
+  Suite. Never produce day-of unless reacting to a trend.
+- **Mid-week pulse:** kill losing formats immediately, recut the week's winner same day —
+  don't wait for a Friday review.
 
 ## Guardrails
 

@@ -21,6 +21,7 @@ into its own `caillte-social` repo at any time (see `engines/SETUP.md` → "Extr
 | `competitors.md` | Joe Doyle / Tradify / the AI-receptionist newcomers — how we differ |
 | `series/office-heroes.md` | The flagship faceless content franchise + episode formats + scripts |
 | `content/hooks.md` | Hook swipe file (missed-call pain → product) |
+| `content/launch-sprint.md` | ⚡ **72-hour go-live sprint — start here** |
 | `content/calendar-30day.md` | Day-by-day launch calendar |
 | `content/lead-magnet-missed-call-audit.md` | The free "what are missed calls costing you" audit |
 | `audit/index.html` | The **owned, capture-enabled** missed-call calculator (our CTA) |
@@ -46,7 +47,10 @@ are optional, only when you want AI-actor video.
 Run the `caillte-daily-snapshot` skill each morning for a "what to post today" brief,
 or ask: *"plan this week's CaillteAI posts"* (→ `caillte-content-calendar`).
 
-## Action mode: GROW
+## Action mode: GROW — and SHIP NOW ⚡
+
+**Bias to ship.** Aggressive timelines: live in hours not weeks, 8/10-today beats
+10/10-next-week. New here? Open `content/launch-sprint.md` and go.
 
 Every decision in this module optimises for **reach → saves → follows** first.
 Soft CTA only (free missed-call audit). Monetise the audience once it's built.
