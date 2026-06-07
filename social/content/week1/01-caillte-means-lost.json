@@ -1,0 +1,12 @@
+{
+  "name": "01-caillte-means-lost",
+  "slides": [
+    {"type":"cover","kicker":"Office Heroes · Ep.01","headline":"In Irish, <span class='hl'>caillte</span> means “lost”.","body":"We named the company after the one thing we kill. Swipe.","theme":"dark"},
+    {"type":"point","index":"01","headline":"Every missed call is a lost job.","body":"Not a maybe. The caller rings the next trade and books them instead."},
+    {"type":"quote","headline":"You don’t lose the job on price. You lose it because you didn’t pick up."},
+    {"type":"point","index":"02","headline":"You’re on the tools. The phone’s in the van.","body":"That’s not a you problem — it’s every trade’s problem. You can’t answer and earn at once."},
+    {"type":"point","index":"03","headline":"So we built the receptionist that never sleeps.","body":"Answers every call, books the job, takes the deposit — while you stay on the job."},
+    {"type":"quote","headline":"Caillte = lost. CaillteAI = found."},
+    {"type":"cta","headline":"What are missed calls costing you?","body":"Free 60-second audit — link in bio.","save":"Save this — the next ring-out is a job"}
+  ]
+}

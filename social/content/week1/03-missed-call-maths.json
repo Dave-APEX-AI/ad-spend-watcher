@@ -1,0 +1,13 @@
+{
+  "name": "03-missed-call-maths",
+  "slides": [
+    {"type":"cover","kicker":"The maths","headline":"What missed calls <span class='hl'>really</span> cost you.","body":"You won’t like the number. Sit down and swipe.","theme":"dark"},
+    {"type":"stat","value":"9","label":"calls a week the average trade lets ring out"},
+    {"type":"point","index":"x","headline":"£280 average job.","body":"Now multiply it by every call you didn’t pick up this week."},
+    {"type":"point","index":"30%","headline":"Most never call back.","body":"Reckon a third would’ve booked? That’s the conservative number — and it still stings."},
+    {"type":"stat","value":"£35k","label":"walking out the door every single year","amberDot":true},
+    {"type":"quote","headline":"Your busiest competitor isn’t better than you. They just answer the phone."},
+    {"type":"point","index":"01","headline":"This isn’t a £0 problem.","body":"It’s the biggest invisible cost in your business — and the easiest one to fix."},
+    {"type":"cta","headline":"Work out YOUR number","body":"Free 60-second missed-call audit — link in bio.","save":"Save this and do the maths tonight"}
+  ]
+}

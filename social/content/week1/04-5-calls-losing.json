@@ -1,0 +1,13 @@
+{
+  "name": "04-5-calls-losing",
+  "slides": [
+    {"type":"cover","kicker":"Quick win","headline":"5 calls you’re losing every week <span class='hl'>without realising</span>.","body":"And how to catch every one. Swipe.","theme":"dark"},
+    {"type":"point","index":"01","headline":"The on-the-tools call.","body":"Hands full, can’t answer. Catch it: an AI receptionist picks up in 2 rings every time."},
+    {"type":"point","index":"02","headline":"The after-hours emergency.","body":"9pm leaks book the plumber who answers at 9pm. Catch it: 24/7 cover, no night shift."},
+    {"type":"point","index":"03","headline":"The “I’ll ring back” that never happens.","body":"Voicemail kills 80% of leads. Catch it: book the job on the first call, not the third."},
+    {"type":"point","index":"04","headline":"The double-booked Monday.","body":"Two calls at once = one lost. Catch it: AI answers both, neither rings out."},
+    {"type":"point","index":"05","headline":"The lunchtime quote chaser.","body":"They’re ringing round 3 trades on their break. First to answer wins. Catch it: be first."},
+    {"type":"quote","headline":"You don’t need more leads. You need to stop losing the ones you’ve got."},
+    {"type":"cta","headline":"How many are you losing?","body":"Free missed-call audit — link in bio.","save":"Save this — share it with a mate on the tools"}
+  ]
+}
