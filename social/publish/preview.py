@@ -45,65 +45,73 @@ def main():
 <style>
   *{{margin:0;padding:0;box-sizing:border-box}}
   body{{background:#050806;color:#F5F3EC;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-        min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:14px 0 22px}}
+        min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:14px 0 26px}}
   .hd{{font-weight:800;letter-spacing:-.3px;font-size:15px;margin-bottom:4px}}
   .hd .g{{color:#0FB97E}}
   .sub{{color:#8A938F;font-size:12px;margin-bottom:12px}}
-  .swiper{{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;
-           width:100%;padding:0 14px 6px;-webkit-overflow-scrolling:touch}}
-  .swiper::-webkit-scrollbar{{display:none}}
-  .frame{{flex:0 0 auto;scroll-snap-align:center;overflow:hidden;border-radius:16px;
-          box-shadow:0 10px 40px rgba(0,0,0,.5);position:relative}}
+  .viewport{{overflow:hidden;border-radius:16px;box-shadow:0 10px 40px rgba(0,0,0,.5);position:relative}}
+  .track{{display:flex;will-change:transform;transition:transform .28s ease}}
+  .frame{{flex:0 0 100%;overflow:hidden}}
   .frame iframe{{width:1080px;height:1350px;border:0;transform-origin:top left;pointer-events:none}}
-  .nav{{display:flex;align-items:center;gap:18px;margin-top:14px}}
-  .nav button{{width:54px;height:54px;border-radius:50%;border:0;background:#0FB97E;color:#06120c;
-    font-size:24px;font-weight:900;cursor:pointer;line-height:1;box-shadow:0 4px 18px rgba(15,185,126,.4)}}
+  /* tap halves over the slide to advance */
+  .half{{position:absolute;top:0;bottom:0;width:50%;z-index:6}}
+  .half.l{{left:0}} .half.r{{right:0}}
+  .nav{{display:flex;align-items:center;gap:20px;margin-top:16px;z-index:10}}
+  .nav button{{width:58px;height:58px;border-radius:50%;border:0;background:#0FB97E;color:#06120c;
+    font-size:26px;font-weight:900;cursor:pointer;line-height:1;box-shadow:0 4px 18px rgba(15,185,126,.4)}}
+  .nav button:active{{transform:scale(.92)}}
   .nav button:disabled{{background:#243029;color:#5b6b62;box-shadow:none}}
-  .tapzone{{position:fixed;top:0;bottom:0;width:32%;z-index:5}}
-  .tapzone.l{{left:0}} .tapzone.r{{right:0}}
-  .counter{{margin-top:12px;font-size:12px;color:#8A938F}}
-  .dots{{display:flex;gap:7px;margin-top:8px}}
+  .counter{{font-size:13px;color:#cfd6d1;font-weight:700;min-width:46px;text-align:center}}
+  .dots{{display:flex;gap:7px;margin-top:10px;flex-wrap:wrap;justify-content:center;max-width:90%}}
   .dots .dot{{width:7px;height:7px;border-radius:50%;background:#2a3a31;transition:.2s}}
   .dots .dot.on{{background:#0FB97E;width:18px;border-radius:4px}}
-  .tip{{color:#8A938F;font-size:11px;margin-top:14px}}
+  .tip{{color:#8A938F;font-size:11px;margin-top:14px;text-align:center;max-width:90%}}
 </style></head><body>
   <div class="hd">Caillte<span class="g">AI</span> · carousel preview</div>
-  <div class="sub">{html.escape(name)} — swipe sideways →</div>
-  <div class="swiper" id="sw">{''.join(frames)}</div>
-  <div class="dots" id="dots">{dots}</div>
+  <div class="sub">{html.escape(name)}</div>
+  <div class="viewport" id="vp">
+    <div class="track" id="track">{''.join(frames)}</div>
+    <div class="half l" id="hl"></div><div class="half r" id="hr"></div>
+  </div>
   <div class="nav"><button id="prev" aria-label="Previous">‹</button>
     <span class="counter" id="ct">1 / {n}</span>
     <button id="next" aria-label="Next">›</button></div>
-  <div class="tip">Use the arrows, tap the screen edges, or swipe. Final posts render as 1080×1350 PNGs.</div>
-  <div class="tapzone l" id="tzl"></div><div class="tapzone r" id="tzr"></div>
+  <div class="dots" id="dots">{dots}</div>
+  <div class="tip">Tap the green arrows, or tap the right/left side of the slide. Final posts render as 1080×1350 PNGs.</div>
 <script>
   const N={n};
-  const sw=document.getElementById('sw'), frames=[...document.querySelectorAll('.frame')];
+  const vp=document.getElementById('vp'), track=document.getElementById('track');
+  const frames=[...document.querySelectorAll('.frame')];
   const dots=[...document.querySelectorAll('#dots .dot')], ct=document.getElementById('ct');
   const prev=document.getElementById('prev'), next=document.getElementById('next');
-  let cur=0;
+  let cur=0, W=0;
   function fit(){{
-    const w=Math.min(window.innerWidth-28, 430), s=w/1080, h=1350*s;
-    frames.forEach(f=>{{f.style.width=w+'px';f.style.height=h+'px';
-      f.querySelector('iframe').style.transform='scale('+s+')';}});
-    go(cur,false);
+    W=Math.min(window.innerWidth-28, 430);
+    const s=W/1080, h=1350*s;
+    vp.style.width=W+'px'; vp.style.height=h+'px';
+    frames.forEach(f=>{{f.style.height=h+'px'; f.querySelector('iframe').style.transform='scale('+s+')';}});
+    move(false);
   }}
   function paint(){{
     dots.forEach((d,k)=>d.classList.toggle('on',k===cur));
     ct.textContent=(cur+1)+' / '+N;
     prev.disabled=(cur===0); next.disabled=(cur===N-1);
   }}
-  function go(i,smooth){{
-    cur=Math.max(0,Math.min(N-1,i));
-    frames[cur].scrollIntoView({{behavior:smooth?'smooth':'auto',inline:'center',block:'nearest'}});
-    paint();
+  function move(anim){{
+    track.style.transition = anim ? 'transform .28s ease' : 'none';
+    track.style.transform='translateX('+(-cur*W)+'px)'; paint();
   }}
-  prev.onclick=()=>go(cur-1,true); next.onclick=()=>go(cur+1,true);
-  document.getElementById('tzl').onclick=()=>go(cur-1,true);
-  document.getElementById('tzr').onclick=()=>go(cur+1,true);
-  let t=null; sw.addEventListener('scroll',()=>{{clearTimeout(t);t=setTimeout(()=>{{
-    cur=Math.round(sw.scrollLeft/(sw.scrollWidth/N)); cur=Math.max(0,Math.min(N-1,cur)); paint();
-  }},90);}});
+  function go(i){{ cur=Math.max(0,Math.min(N-1,i)); move(true); }}
+  prev.onclick=()=>go(cur-1); next.onclick=()=>go(cur+1);
+  document.getElementById('hl').onclick=()=>go(cur-1);
+  document.getElementById('hr').onclick=()=>go(cur+1);
+  // touch swipe on the viewport (independent of native scroll)
+  let x0=null;
+  vp.addEventListener('touchstart',e=>{{x0=e.touches[0].clientX;}},{{passive:true}});
+  vp.addEventListener('touchend',e=>{{
+    if(x0===null)return; const dx=e.changedTouches[0].clientX-x0;
+    if(Math.abs(dx)>40) go(cur+(dx<0?1:-1)); x0=null;
+  }});
   window.addEventListener('resize',fit); fit();
 </script></body></html>"""
 
