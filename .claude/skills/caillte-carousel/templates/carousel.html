@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<style>
+  /* ── CaillteAI brand tokens (single source of truth — edit here) ── */
+  :root{
+    --ink:#0A0F0D; --emerald:#0FB97E; --emerald-deep:#0A8F5F;
+    --cream:#F5F3EC; --amber:#FFC247; --steel:#8A938F;
+    --pad:96px; --w:1080px; --h:1350px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:var(--w);height:var(--h);overflow:hidden}
+  body{
+    font-family:"Inter","Satoshi","Segoe UI",-apple-system,Roboto,Helvetica,Arial,sans-serif;
+    background:var(--ink); color:var(--cream);
+    -webkit-font-smoothing:antialiased;
+  }
+  .slide{
+    width:var(--w); height:var(--h); padding:var(--pad);
+    display:flex; flex-direction:column; position:relative;
+  }
+  /* theme: light slide */
+  body.light{background:var(--cream); color:var(--ink)}
+  /* top bar: brand + page */
+  .bar{display:flex; align-items:center; justify-content:space-between; font-size:30px; font-weight:700; letter-spacing:-0.5px}
+  .brand{display:flex; align-items:center; gap:16px}
+  .dot{width:26px;height:26px;border-radius:50%;background:var(--emerald);box-shadow:0 0 28px var(--emerald)}
+  .dot.amber{background:var(--amber);box-shadow:0 0 28px var(--amber)}
+  .page{color:var(--steel); font-weight:600; font-size:26px}
+  /* main */
+  .main{flex:1; display:flex; flex-direction:column; justify-content:center; gap:36px}
+  .kicker{font-size:34px; font-weight:800; letter-spacing:3px; text-transform:uppercase; color:var(--emerald)}
+  body.light .kicker{color:var(--emerald-deep)}
+  h1{font-size:104px; line-height:1.02; font-weight:900; letter-spacing:-3px}
+  h2{font-size:78px; line-height:1.05; font-weight:900; letter-spacing:-2px}
+  .body{font-size:44px; line-height:1.32; font-weight:500; color:var(--cream)}
+  body.light .body{color:#28302c}
+  .index{font-size:160px; font-weight:900; color:var(--emerald); line-height:.9; letter-spacing:-6px}
+  .stat{font-size:300px; font-weight:900; line-height:.85; letter-spacing:-10px; color:var(--amber)}
+  .stat.win{color:var(--emerald)}
+  .stat-label{font-size:46px; font-weight:700; color:var(--steel)}
+  .quote{font-size:80px; line-height:1.12; font-weight:800; letter-spacing:-1.5px}
+  .quote::before{content:"\201C"; color:var(--emerald); font-size:120px; line-height:0; display:block; margin-bottom:30px}
+  /* footer / CTA */
+  .foot{display:flex; align-items:center; justify-content:space-between; font-size:30px; font-weight:700; color:var(--steel)}
+  .cta-card{background:var(--emerald); color:var(--ink); border-radius:40px; padding:64px; display:flex; flex-direction:column; gap:24px}
+  .cta-card .big{font-size:72px; font-weight:900; letter-spacing:-2px; line-height:1.05}
+  .cta-card .sub{font-size:40px; font-weight:600}
+  .save{display:inline-flex; align-items:center; gap:16px; font-size:34px; font-weight:800; color:var(--emerald)}
+  .save .ic{width:30px;height:38px;border:5px solid var(--emerald);border-bottom:none;border-radius:6px 6px 0 0;position:relative}
+  .wave{display:flex; align-items:flex-end; gap:10px; height:60px}
+  .wave i{width:12px;background:var(--emerald);border-radius:6px;animation:none}
+  .wave i:nth-child(1){height:30%}.wave i:nth-child(2){height:70%}.wave i:nth-child(3){height:100%}
+  .wave i:nth-child(4){height:55%}.wave i:nth-child(5){height:85%}.wave i:nth-child(6){height:40%}
+  .hl{color:var(--emerald)} body.light .hl{color:var(--emerald-deep)}
+  .hl-amber{color:var(--amber)}
+</style>
+</head>
+<body>
+  <div class="slide" id="slide"></div>
+<script>
+  // render.py injects the slide object here:
+  const SLIDE = /*__SLIDE_JSON__*/{"type":"cover","kicker":"Office Heroes","headline":"Caillte means <span class='hl'>lost</span>.","body":"Every missed call is a lost job.","page":"1 / 6","theme":"dark"};
+
+  if (SLIDE.theme === "light") document.body.classList.add("light");
+  const el = document.getElementById("slide");
+  const bar = (p) => `<div class="bar"><div class="brand"><span class="dot ${SLIDE.amberDot?'amber':''}"></span>CaillteAI</div><div class="page">${p||""}</div></div>`;
+  const wave = `<div class="wave"><i></i><i></i><i></i><i></i><i></i><i></i></div>`;
+  let html = "";
+  switch (SLIDE.type) {
+    case "cover":
+      html = bar(SLIDE.page) +
+        `<div class="main">${SLIDE.kicker?`<div class="kicker">${SLIDE.kicker}</div>`:""}
+          <h1>${SLIDE.headline||""}</h1>
+          ${SLIDE.body?`<div class="body">${SLIDE.body}</div>`:""}</div>
+        <div class="foot">${wave}<span>@caillte_ai</span></div>`;
+      break;
+    case "point":
+      html = bar(SLIDE.page) +
+        `<div class="main">${SLIDE.index?`<div class="index">${SLIDE.index}</div>`:""}
+          <h2>${SLIDE.headline||""}</h2>
+          ${SLIDE.body?`<div class="body">${SLIDE.body}</div>`:""}</div>
+        <div class="foot"><span class="dot"></span><span>@caillte_ai</span></div>`;
+      break;
+    case "stat":
+      html = bar(SLIDE.page) +
+        `<div class="main"><div class="stat ${SLIDE.win?'win':''}">${SLIDE.value||""}</div>
+          <div class="stat-label">${SLIDE.label||""}</div>
+          ${SLIDE.body?`<div class="body">${SLIDE.body}</div>`:""}</div>
+        <div class="foot">${wave}<span>@caillte_ai</span></div>`;
+      break;
+    case "quote":
+      html = bar(SLIDE.page) +
+        `<div class="main"><div class="quote">${SLIDE.headline||""}</div></div>
+        <div class="foot"><span class="dot"></span><span>@caillte_ai</span></div>`;
+      break;
+    case "cta":
+      html = bar(SLIDE.page) +
+        `<div class="main"><div class="cta-card">
+            <div class="big">${SLIDE.headline||"Curious what missed calls cost you?"}</div>
+            <div class="sub">${SLIDE.body||"Free missed-call audit — link in bio."}</div>
+          </div>
+          <div style="height:40px"></div>
+          <div class="save"><span class="ic"></span>${SLIDE.save||"Save this for the next time the phone rings out"}</div>
+        </div>
+        <div class="foot">${wave}<span>@caillte_ai · CaillteAI</span></div>`;
+      break;
+    default:
+      html = `<div class="main"><h1>${SLIDE.headline||"Slide"}</h1></div>`;
+  }
+  el.innerHTML = html;
+</script>
+</body>
+</html>

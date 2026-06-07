@@ -27,3 +27,8 @@ Thumbs.db
 
 # Temp build artifacts
 *.tmp
+
+# CaillteAI social — generated assets (regenerated, don't commit)
+social/out/
+carousel-out/
+.claude/skills/caillte-carousel/carousel-out/

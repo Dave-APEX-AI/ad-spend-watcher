@@ -1,0 +1,12 @@
+{
+  "_comment": "Pletor.ai custom MCP connector for CaillteAI. Copy to repo-root .mcp.json (or merge into it), then fill the real URL + key from docs.pletor.ai/automate/pletor-mcp. Never commit a real key — use ${PLETOR_API_KEY} from your env. Remote MCP server, API-key/bearer auth. Free trial 200 credits, then paid.",
+  "mcpServers": {
+    "pletor": {
+      "type": "http",
+      "url": "https://PASTE_PLETOR_MCP_URL_FROM_DOCS",
+      "headers": {
+        "Authorization": "Bearer ${PLETOR_API_KEY}"
+      }
+    }
+  }
+}

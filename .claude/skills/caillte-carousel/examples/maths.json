@@ -1,0 +1,11 @@
+{
+  "name": "missed-call-maths",
+  "slides": [
+    {"type":"cover","kicker":"The maths","headline":"What missed calls <span class='hl'>really</span> cost you","body":"You won't like the number. Swipe.","theme":"dark"},
+    {"type":"stat","value":"9","label":"calls a week ring out (the average trade)"},
+    {"type":"point","index":"x","headline":"£280 average job","body":"Now multiply it by every call you didn't pick up."},
+    {"type":"stat","value":"£35k","label":"walking out the door every year","amberDot":true},
+    {"type":"quote","headline":"First to answer wins the job. Always has."},
+    {"type":"cta","headline":"What's it costing <em>you</em>?","body":"Free 60-second missed-call audit — link in bio.","save":"Save this before the phone rings out again"}
+  ]
+}
