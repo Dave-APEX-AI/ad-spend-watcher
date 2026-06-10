@@ -4,6 +4,9 @@ config/credentials.json
 *.env
 .env
 .env.*
+# ...but keep the documented example templates
+!.env.example
+!**/.env.example
 
 # Cloudflare Workers local state
 .wrangler/
@@ -27,3 +30,8 @@ Thumbs.db
 
 # Temp build artifacts
 *.tmp
+
+# CaillteAI social — generated assets (regenerated, don't commit)
+social/out/
+carousel-out/
+.claude/skills/caillte-carousel/carousel-out/

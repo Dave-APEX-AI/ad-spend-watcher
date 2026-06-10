@@ -1,0 +1,67 @@
+# CaillteAI auto-publisher — posts the next queued carousel to Instagram + Facebook.
+#
+# Activation (one-time):
+#   1. This file must be on the DEFAULT branch (main) to run — merge the social branch.
+#   2. Repo → Settings → Secrets and variables → Actions → add repo secrets:
+#        IG_USER_ID, IG_ACCESS_TOKEN, FB_PAGE_ID, FB_PAGE_TOKEN
+#      (FB_* optional — omit to skip the Facebook cross-post.)
+#   3. Run it manually first (Actions → caillte-publish → Run workflow, dry run = true)
+#      to preview, then dry run = false to publish. The daily schedule then drains the
+#      queue one post at a time. See social/publish/ACTIVATE.md.
+
+name: caillte-publish
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Preview only (no live post)?"
+        type: boolean
+        default: true
+  schedule:
+    - cron: "0 18 * * *"   # daily 18:00 UTC — posts the next queued item
+
+permissions:
+  contents: write          # to commit the .posted progress marker back
+
+concurrency:
+  group: caillte-publish    # never run two publishes at once
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Publish next queued post
+        env:
+          IG_USER_ID:      ${{ secrets.IG_USER_ID }}
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          FB_PAGE_ID:      ${{ secrets.FB_PAGE_ID }}
+          FB_PAGE_TOKEN:   ${{ secrets.FB_PAGE_TOKEN }}
+          # Scheduled runs always publish live; manual runs honour the dry_run input.
+          DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.dry_run || 'false' }}
+        run: |
+          if [ -z "$IG_ACCESS_TOKEN" ] || [ -z "$IG_USER_ID" ]; then
+            echo "ℹ️ IG secrets not set yet — skipping. Add IG_USER_ID + IG_ACCESS_TOKEN in"
+            echo "   Settings → Secrets and variables → Actions, then re-run. (see ACTIVATE.md)"
+            exit 0
+          fi
+          python3 social/publish/publish_next.py
+
+      - name: Save queue progress
+        if: ${{ success() }}
+        run: |
+          if [ -n "$(git status --porcelain social/publish/queue/.posted)" ]; then
+            git config user.name  "caillte-bot"
+            git config user.email "actions@users.noreply.github.com"
+            git add social/publish/queue/.posted
+            git commit -m "publish: mark queued post as sent [skip ci]"
+            git push
+          else
+            echo "no queue change to commit"
+          fi

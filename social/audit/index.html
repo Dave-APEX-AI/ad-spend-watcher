@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>What are missed calls costing your business? | CaillteAI</title>
+<meta name="description" content="Find out what missed calls are really costing your trade business — free, 60 seconds, no call required." />
+<style>
+  :root{
+    --ink:#0A0F0D; --panel:#111A15; --emerald:#0FB97E; --emerald-deep:#0A8F5F;
+    --cream:#F5F3EC; --amber:#FFC247; --steel:#8A938F; --line:#23302a;
+    --r:18px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{background:var(--ink);color:var(--cream);
+    font-family:"Inter","Segoe UI",-apple-system,Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;line-height:1.4}
+  .wrap{max-width:560px;margin:0 auto;padding:28px 20px 64px}
+  .brand{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:-.4px;font-size:20px;margin-bottom:22px}
+  .dot{width:16px;height:16px;border-radius:50%;background:var(--emerald);box-shadow:0 0 18px var(--emerald)}
+  h1{font-size:30px;line-height:1.12;font-weight:900;letter-spacing:-.8px;margin-bottom:8px}
+  h1 .hl{color:var(--emerald)}
+  .sub{color:var(--steel);font-size:15px;margin-bottom:24px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:20px;margin-bottom:16px}
+  label{display:block;font-weight:700;font-size:14px;margin-bottom:10px}
+  label .v{float:right;color:var(--emerald);font-weight:800}
+  input[type=range]{width:100%;accent-color:var(--emerald);height:26px}
+  .row{margin-bottom:18px}
+  .row:last-child{margin-bottom:0}
+  .hint{color:var(--steel);font-size:12px;margin-top:4px}
+  /* result */
+  .result{text-align:center;background:linear-gradient(180deg,#111A15,#0c1410);border-color:#2a3a31}
+  .result .lead{color:var(--steel);font-size:13px;text-transform:uppercase;letter-spacing:2px;font-weight:800}
+  .big{font-size:64px;font-weight:900;letter-spacing:-3px;color:var(--amber);line-height:1.05;margin:6px 0}
+  .peryear{font-size:15px;color:var(--cream);font-weight:600}
+  .peryear b{color:var(--amber)}
+  .bar{display:flex;height:34px;border-radius:10px;overflow:hidden;margin:18px 0 6px;border:1px solid var(--line)}
+  .bar .won{background:var(--emerald)}
+  .bar .lost{background:var(--amber)}
+  .barlabels{display:flex;justify-content:space-between;font-size:12px;color:var(--steel);font-weight:600}
+  /* capture */
+  .capture h2{font-size:20px;font-weight:900;letter-spacing:-.5px;margin-bottom:6px}
+  .capture p{color:var(--steel);font-size:14px;margin-bottom:16px}
+  .field{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
+  .field input{background:var(--ink);border:1px solid var(--line);color:var(--cream);
+    border-radius:12px;padding:14px 14px;font-size:16px;font-family:inherit}
+  .field input:focus{outline:none;border-color:var(--emerald)}
+  button.cta{width:100%;background:var(--emerald);color:var(--ink);border:none;border-radius:12px;
+    padding:16px;font-size:16px;font-weight:900;letter-spacing:-.3px;cursor:pointer;transition:.15s}
+  button.cta:hover{background:#13d18d}
+  button.cta:disabled{opacity:.6;cursor:not-allowed}
+  .consent{color:var(--steel);font-size:11px;margin-top:10px;text-align:center}
+  .done{display:none;text-align:center}
+  .done .tick{width:54px;height:54px;border-radius:50%;background:var(--emerald);color:var(--ink);
+    font-size:30px;font-weight:900;display:flex;align-items:center;justify-content:center;margin:0 auto 14px}
+  .done a{color:var(--emerald);font-weight:800;text-decoration:none}
+  .foot{text-align:center;color:var(--steel);font-size:12px;margin-top:26px}
+  .foot a{color:var(--steel)}
+  .err{color:var(--amber);font-size:13px;margin-top:8px;display:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand"><span class="dot"></span> CaillteAI</div>
+  <h1>What are missed calls <span class="hl">really</span> costing you?</h1>
+  <p class="sub">60 seconds. Free. No call required. Slide the numbers to match your business.</p>
+
+  <div class="card">
+    <div class="row">
+      <label>Average job value <span class="v" id="vJob">£280</span></label>
+      <input type="range" id="job" min="50" max="3000" step="10" value="280" />
+      <div class="hint">What a typical job is worth to you.</div>
+    </div>
+    <div class="row">
+      <label>Calls you miss per day <span class="v" id="vMiss">3</span></label>
+      <input type="range" id="miss" min="0" max="20" step="1" value="3" />
+      <div class="hint">Be honest — voicemail, after-hours, on-the-tools.</div>
+    </div>
+    <div class="row">
+      <label>Days worked per week <span class="v" id="vDays">5</span></label>
+      <input type="range" id="days" min="1" max="7" step="1" value="5" />
+    </div>
+    <div class="row">
+      <label>Missed callers who'd have booked <span class="v" id="vConv">30%</span></label>
+      <input type="range" id="conv" min="5" max="80" step="5" value="30" />
+      <div class="hint">Most never call back — they ring the next trade.</div>
+    </div>
+  </div>
+
+  <div class="card result">
+    <div class="lead">You're losing about</div>
+    <div class="big" id="perMonth">£0</div>
+    <div class="peryear">that's <b id="perYear">£0</b> a year walking out the door</div>
+    <div class="bar"><div class="won" id="barWon" style="width:60%"></div><div class="lost" id="barLost" style="width:40%"></div></div>
+    <div class="barlabels"><span>Jobs you win</span><span id="lostPct">Lost to missed calls</span></div>
+  </div>
+
+  <div class="card capture" id="capture">
+    <h2>Want the full breakdown + how to plug it?</h2>
+    <p>We'll send your personal missed-call report and the exact fix — no spam, no sales call unless you ask.</p>
+    <form id="leadForm">
+      <div class="field"><input type="text" id="name" name="name" placeholder="Your name" autocomplete="name" /></div>
+      <div class="field"><input type="email" id="email" name="email" placeholder="Email" autocomplete="email" /></div>
+      <div class="field"><input type="tel" id="phone" name="phone" placeholder="WhatsApp / mobile (optional)" autocomplete="tel" /></div>
+      <button class="cta" type="submit" id="submitBtn">Send my missed-call report →</button>
+      <div class="err" id="err">Please enter an email or a phone number.</div>
+      <div class="consent">By submitting you agree CaillteAI can contact you about your results. We never share your details.</div>
+    </form>
+  </div>
+
+  <div class="card done" id="done">
+    <div class="tick">✓</div>
+    <h2>You're sorted.</h2>
+    <p class="sub">Your missed-call report is on its way. Want to see the AI answer a call live?</p>
+    <a href="https://www.caillteai.com" id="demoLink">Watch a 60-second demo →</a>
+  </div>
+
+  <div class="foot">
+    Built by <a href="https://www.caillteai.com">CaillteAI</a> — the AI receptionist for UK &amp; Irish trades.<br/>
+    <em>Caillte</em> means "lost". We make sure you're not.
+  </div>
+</div>
+
+<script>
+  // ── CONFIG ──────────────────────────────────────────────────────────────
+  // EASIEST (recommended): leads land in your email, no backend to deploy.
+  //   1. Go to https://web3forms.com  2. Enter the inbox you want leads sent to
+  //   3. They email you a free access key  4. Paste it below. Done.
+  const WEB3FORMS_KEY = "";   // e.g. "a1b2c3d4-1234-5678-9abc-def012345678"
+  const LEAD_TO_EMAIL = "hello@caillteai.com";  // inbox (used for the mailto fallback)
+
+  // OPTIONAL alternative: a Cloudflare Worker that stores leads to KV for a
+  // CSV-exportable list (worker/caillte-leads). Leave "" if you're using email above.
+  const LEAD_ENDPOINT = "";   // e.g. "https://caillte-leads.<you>.workers.dev/lead"
+  const WEEKS_PER_YEAR = 50;
+  // ────────────────────────────────────────────────────────────────────────
+
+  const $ = (id) => document.getElementById(id);
+  const gbp = (n) => "£" + Math.round(n).toLocaleString("en-GB");
+  const params = new URLSearchParams(location.search);
+
+  function calc(){
+    const job = +$("job").value, miss = +$("miss").value, days = +$("days").value, conv = +$("conv").value/100;
+    $("vJob").textContent = gbp(job);
+    $("vMiss").textContent = miss;
+    $("vDays").textContent = days;
+    $("vConv").textContent = (conv*100) + "%";
+    const lostYear = job * miss * days * WEEKS_PER_YEAR * conv;
+    const lostMonth = lostYear / 12;
+    $("perMonth").textContent = gbp(lostMonth);
+    $("perYear").textContent = gbp(lostYear);
+    // bar: lost share of *potential* (won + lost). Illustrative, capped 5–80%.
+    const lostShare = Math.min(80, Math.max(5, conv*100));
+    $("barWon").style.width = (100 - lostShare) + "%";
+    $("barLost").style.width = lostShare + "%";
+    $("lostPct").textContent = Math.round(lostShare) + "% lost to missed calls";
+    return { job, miss, days, conv, lostYear: Math.round(lostYear), lostMonth: Math.round(lostMonth) };
+  }
+  ["job","miss","days","conv"].forEach(id => $(id).addEventListener("input", calc));
+
+  $("leadForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const email = $("email").value.trim(), phone = $("phone").value.trim();
+    if (!email && !phone){ $("err").style.display = "block"; return; }
+    $("err").style.display = "none";
+    const btn = $("submitBtn"); btn.disabled = true; btn.textContent = "Sending…";
+
+    const r = calc();
+    const lead = {
+      name: $("name").value.trim(), email, phone,
+      result: r,
+      trade: params.get("trade") || "",
+      utm_source: params.get("utm_source") || "",
+      utm_medium: params.get("utm_medium") || "",
+      utm_campaign: params.get("utm_campaign") || "",
+      page: location.href, ts: Date.now()
+    };
+
+    const summary = `Losing ~${gbp(r.lostYear)}/yr (${gbp(r.lostMonth)}/mo)`;
+    try {
+      if (WEB3FORMS_KEY) {
+        // Email delivery — leads land straight in your inbox, no backend.
+        const res = await fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          headers: {"Content-Type":"application/json", "Accept":"application/json"},
+          body: JSON.stringify({
+            access_key: WEB3FORMS_KEY,
+            subject: "New missed-call audit lead — " + (lead.name || email || phone),
+            from_name: "CaillteAI Missed-Call Audit",
+            email, // sets reply-to to the lead
+            message:
+              `${summary}\n\nName:  ${lead.name}\nEmail: ${email}\nPhone: ${phone}\n` +
+              `Trade: ${lead.trade}\nSource: ${lead.utm_source} / ${lead.utm_campaign}\nPage:  ${lead.page}\n\n` +
+              `Inputs — job £${r.job}, ${r.miss} missed/day, ${r.days} days/wk, ${Math.round(r.conv*100)}% convert`
+          })
+        });
+        const j = await res.json().catch(() => ({}));
+        if (!j.success) throw new Error("web3forms");
+      } else if (LEAD_ENDPOINT) {
+        const res = await fetch(LEAD_ENDPOINT, {
+          method: "POST", headers: {"Content-Type":"application/json"}, body: JSON.stringify(lead)
+        });
+        if (!res.ok) throw new Error("bad status " + res.status);
+      } else {
+        // Last-resort fallback: open a pre-filled email so the lead still reaches you.
+        const body = encodeURIComponent(
+          `New missed-call audit lead\n\nName: ${lead.name}\nEmail: ${email}\nPhone: ${phone}\n` +
+          `${summary}\nTrade: ${lead.trade}\nSource: ${lead.utm_source}`);
+        window.location.href = `mailto:${LEAD_TO_EMAIL}?subject=Missed-call%20audit%20lead&body=${body}`;
+      }
+      $("capture").style.display = "none";
+      $("done").style.display = "block";
+    } catch(err){
+      btn.disabled = false; btn.textContent = "Send my missed-call report →";
+      $("err").textContent = "Something went wrong — try again, or email " + LEAD_TO_EMAIL;
+      $("err").style.display = "block";
+    }
+  });
+
+  // Pre-fill demo link if provided; run once on load.
+  if (params.get("demo")) $("demoLink").href = params.get("demo");
+  calc();
+</script>
+</body>
+</html>

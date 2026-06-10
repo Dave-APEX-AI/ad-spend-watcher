@@ -1,0 +1,8 @@
+{
+  "_comment": "Ordered publish queue for the GitHub Actions auto-publisher. publish_next.py posts the first job not yet in .posted, one per run. Add more job files here to extend the schedule.",
+  "jobs": [
+    "01-caillte-means-lost.json",
+    "03-missed-call-maths.json",
+    "02-the-680-ring.json"
+  ]
+}
