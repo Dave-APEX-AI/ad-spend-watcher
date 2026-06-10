@@ -76,6 +76,18 @@ def get_status(creation_id, token):
         return json.loads(r.read().decode())
 
 
+def derive_page_token(page_id, user_token):
+    """Get the Page access token from a user token (so only ONE token secret is needed).
+    Requires pages_manage_posts granted to the user token."""
+    url = f"{GRAPH}/{page_id}?" + urllib.parse.urlencode(
+        {"fields": "access_token", "access_token": user_token})
+    try:
+        with urllib.request.urlopen(url, timeout=60) as r:
+            return json.loads(r.read().decode()).get("access_token", "")
+    except urllib.error.HTTPError:
+        return ""  # cross-post will be skipped with a notice
+
+
 def wait_ready(creation_id, token, timeout=300):
     """Poll a media container until FINISHED (needed for reels; quick for images)."""
     start = time.time()
@@ -223,6 +235,14 @@ def main():
     print(f"✅ Instagram published — media id {pid}")
 
     if job.get("cross_post_facebook") and fb_page and jtype in ("image", "carousel"):
+        if not env("FB_PAGE_TOKEN"):
+            derived = derive_page_token(fb_page, token)
+            if derived:
+                fb_token = derived
+            else:
+                print("ℹ️  Couldn't derive a Page token — skipping FB cross-post "
+                      "(IG post unaffected). Add FB_PAGE_TOKEN to enable.")
+                return
         fid = fb_crosspost(fb_page, fb_token, urls, caption)
         print(f"✅ Facebook Page cross-posted — {fid}")
     elif job.get("cross_post_facebook") and jtype == "reel":
