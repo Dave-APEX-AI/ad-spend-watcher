@@ -1,13 +1,13 @@
 {
   "name": "02-the-680-ring",
   "slides": [
-    {"type":"cover","kicker":"The £680 ring","headline":"<span class='hl-amber'>9:42pm.</span> Burst pipe. She’s panicking.","body":"Your phone’s buzzing face-down in the brick dust. Swipe.","theme":"dark","amberDot":true},
-    {"type":"point","index":"01","headline":"You’re asleep. Fair enough.","body":"You did 11 hours today. Nobody answers the phone at quarter to ten."},
-    {"type":"stat","value":"00:00","label":"how long she waited before ringing the next plumber","amberDot":true},
-    {"type":"point","index":"02","headline":"He picked up. You didn’t.","body":"Emergency call-out, same night. She never rings you back — why would she?"},
-    {"type":"stat","value":"£680","label":"that one call was worth. Gone. You’ll never know it happened.","amberDot":true},
-    {"type":"quote","headline":"The most expensive sound in your business is a phone ringing out."},
-    {"type":"point","index":"03","headline":"Unless someone picked up.","body":"CaillteAI answers in 2 rings, day or night, and books her in — while you sleep."},
-    {"type":"cta","headline":"How many £680 rings have you slept through?","body":"Find out free — link in bio.","save":"Save this before tonight"}
+    {"type":"cover","kicker":"The £680 ring","headline":"<span class='hl-amber'>9:42pm.</span> Burst pipe.","body":"Her kitchen's flooding. Your phone's face-down in brick dust. Buzzing.","theme":"dark","amberDot":true},
+    {"type":"point","index":"01","headline":"You're asleep. Fair enough — 11 hours on the tools.","body":"Here's what happened next."},
+    {"type":"stat","value":"00:00","label":"seconds she waited before ringing the next plumber","amberDot":true},
+    {"type":"point","index":"02","headline":"He answered on the second ring.","body":"Same-night call-out. She saves his number now. Not yours."},
+    {"type":"stat","value":"£680","label":"what that one ring was worth. You'll never even know it happened.","amberDot":true},
+    {"type":"quote","headline":"The most expensive sound in your business is a phone <span class='hl-amber'>ringing out</span>."},
+    {"type":"point","index":"03","headline":"Unless something picks up.","body":"CaillteAI answers in 2 rings, books the job, takes the deposit — while you sleep."},
+    {"type":"cta","headline":"How many £680 rings have you slept through this year?","body":"Find out free — link in bio.","save":"Save this for the next time you 'ring back later'"}
   ]
 }
