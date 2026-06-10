@@ -1,0 +1,12 @@
+{
+  "name": "06-dont-hire-us",
+  "slides": [
+    {"type":"cover","kicker":"Honest pitch","headline":"3 trades who should <span class='hl-amber'>NOT</span> get an AI receptionist.","body":"Serious. If this is you, keep your money. Swipe.","theme":"dark"},
+    {"type":"point","index":"01","headline":"You answer every call. Every time.","body":"On the roof. Under the sink. 9pm Sunday. If you genuinely never miss one — you don't need us."},
+    {"type":"point","index":"02","headline":"You're turning work away.","body":"Booked out till autumn, waiting list at the gate? Catching more calls just makes the list longer."},
+    {"type":"point","index":"03","headline":"You hate the idea of more jobs.","body":"Some lads are happy with the van, the radio and a steady week. Honestly — fair play."},
+    {"type":"quote","headline":"Everyone else? You're paying for a receptionist already. <span class='hl-amber'>In lost jobs.</span>"},
+    {"type":"point","index":"!","headline":"The phone rings either way.","body":"The only question is whether it's answered — by you, by no one, or by something that never sleeps."},
+    {"type":"cta","headline":"Not sure which one you are?","body":"The free 60-second audit will tell you. Link in bio.","save":"Save this — or send it to the mate who 'answers everything'"}
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "name": "07-first-to-answer",
+  "slides": [
+    {"type":"cover","kicker":"Office Heroes · the ring-round","headline":"She's ringing <span class='hl'>three</span> electricians. Right now.","body":"Same job. Same money. One winner. Swipe.","theme":"dark"},
+    {"type":"point","index":"1st","headline":"Electrician one: rings out.","body":"Up a ladder, phone in the van. The usual."},
+    {"type":"point","index":"2nd","headline":"Electrician two: voicemail.","body":"'Leave a message after the tone.' She doesn't. Nobody does."},
+    {"type":"point","index":"3rd","headline":"Electrician three: answered in 2 rings.","body":"Quote booked for Thursday, deposit taken, confirmation text sent. Done in 90 seconds."},
+    {"type":"stat","value":"90s","label":"that's how long it took for the job to be gone","amberDot":true},
+    {"type":"quote","headline":"First to answer wins the job. <span class='hl'>Always has.</span>"},
+    {"type":"point","index":"!","headline":"You don't have to be cheaper. Or better. Or faster on site.","body":"You just have to pick up first. CaillteAI makes you the third electrician — on every call."},
+    {"type":"cta","headline":"How often are you electrician one?","body":"Free 60-second missed-call audit — link in bio.","save":"Save this for the next 'I'll ring them back'"}
+  ]
+}
