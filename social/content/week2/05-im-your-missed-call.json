@@ -1,0 +1,13 @@
+{
+  "name": "05-im-your-missed-call",
+  "slides": [
+    {"type":"cover","kicker":"Office Heroes · the villain speaks","headline":"<span class='hl-amber'>11 missed calls</span> this week.","body":"That's a holiday I funded — for the plumber down the road. Swipe.","theme":"dark","amberDot":true},
+    {"type":"quote","headline":"Hi. I'm your missed call. We've never spoken. <span class='hl-amber'>That's the point.</span>"},
+    {"type":"point","index":"Mon","headline":"8:04am — boiler quote.","body":"You were driving. He wasn't. First job of my week."},
+    {"type":"point","index":"Wed","headline":"1pm — 'just ringing round'.","body":"Three trades on her list. First to answer won. Not you."},
+    {"type":"stat","value":"£680","label":"Friday, 9:42pm. Burst pipe. You were asleep — fair enough.","amberDot":true},
+    {"type":"quote","headline":"I don't leave voicemails. Nobody rings back. I just… <span class='hl-amber'>move on.</span>"},
+    {"type":"point","index":"!","headline":"I'm only afraid of one thing.","body":"Someone who always picks up. Day, night, mid-ladder. Every single time."},
+    {"type":"cta","headline":"Find out what I've cost you","body":"Free 60-second missed-call audit — link in bio.","save":"Save this — then send it to a mate who never answers"}
+  ]
+}
