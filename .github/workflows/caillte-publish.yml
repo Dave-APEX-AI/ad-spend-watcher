@@ -45,7 +45,13 @@ jobs:
           FB_PAGE_TOKEN:   ${{ secrets.FB_PAGE_TOKEN }}
           # Scheduled runs always publish live; manual runs honour the dry_run input.
           DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.dry_run || 'false' }}
-        run: python3 social/publish/publish_next.py
+        run: |
+          if [ -z "$IG_ACCESS_TOKEN" ] || [ -z "$IG_USER_ID" ]; then
+            echo "ℹ️ IG secrets not set yet — skipping. Add IG_USER_ID + IG_ACCESS_TOKEN in"
+            echo "   Settings → Secrets and variables → Actions, then re-run. (see ACTIVATE.md)"
+            exit 0
+          fi
+          python3 social/publish/publish_next.py
 
       - name: Save queue progress
         if: ${{ success() }}
