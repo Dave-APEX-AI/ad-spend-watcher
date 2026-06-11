@@ -18,6 +18,10 @@ on:
         description: "Preview only (no live post)?"
         type: boolean
         default: true
+      job:
+        description: "Publish THIS specific queue job (e.g. im-your-missed-call-reel.json). Leave blank to post the next queued item."
+        type: string
+        default: ""
   schedule:
     - cron: "0 18 * * *"   # daily 18:00 UTC — posts the next queued item
 
@@ -45,13 +49,23 @@ jobs:
           FB_PAGE_TOKEN:   ${{ secrets.FB_PAGE_TOKEN }}
           # Scheduled runs always publish live; manual runs honour the dry_run input.
           DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.dry_run || 'false' }}
+          JOB: ${{ github.event.inputs.job }}
         run: |
           if [ -z "$IG_ACCESS_TOKEN" ] || [ -z "$IG_USER_ID" ]; then
             echo "ℹ️ IG secrets not set yet — skipping. Add IG_USER_ID + IG_ACCESS_TOKEN in"
             echo "   Settings → Secrets and variables → Actions, then re-run. (see ACTIVATE.md)"
             exit 0
           fi
-          python3 social/publish/publish_next.py
+          DRY=""; [ "$DRY_RUN" = "true" ] && DRY="--dry-run"
+          if [ -n "$JOB" ]; then
+            echo "Publishing specific job: $JOB"
+            python3 social/publish/ig_publish.py "social/publish/queue/$JOB" $DRY
+            if [ -z "$DRY" ]; then
+              grep -qxF "$JOB" social/publish/queue/.posted 2>/dev/null || echo "$JOB" >> social/publish/queue/.posted
+            fi
+          else
+            python3 social/publish/publish_next.py
+          fi
 
       - name: Save queue progress
         if: ${{ success() }}
