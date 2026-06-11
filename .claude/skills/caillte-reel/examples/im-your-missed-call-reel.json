@@ -1,0 +1,12 @@
+{
+  "name": "im-your-missed-call-reel",
+  "fps": 30,
+  "cards": [
+    {"seconds": 2.4, "type":"cover", "kicker":"", "headline":"Hi. I'm your <span class='hl-amber'>missed call</span>.", "body":"", "theme":"dark", "amberDot":true},
+    {"seconds": 2.2, "type":"quote", "headline":"You've never heard me. That's the point."},
+    {"seconds": 2.6, "type":"point", "index":"this week", "headline":"I took a boiler quote, an emergency call-out, and a rewire.", "body":""},
+    {"seconds": 2.4, "type":"stat",  "value":"£1,400", "label":"gone. You'll never know it happened.", "amberDot":true},
+    {"seconds": 2.2, "type":"quote", "headline":"I'm only afraid of <span class='hl'>one</span> thing."},
+    {"seconds": 2.8, "type":"cta",   "headline":"The receptionist that never sleeps.", "body":"CaillteAI — free missed-call audit in bio.", "save":"Don't let leads go caillte"}
+  ]
+}
