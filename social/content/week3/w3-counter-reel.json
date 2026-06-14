@@ -1,0 +1,7 @@
+{"name":"w3-counter-reel","fps":30,"cards":[
+{"seconds":2.0,"type":"cover","kicker":"","headline":"Watch what one missed call a day <span class='hl-amber'>adds up to</span>.","body":"","theme":"dark","amberDot":true},
+{"seconds":1.6,"type":"stat","value":"£280","label":"one missed job","amberDot":true},
+{"seconds":1.6,"type":"stat","value":"£1,400","label":"one week","amberDot":true},
+{"seconds":1.6,"type":"stat","value":"£5,600","label":"one month","amberDot":true},
+{"seconds":2.2,"type":"stat","value":"£24,000","label":"one year. Gone.","amberDot":true},
+{"seconds":2.6,"type":"cta","headline":"Stop the leak.","body":"Free missed-call audit in bio.","save":"Don't let leads go caillte"}]}
