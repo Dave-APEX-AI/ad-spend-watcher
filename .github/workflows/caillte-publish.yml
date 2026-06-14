@@ -80,3 +80,12 @@ jobs:
           else
             echo "no queue change to commit"
           fi
+
+      - name: Alert on failure
+        if: ${{ failure() }}
+        env:
+          WEB3FORMS_KEY: ${{ secrets.WEB3FORMS_KEY }}
+        run: |
+          python3 social/publish/notify.py \
+            "🚨 CaillteAI auto-post FAILED" \
+            "A scheduled CaillteAI post did not publish. Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} — likely cause: the Meta token expired (~60-day life) or a media URL wasn't reachable. Check the run log and, if it's the token, refresh it (see social/publish/ACTIVATE.md)."
