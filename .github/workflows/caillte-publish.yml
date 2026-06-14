@@ -23,7 +23,8 @@ on:
         type: string
         default: ""
   schedule:
-    - cron: "0 18 * * *"   # daily 18:00 UTC — posts the next queued item
+    - cron: "0 9 * * *"    # daily 09:00 UTC — morning post (the story slot)
+    - cron: "0 18 * * *"   # daily 18:00 UTC — evening post (the other type)
 
 permissions:
   contents: write          # to commit the .posted progress marker back

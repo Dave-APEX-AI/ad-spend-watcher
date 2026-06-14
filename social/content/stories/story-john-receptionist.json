@@ -1,0 +1,7 @@
+{"name":"story-john-receptionist","slides":[
+{"type":"cover","kicker":"Customer story","headline":"John thought an AI receptionist was a <span class='hl-amber'>gimmick</span>.","body":"He runs a plumbing firm. He'd heard the hype. He wasn't buying it. Swipe.","theme":"dark"},
+{"type":"point","index":"01","headline":"So we didn't argue. We started tiny.","body":"It only answered the calls he always missed anyway — after 6pm and weekends."},
+{"type":"stat","value":"Week 1","label":"after-hours calls answered and booked — jobs he'd never have seen","win":true},
+{"type":"point","index":"02","headline":"Then John rang us.","body":"Three words: \"Put it on everything.\""},
+{"type":"point","index":"03","headline":"Now it answers every call.","body":"Day, night, mid-job. John just turns up to work that's already booked in."},
+{"type":"cta","headline":"Sceptical like John? Start with after-hours.","body":"See what you're missing — free audit, link in bio.","save":"Save this if you've ever doubted it"}]}
