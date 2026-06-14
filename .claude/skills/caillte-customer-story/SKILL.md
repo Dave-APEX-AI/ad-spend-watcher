@@ -34,11 +34,19 @@ the system does — proof first, soft sell second. One of the 2 daily posts is a
   not "conversational AI platform".
 - End on a bridge: "Sceptical too? Start with after-hours." — meet the reader's objection.
 
-## ⚠️ Consent guardrail (important)
-Real names/results need the customer's OK. Before posting a story with a real first name:
-- Confirm the customer is happy to be named, OR
-- Anonymise: "a plumber we work with in Cork", "an electrician on our books".
-Never fabricate a result or a quote. If a number isn't confirmed, keep it qualitative.
+## ⚠️ Anonymise by default + compliance (important)
+- **Default to anonymised:** "a plumber we work with", "a solar installer we work with".
+  Use a real first name ONLY with explicit customer consent.
+- **Never fabricate specifics:** no invented £/%/quotes presented as a real result. Keep
+  outcomes qualitative. UK fake-testimonial rules (DMCCA 2024 / ASA) make invented
+  testimonials illegal — describe what the system genuinely does, dressed as a story.
+- Add real confirmed numbers later (still anonymised) to strengthen.
+
+## Trades to rotate (3 new stories/week)
+Solar · Plumbers · Electricians · Heat pump · Insulation · Windows & doors/glaziers ·
+Carpenters (feature-wall) · Understairs storage · Roofers · Tilers. Map each to a product
+(receptionist / speed-to-lead / smart website) and a real public pain. Full angle bank +
+recurring process: `social/content/customer-stories.md`.
 
 ## Formats
 - Default: **carousel** (storytelling + saves). Also works as a **static** (one-card quote +

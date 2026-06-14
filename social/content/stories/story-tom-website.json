@@ -1,7 +1,7 @@
 {"name":"story-tom-website","slides":[
-{"type":"cover","kicker":"Customer story","headline":"Tom's website was <span class='hl-amber'>dead</span>.","body":"Well — a sad one from 2014. Customers couldn't find him, and the few who did couldn't do anything. Swipe.","theme":"dark"},
+{"type":"cover","kicker":"Customer story","headline":"A tradesman we work with had a <span class='hl-amber'>dead</span> website.","body":"A sad one from 2014. Customers couldn't find him, and the few who did couldn't do anything. Swipe.","theme":"dark"},
 {"type":"point","index":"01","headline":"A website should win you the job.","body":"His was a brochure nobody read. No way to ask, no way to book."},
 {"type":"point","index":"02","headline":"We built him a new one — chat and voice enabled.","body":"Visitors can ask a question and get a real answer — by typing or talking."},
-{"type":"point","index":"03","headline":"And they can book. 24/7.","body":"No form that goes to an inbox he checks on Sundays. Booked, there and then."},
+{"type":"point","index":"03","headline":"And they can book. 24/7.","body":"No form sitting in an inbox he checks on Sundays. Booked, there and then."},
 {"type":"stat","value":"24/7","label":"his website now works while he sleeps — his best salesperson","win":true},
 {"type":"cta","headline":"Website doing nothing for you?","body":"Free audit — link in bio.","save":"Save this if your site is just sitting there"}]}
