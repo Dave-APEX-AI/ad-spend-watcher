@@ -1,0 +1,7 @@
+{"name":"w2-under-the-sink","fps":30,"cards":[
+{"seconds":2.6,"type":"cover","kicker":"","headline":"You didn't <span class='hl-amber'>ignore</span> them.","body":"You were on a job.","theme":"dark","amberDot":true},
+{"seconds":2.2,"type":"quote","headline":"Hands full. Phone in the van. It rings out."},
+{"seconds":2.4,"type":"point","index":"","headline":"To the customer, it doesn't matter why.","body":"A ring-out is a ring-out."},
+{"seconds":2.2,"type":"quote","headline":"So they ring the next trade. <span class='hl-amber'>That one answers.</span>"},
+{"seconds":2.4,"type":"stat","value":"£24k","label":"a year, the average UK trade loses this way","amberDot":true},
+{"seconds":2.8,"type":"cta","headline":"Something should answer while you can't.","body":"CaillteAI — free missed-call audit in bio.","save":"Don't let leads go caillte"}]}
