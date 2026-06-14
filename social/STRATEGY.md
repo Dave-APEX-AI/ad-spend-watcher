@@ -107,15 +107,22 @@ Pace is deliberately hot: **2 posts/day** from Day 7 (1 reel + 1 carousel/static
 Leading indicators we steer on daily: **hold rate (first 3s), saves, shares, profile
 visits → follows** via `caillte-daily-snapshot`.
 
-## Operating rhythm (compressed)
+## Operating rhythm — the weekly loop
 
-- **Today:** run `content/launch-sprint.md` — profile live + first 3 posts up. No waiting.
-- **Daily (15 min):** `caillte-daily-snapshot` → post the day's 1–2 pieces, reply to every
-  comment in the first 60 min, log numbers.
-- **One batch night/week (45 min):** render + schedule the whole next week in Meta Business
-  Suite. Never produce day-of unless reacting to a trend.
-- **Mid-week pulse:** kill losing formats immediately, recut the week's winner same day —
-  don't wait for a Friday review.
+The core engine is **`caillte-weekly-drop`**: every week, content is built FROM that week's
+scan so it's always the freshest, most relevant. Trigger it weekly ("weekly drop").
+
+1. **SCAN** — `caillte-competitor-watch`: what's relevant/trending, 3 reactive ideas.
+2. **PIVOT** — turn findings into the week's plan (format mix + hooks the scan surfaced + 3
+   rotating trade stories). Don't reuse stale angles.
+3. **PRODUCE** — render carousels/reels/statics, caption with this week's hooks.
+4. **QUEUE** — stage + weave (2/day, story + other) + push to `main`; auto-posts 09:00 +
+   18:00 UTC.
+5. **REVIEW** — last week's `caillte-daily-snapshot` numbers steer the next pivot.
+
+- **Daily (10–15 min, you):** reply to comments in the first 60 min, log numbers.
+- **Buffer:** keep ~1 week queued ahead so a missed week never goes dark.
+- Don't over-batch a static month — produce a week, ship, re-scan. Fresh > stockpiled.
 
 ## Guardrails
 
