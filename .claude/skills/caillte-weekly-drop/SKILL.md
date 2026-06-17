@@ -44,6 +44,16 @@ interleave against the live `.posted`; append to `queue/schedule.json`; commit +
 Glance at `caillte-daily-snapshot` numbers from last week; double down on what hit, cut what
 didn't. Feed that into next week's pivot.
 
+### 6. EMAIL Dave — confirm / flag
+At the end of every drop (and any significant step), email hello@caillteai.com via the
+`caillte-notify` workflow:
+- ✅ **Done & good** — "Weekly Drop done", the 3 findings that shaped it, what was queued.
+- ❓ **Needs input** — anything blocked on Dave (e.g. confirm a customer result, a decision).
+- 🚨 **Problem** — failures from the publisher are emailed automatically (caillte-publish.yml
+  failure step); flag anything else here.
+Dispatch: Actions → caillte-notify → subject + message (or trigger via MCP). Requires the
+`WEB3FORMS_KEY` secret (one-time). GitHub's native failed-workflow email is a free backstop.
+
 ## Cadence & honesty
 - **Triggered, not autonomous** — the scan needs live web research, so this runs when
   invoked (say "weekly drop"). It can't self-run unattended in this environment.
