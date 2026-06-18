@@ -1,30 +1,30 @@
-# Email notifications — what you get, and the one-time setup
+# Notifications — via GitHub (no third-party, no extra account)
 
-You wanted: email me on **problems**, **when steps are done/good**, and **when I need your
-input**. Here's how each is delivered.
+You wanted email on **problems**, **steps done/good**, and **needs-your-input** — without
+Web3Forms. So we use **GitHub Issues** as the channel: when an issue is opened, **GitHub
+emails you** through its own notification system. No external service, no key.
 
-## The three emails
-| Trigger | How | To |
-|---------|-----|----|
-| 🚨 **Problem** — a scheduled post fails | `caillte-publish.yml` failure step → email | hello@caillteai.com |
-| 🚨 **Problem** (backstop) — any workflow fails | GitHub's built-in failed-run email (free) | your GitHub account email |
-| ✅ **Done & good** — weekly drop / a step finished | `caillte-notify.yml` (I trigger it) | hello@caillteai.com |
-| ❓ **Needs your input** — something's blocked on you | `caillte-notify.yml` (I trigger it) | hello@caillteai.com |
+## The three notifications
+| Trigger | How | You're emailed because |
+|---------|-----|------------------------|
+| 🚨 **Problem** — a scheduled post fails | `caillte-publish.yml` opens a `🚨 ...FAILED` issue | you're @mentioned + own the repo |
+| 🚨 **Problem** (backstop) — any workflow fails | GitHub's built-in failed-run email | repo notifications |
+| ✅ **Done & good** — weekly drop / a step finished | I open a `✅ ...` issue (cc you) | @mention emails you |
+| ❓ **Needs your input** — blocked on you | I open a `❓ ...` issue (cc you) | @mention emails you |
 
-## Why an email sender is needed
-GitHub Actions (the robot that posts) has no mailbox. GitHub will email you *only when a
-job fails* — it can't send "all good ✅" or "need your input ❓" emails. So those require a
-sender. **Web3Forms** is the simplest free one (no SMTP, no password — one HTTP request).
+Each issue @mentions **@Dave-APEX-AI**, and a mention always triggers a GitHub email — so
+these land in your inbox regardless of watch settings. Close the issue once you've read it.
 
-## One-time setup (~2 min, free)
-1. Go to **web3forms.com**, enter **hello@caillteai.com**, copy the access key they email you.
-2. Repo → Settings → Secrets and variables → Actions → **New repository secret**:
-   name `WEB3FORMS_KEY`, value = the key.
-That's it. All three emails above now send to hello@caillteai.com.
+## One-time check (≈1 min, no account, no key)
+Make sure GitHub emails you:
+1. github.com → your avatar → **Settings → Notifications**.
+2. Under **Email**, confirm your notification email — set it to **hello@caillteai.com** if
+   you want them there (add+verify it under Settings → Emails first), or keep your usual one.
+3. Ensure **Participating** notifications (mentions) are emailed — on by default.
 
-> Already made a Web3Forms key for the audit page? Reuse the same one.
+That's it. No Web3Forms, no secrets, no SMTP.
 
-## Free backstop (no setup)
-Even without the key, GitHub emails you when a workflow **fails** — make sure repo
-notifications are on (Settings → Notifications → Actions) and your GitHub email is one you
-check. This covers "alert me on problems" at zero cost; the key adds the ✅ and ❓ emails.
+## Volume
+Notifications are **per step/problem**, not per post — a few a week, not 60. The 2-a-day
+auto-posts don't each email you; only failures and the work-steps (weekly drops, input
+requests) do.

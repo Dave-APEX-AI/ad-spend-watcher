@@ -28,6 +28,7 @@ on:
 
 permissions:
   contents: write          # to commit the .posted progress marker back
+  issues: write            # to open an alert issue on failure (GitHub emails you)
 
 concurrency:
   group: caillte-publish    # never run two publishes at once
@@ -81,11 +82,17 @@ jobs:
             echo "no queue change to commit"
           fi
 
-      - name: Alert on failure
+      - name: Alert on failure (opens a GitHub issue → GitHub emails you)
         if: ${{ failure() }}
         env:
-          WEB3FORMS_KEY: ${{ secrets.WEB3FORMS_KEY }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          python3 social/publish/notify.py \
-            "🚨 CaillteAI auto-post FAILED" \
-            "A scheduled CaillteAI post did not publish. Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} — likely cause: the Meta token expired (~60-day life) or a media URL wasn't reachable. Check the run log and, if it's the token, refresh it (see social/publish/ACTIVATE.md)."
+          gh issue create \
+            --title "🚨 CaillteAI auto-post FAILED ($(date -u +%F))" \
+            --body "A scheduled CaillteAI post did not publish.
+
+          Run log: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+          Most likely cause: the Meta token expired (~60-day life) or a media URL wasn't reachable. If it's the token, refresh it — see social/publish/ACTIVATE.md.
+
+          cc @Dave-APEX-AI"
