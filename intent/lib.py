@@ -13,6 +13,12 @@ DATA = os.path.join(HERE, "data")
 SIGNALS_LOG = os.path.join(DATA, "signals.jsonl")
 COMPANIES_OUT = os.path.join(DATA, "intent_companies.json")
 ACTION_QUEUE = os.path.join(DATA, "action_queue.json")
+ROSTER = os.path.join(DATA, "roster.json")
+
+
+def load_roster():
+    data = load_json(ROSTER, {"companies": []})
+    return data.get("companies", [])
 
 os.makedirs(DATA, exist_ok=True)
 

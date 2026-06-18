@@ -1,0 +1,1776 @@
+{
+  "summary": {
+    "generated": "2026-06-18",
+    "qualified": 18,
+    "disqualified": 4,
+    "hot": 15,
+    "warm": 2,
+    "watch": 1,
+    "by_offer": {
+      "AI Receptionist + Speed-to-Lead": 18,
+      "Website rebuild + Speed-to-Lead": 0,
+      "New-location launch": 0
+    },
+    "verticals": [
+      "aesthetic_clinic",
+      "car_dealer",
+      "ev_charger",
+      "heat_pump",
+      "mot_centre",
+      "recruitment",
+      "solar",
+      "tyre",
+      "vet"
+    ]
+  },
+  "companies": [
+    {
+      "id": "tyrepro-midlands",
+      "name": "TyrePro Midlands",
+      "vertical": "tyre",
+      "vertical_label": "Tyre & fast-fit",
+      "country": "UK",
+      "region": "West Midlands",
+      "employees": 31,
+      "locations": 5,
+      "website": "https://tyrepromidlands.co.uk",
+      "website_status": "not_mobile",
+      "facebook": "tyrepromidlands",
+      "phone": "+441216000000",
+      "advertising": true,
+      "rating": 4.5,
+      "reviews_now": 690,
+      "intent_score": 94,
+      "tier": "Hot",
+      "primary_offer": "AI Receptionist + Speed-to-Lead",
+      "offers": [
+        "AI Receptionist + Speed-to-Lead",
+        "Website rebuild + Speed-to-Lead",
+        "New-location launch"
+      ],
+      "leak_tags": [
+        "Missing calls",
+        "Opening a new site",
+        "Slow on DMs/forms",
+        "Broken/no website",
+        "Hiring to answer phones",
+        "No out-of-hours cover",
+        "Paying for ads",
+        "Scaling up",
+        "High throughput"
+      ],
+      "signal_types": [
+        "missed_call_review",
+        "new_location",
+        "slow_response",
+        "website_leak",
+        "hiring_receptionist",
+        "out_of_hours_gap",
+        "ads_active",
+        "expansion_hiring",
+        "review_velocity"
+      ],
+      "top_triggers": [
+        "9 reviews mention unanswered calls / no callback",
+        "Expanding — 6th depot now open in Cannock",
+        "Facebook shows a slow DM reply time ('within a day')"
+      ],
+      "signals": [
+        {
+          "type": "missed_call_review",
+          "headline": "9 reviews mention unanswered calls / no callback",
+          "detected_at": "2026-06-18",
+          "evidence": "https://tyrepromidlands.co.uk",
+          "weight": 38.0,
+          "quote": "Phone never answered at the Walsall depot"
+        },
+        {
+          "type": "new_location",
+          "headline": "Expanding — 6th depot now open in Cannock",
+          "detected_at": "2026-06-18",
+          "evidence": "",
+          "weight": 30.0,
+          "quote": ""
+        },
+        {
+          "type": "slow_response",
+          "headline": "Facebook shows a slow DM reply time ('within a day')",
+          "detected_at": "2026-06-18",
+          "evidence": "https://facebook.com/tyrepromidlands",
+          "weight": 25.0,
+          "quote": ""
+        },
+        {
+          "type": "website_leak",
+          "headline": "Website isn't mobile-friendly — most enquiries bounce on phones — and they're paying for ads into it",
+          "detected_at": "2026-06-18",
+          "evidence": "https://tyrepromidlands.co.uk",
+          "weight": 24.0,
+          "quote": ""
+        },
+        {
+          "type": "hiring_receptionist",
+          "headline": "Advertising for front-desk staff (service advisor, depot receptionist) — paying to answer the phone",
+          "detected_at": "2026-06-18",
+          "evidence": "",
+          "weight": 20.0,
+          "quote": ""
+        },
+        {
+          "type": "out_of_hours_gap",
+          "headline": "Urgent enquiries arrive out-of-hours but the line isn't covered",
+          "detected_at": "2026-06-18",
+          "evidence": "",
+          "weight": 16.0,
+          "quote": ""
+        },
+        {
+          "type": "ads_active",
+          "headline": "Currently running paid ads — has budget and is buying inbound",
+          "detected_at": "2026-06-18",
+          "evidence": "https://www.facebook.com/ads/library/",
+          "weight": 15.0,
+          "quote": ""
+        },
+        {
+          "type": "expansion_hiring",
+          "headline": "5 open roles — actively scaling",
+          "detected_at": "2026-06-18",
+          "evidence": "",
+          "weight": 14.0,
+          "quote": ""
+        },
+        {
+          "type": "review_velocity",
+          "headline": "+36 reviews in 30 days — high throughput",
+          "detected_at": "2026-06-18",
+          "evidence": "",
+          "weight": 8.0,
+          "quote": ""
+        }
+      ],
+      "hook": "puncture/urgent calls go to whoever answers first; seasonal changeover spikes flood the line",
+      "avatar": "TM",
+      "avatarBg": "#FDECEC",
+      "avatarCol": "#C0392B",
+      "suggested_action": "TyrePro Midlands (31 staff, 5 sites) is missing calls, slow on dms/forms, broken/no website. Lead with AI Receptionist + Speed-to-Lead. Angle: puncture/urgent calls go to whoever answers first; seasonal changeover spikes flood the line."
+    },
+    {
+      "id": "riverside-veterinary-group",
+      "name": "Riverside Veterinary Group",
+      "vertical": "vet",
+      "vertical_label": "Veterinary practices",
+      "country": "UK",
+      "region": "Yorkshire",
+      "employees": 38,
+      "locations": 4,
+      "website": "https://riversidevets.co.uk",
+      "website_status": "slow",
+      "facebook": "riversidevetgroup",
+      "phone": "+441132000000",
+      "advertising": false,
+      "rating": 4.7,
+      "reviews_now": 520,
+      "intent_score": 89,
+      "tier": "Hot",
+      "primary_offer": "AI Receptionist + Speed-to-Lead",
+      "offers": [
+        "AI Receptionist + Speed-to-Lead",
+        "Website rebuild + Speed-to-Lead",
+        "New-location launch"
+      ],
+      "leak_tags": [
+        "Missing calls",
+        "Opening a new site",
+        "Slow on DMs/forms",
+        "Hiring to answer phones",
+        "Broken/no website",
+        "No out-of-hours cover",
+        "Scaling up",
+        "High throughput"
+      ],
+      "signal_types": [
+        "missed_call_review",
+        "new_location",
+        "slow_response",
+        "hiring_receptionist",
+        "website_leak",
+        "out_of_hours_gap",
+        "expansion_hiring",
+        "review_velocity"
+      ],
+      "top_triggers": [
+        "6 reviews mention unanswered calls / no callback",
+        "Expanding — New branch opening in Wetherby",
+        "Facebook shows a slow DM reply time ('within a day')"
+      ],
+      "signals": [
+        {
+          "type": "missed_call_review",
+          "headline": "6 reviews mention unanswered calls / no callback",
+          "detected_at": "2026-06-18",
+          "evidence": "https://riversidevets.co.uk",
+          "weight": 38.0,
+          "quote": "Impossible to get through on the phone, especially mornings"
+        },
+        {
+          "type": "new_location",
+          "headline": "Expanding — New branch opening in Wetherby",
+          "detected_at": "2026-06-18",
+          "evidence": "",
+          "weight": 30.0,
+          "quote": ""
+        },
+        {
+          "type": "slow_response",
+          "headline": "Facebook shows a slow DM reply time ('within a day')",
+          "detected_at": "2026-06-18",
+          "evidence": "https://facebook.com/riversidevetgroup",
+          "weight": 25.0,
+          "quote": ""
+        },
+        {
+          "type": "hiring_receptionist",
+          "headline": "Advertising for front-desk staff (veterinary receptionist, client care) — paying to answer the phone",
+          "detected_at": "2026-06-18",
+          "evidence": "",
+          "weight": 20.0,
+          "quote": ""
+        },
+        {
+          "type": "website_leak",
+          "headline": "Very slow site (PageSpeed < 50) — losing enquiries to load time",
+          "detected_at": "2026-06-18",
+          "evidence": "https://riversidevets.co.uk",
+          "weight": 16.8,
+          "quote": ""
+        },
+        {
+          "type": "out_of_hours_gap",
+          "headline": "Urgent enquiries arrive out-of-hours but the line isn't covered",
+          "detected_at": "2026-06-18",
+          "evidence": "",
+          "weight": 16.0,
+          "quote": ""
+        },
+        {
+          "type": "expansion_hiring",
+          "headline": "4 open roles — actively scaling",
+          "detected_at": "2026-06-18",
+          "evidence": "",
+          "weight": 14.0,
+          "quote": ""
+        },
+        {
+          "type": "review_velocity",
+          "headline": "+15 reviews in 30 days — high throughput",
+          "detected_at": "2026-06-18",
+          "evidence": "",
+          "weight": 6.0,
+          "quote": ""
+        }
+      ],
+      "hook": "emergency + booking calls overflow the front desk; out-of-hours calls go to a competitor",
+      "avatar": "RV",
+      "avatarBg": "#FDECEC",
+      "avatarCol": "#C0392B",
+      "suggested_action": "Riverside Veterinary Group (38 staff, 4 sites) is missing calls, slow on dms/forms, hiring to answer phones. Lead with AI Receptionist + Speed-to-Lead. Angle: emergency + booking calls overflow the front desk; out-of-hours calls go to a competitor."
+    },
+    {
+      "id": "sunvolt-solar-group",
+      "name": "SunVolt Solar Group",
+      "vertical": "solar",
+      "vertical_label": "Solar installers",
+      "country": "UK",
+      "region": "South East",
+      "employees": 46,
+      "locations": 3,
+      "website": "https://sunvoltsolar.co.uk",
+      "website_status": "ok",
+      "facebook": "sunvoltsolar",
+      "phone": "+441273000000",
+      "advertising": true,
+      "rating": 4.5,
+      "reviews_now": 410,
+      "intent_score": 86,
+      "tier": "Hot",
+      "primary_offer": "AI Receptionist + Speed-to-Lead",
+      "offers": [
+        "AI Receptionist + Speed-to-Lead",
+        "New-location launch"
+      ],
+      "leak_tags": [
+        "Missing calls",
+        "Opening a new site",
+        "Slow on DMs/forms",
+        "Hiring to answer phones",
+        "Paying for ads",
+        "Scaling up",
+        "High throughput"
+      ],
+      "signal_types": [
+        "missed_call_review",
+        "new_location",
+        "slow_response",
+        "hiring_receptionist",
+        "ads_active",
+        "expansion_hiring",
+        "review_velocity"
+      ],
+      "top_triggers": [
+        "6 reviews mention unanswered calls / no callback",
+        "Expanding — New regional office in Southampton",
+        "Facebook shows a slow DM reply time ('within a day')"
+      ],
+      "signals": [
+        {
+          "type": "missed_call_review",
+          "headline": "6 reviews mention unanswered calls / no callback",
+          "detected_at": "2026-06-18",
+          "evidence": "https://sunvoltsolar.co.uk",
+          "weight": 38.0,
+          "quote": "Paid for a callback that never came"
+        },
+        {
+          "type": "new_location",
+          "headline": "Expanding — New regional office in Southampton",
+          "detected_at": "2026-06-18",
+          "evidence": "",
+          "weight": 30.0,
+          "quote": ""
+        },
+        {
+          "type": "slow_response",
+          "headline": "Facebook shows a slow DM reply time ('within a day')",
+          "detected_at": "2026-06-18",
+          "evidence": "https://facebook.com/sunvoltsolar",
+          "weight": 25.0,
+          "quote": ""
+        },
+        {
+          "type": "hiring_receptionist",
+          "headline": "Advertising for front-desk staff (office manager, scheduler) — paying to answer the phone",
+          "detected_at": "2026-06-18",
+          "evidence": "",
+          "weight": 20.0,
+          "quote": ""
+        },
+        {
+          "type": "ads_active",
+          "headline": "Currently running paid ads — has budget and is buying inbound",
+          "detected_at": "2026-06-18",
+          "evidence": "https://www.facebook.com/ads/library/",
+          "weight": 15.0,
+          "quote": ""
+        },
+        {
+          "type": "expansion_hiring",
+          "headline": "4 open roles — actively scaling",
+          "detected_at": "2026-06-18",
+          "evidence": "",
+          "weight": 14.0,
+          "quote": ""
+        },
+        {
+          "type": "review_velocity",
+          "headline": "+38 reviews in 30 days — high throughput",
+          "detected_at": "2026-06-18",
+          "evidence": "",
+          "weight": 8.0,
+          "quote": ""
+        }
+      ],
+      "hook": "paying for solar leads (brutal CPCs) then dropping the call while on a roof",
+      "avatar": "SS",
+      "avatarBg": "#FDECEC",
+      "avatarCol": "#C0392B",
+      "suggested_action": "SunVolt Solar Group (46 staff, 3 sites) is missing calls, slow on dms/forms, hiring to answer phones. Lead with AI Receptionist + Speed-to-Lead. Angle: paying for solar leads (brutal CPCs) then dropping the call while on a roof."
+    },
+    {
+      "id": "frontline-recruitment-group",
+      "name": "Frontline Recruitment Group",
+      "vertical": "recruitment",
+      "vertical_label": "Recruitment agencies",
+      "country": "UK",
+      "region": "Manchester",
+      "employees": 34,
+      "locations": 3,
+      "website": "https://frontlinerecruit.co.uk",
+      "website_status": "ok",
+      "facebook": "frontlinerecruitment",
+      "phone": "+441612000000",
+      "advertising": true,
+      "rating": 4.3,
+      "reviews_now": 88,
+      "intent_score": 85,
+      "tier": "Hot",
+      "primary_offer": "AI Receptionist + Speed-to-Lead",
+      "offers": [
+        "AI Receptionist + Speed-to-Lead",
+        "New-location launch"
+      ],
+      "leak_tags": [
+        "Missing calls",
+        "Opening a new site",
+        "Slow on DMs/forms",
+        "Hiring to answer phones",
+        "No out-of-hours cover",
+        "Paying for ads",
+        "Scaling up",
+        "High throughput"
+      ],
+      "signal_types": [
+        "missed_call_review",
+        "new_location",
+        "slow_response",
+        "hiring_receptionist",
+        "out_of_hours_gap",
+        "ads_active",
+        "expansion_hiring",
+        "review_velocity"
+      ],
+      "top_triggers": [
+        "5 reviews mention unanswered calls / no callback",
+        "Expanding — Opening a Leeds desk",
+        "Facebook shows a slow DM reply time ('within a day')"
+      ],
+      "signals": [
+        {
+          "type": "missed_call_review",
+          "headline": "5 reviews mention unanswered calls / no callback",
+          "detected_at": "2026-06-18",
+          "evidence": "https://frontlinerecruit.co.uk",
+          "weight": 34.8,
+          "quote": "Applied for 3 roles, no one ever called me back"
+        },
+        {
+          "type": "new_location",
+          "headline": "Expanding — Opening a Leeds desk",
+          "detected_at": "2026-06-18",
+          "evidence": "",
+          "weight": 30.0,
+          "quote": ""
+        },
+        {
+          "type": "slow_response",
+          "headline": "Facebook shows a slow DM reply time ('within a day')",
+          "detected_at": "2026-06-18",
+          "evidence": "https://facebook.com/frontlinerecruitment",
+          "weight": 25.0,
+          "quote": ""
+        },
+        {
+          "type": "hiring_receptionist",
+          "headline": "Advertising for front-desk staff (resourcer, delivery consultant) — paying to answer the phone",
+          "detected_at": "2026-06-18",
+          "evidence": "",
+          "weight": 20.0,
+          "quote": ""
+        },
+        {
+          "type": "out_of_hours_gap",
+          "headline": "Urgent enquiries arrive out-of-hours but the line isn't covered",
+          "detected_at": "2026-06-18",
+          "evidence": "",
+          "weight": 16.0,
+          "quote": ""
+        },
+        {
+          "type": "ads_active",
+          "headline": "Currently running paid ads — has budget and is buying inbound",
+          "detected_at": "2026-06-18",
+          "evidence": "https://www.facebook.com/ads/library/",
+          "weight": 15.0,
+          "quote": ""
+        },
+        {
+          "type": "expansion_hiring",
+          "headline": "6 open roles — actively scaling",
+          "detected_at": "2026-06-18",
+          "evidence": "",
+          "weight": 14.0,
+          "quote": ""
+        },
+        {
+          "type": "review_velocity",
+          "headline": "+9 reviews in 30 days — high throughput",
+          "detected_at": "2026-06-18",
+          "evidence": "",
+          "weight": 3.6,
+          "quote": ""
+        }
+      ],
+      "hook": "speed-to-candidate wins placements — first agency to call the applicant fills the role; slow reply = lost fee",
+      "avatar": "FR",
+      "avatarBg": "#FDECEC",
+      "avatarCol": "#C0392B",
+      "suggested_action": "Frontline Recruitment Group (34 staff, 3 sites) is missing calls, slow on dms/forms, hiring to answer phones. Lead with AI Receptionist + Speed-to-Lead. Angle: speed-to-candidate wins placements — first agency to call the applicant fills the role; slow reply = lost fee."
+    },
+    {
+      "id": "pennine-motor-servicing-mot",
+      "name": "Pennine Motor Servicing & MOT",
+      "vertical": "mot_centre",
+      "vertical_label": "MOT centres",
+      "country": "UK",
+      "region": "Lancashire",
+      "employees": 19,
+      "locations": 2,
+      "website": "https://penninemotormot.co.uk",
+      "website_status": "no_ssl",
+      "facebook": "penninemotor",
+      "phone": "+441254000000",
+      "advertising": true,
+      "rating": 4.6,
+      "reviews_now": 410,
+      "intent_score": 79,
+      "tier": "Hot",
+      "primary_offer": "AI Receptionist + Speed-to-Lead",
+      "offers": [
+        "AI Receptionist + Speed-to-Lead",
+        "Website rebuild + Speed-to-Lead"
+      ],
+      "leak_tags": [
+        "Missing calls",
+        "Slow on DMs/forms",
+        "Broken/no website",
+        "Hiring to answer phones",
+        "Paying for ads",
+        "High throughput"
+      ],
+      "signal_types": [
+        "missed_call_review",
+        "slow_response",
+        "website_leak",
+        "hiring_receptionist",
+        "ads_active",
+        "review_velocity"
+      ],
+      "top_triggers": [
+        "7 reviews mention unanswered calls / no callback",
+        "Facebook shows a slow DM reply time ('within a day')",
+        "No HTTPS / 'not secure' warning — Google demotes it, buyers distrust it — and they're paying for ads into it"
+      ],
+      "signals": [
+        {
+          "type": "missed_call_review",
+          "headline": "7 reviews mention unanswered calls / no callback",
+          "detected_at": "2026-06-18",
+          "evidence": "https://penninemotormot.co.uk",
+          "weight": 38.0,
+          "quote": "Tried to book an MOT, phone rang out all morning"
+        },
+        {
+          "type": "slow_response",
+          "headline": "Facebook shows a slow DM reply time ('within a day')",
+          "detected_at": "2026-06-18",
+          "evidence": "https://facebook.com/penninemotor",
+          "weight": 25.0,
+          "quote": ""
+        },
+        {
+          "type": "website_leak",
+          "headline": "No HTTPS / 'not secure' warning — Google demotes it, buyers distrust it — and they're paying for ads into it",
+          "detected_at": "2026-06-18",
+          "evidence": "https://penninemotormot.co.uk",
+          "weight": 24.0,
+          "quote": ""
+        },
+        {
+          "type": "hiring_receptionist",
+          "headline": "Advertising for front-desk staff (service advisor, garage receptionist) — paying to answer the phone",
+          "detected_at": "2026-06-18",
+          "evidence": "",
+          "weight": 20.0,
+          "quote": ""
+        },
+        {
+          "type": "ads_active",
+          "headline": "Currently running paid ads — has budget and is buying inbound",
+          "detected_at": "2026-06-18",
+          "evidence": "https://www.facebook.com/ads/library/",
+          "weight": 15.0,
+          "quote": ""
+        },
+        {
+          "type": "review_velocity",
+          "headline": "+22 reviews in 30 days — high throughput",
+          "detected_at": "2026-06-18",
+          "evidence": "",
+          "weight": 8.0,
+          "quote": ""
+        }
+      ],
+      "hook": "booking + MOT-reminder calls missed while techs are on the ramp; March/Sept surges overwhelm the phone",
+      "avatar": "PM",
+      "avatarBg": "#FDECEC",
+      "avatarCol": "#C0392B",
+      "suggested_action": "Pennine Motor Servicing & MOT (19 staff, 2 sites) is missing calls, slow on dms/forms, broken/no website. Lead with AI Receptionist + Speed-to-Lead. Angle: booking + MOT-reminder calls missed while techs are on the ramp; March/Sept surges overwhelm the phone."
+    },
+    {
+      "id": "parkway-prestige-cars",
+      "name": "Parkway Prestige Cars",
+      "vertical": "car_dealer",
+      "vertical_label": "Independent car dealers",
+      "country": "UK",
+      "region": "Essex",
+      "employees": 18,
+      "locations": 1,
+      "website": "https://parkwayprestige.co.uk",
+      "website_status": "slow",
+      "facebook": "parkwayprestigecars",
+      "phone": "+441268000000",
+      "advertising": true,
+      "rating": 4.6,
+      "reviews_now": 230,
+      "intent_score": 79,
+      "tier": "Hot",
+      "primary_offer": "AI Receptionist + Speed-to-Lead",
+      "offers": [
+        "AI Receptionist + Speed-to-Lead",
+        "Website rebuild + Speed-to-Lead"
+      ],
+      "leak_tags": [
+        "Missing calls",
+        "Slow on DMs/forms",
+        "Broken/no website",
+        "Hiring to answer phones",
+        "No out-of-hours cover",
+        "Paying for ads",
+        "High throughput"
+      ],
+      "signal_types": [
+        "missed_call_review",
+        "slow_response",
+        "website_leak",
+        "hiring_receptionist",
+        "out_of_hours_gap",
+        "ads_active",
+        "review_velocity"
+      ],
+      "top_triggers": [
+        "5 reviews mention unanswered calls / no callback",
+        "Facebook shows a slow DM reply time ('within a day')",
+        "Very slow site (PageSpeed < 50) — losing enquiries to load time — and they're paying for ads into it"
+      ],
+      "signals": [
+        {
+          "type": "missed_call_review",
+          "headline": "5 reviews mention unanswered calls / no callback",
+          "detected_at": "2026-06-18",
+          "evidence": "https://parkwayprestige.co.uk",
+          "weight": 34.8,
+          "quote": "Enquired about a car online, no one got back to me for 3 days — sold by then"
+        },
+        {
+          "type": "slow_response",
+          "headline": "Facebook shows a slow DM reply time ('within a day')",
+          "detected_at": "2026-06-18",
+          "evidence": "https://facebook.com/parkwayprestigecars",
+          "weight": 25.0,
+          "quote": ""
+        },
+        {
+          "type": "website_leak",
+          "headline": "Very slow site (PageSpeed < 50) — losing enquiries to load time — and they're paying for ads into it",
+          "detected_at": "2026-06-18",
+          "evidence": "https://parkwayprestige.co.uk",
+          "weight": 24.0,
+          "quote": ""
+        },
+        {
+          "type": "hiring_receptionist",
+          "headline": "Advertising for front-desk staff (sales executive, showroom host) — paying to answer the phone",
+          "detected_at": "2026-06-18",
+          "evidence": "",
+          "weight": 20.0,
+          "quote": ""
+        },
+        {
+          "type": "out_of_hours_gap",
+          "headline": "Urgent enquiries arrive out-of-hours but the line isn't covered",
+          "detected_at": "2026-06-18",
+          "evidence": "",
+          "weight": 16.0,
+          "quote": ""
+        },
+        {
+          "type": "ads_active",
+          "headline": "Currently running paid ads — has budget and is buying inbound",
+          "detected_at": "2026-06-18",
+          "evidence": "https://www.facebook.com/ads/library/",
+          "weight": 15.0,
+          "quote": ""
+        },
+        {
+          "type": "review_velocity",
+          "headline": "+16 reviews in 30 days — high throughput",
+          "detected_at": "2026-06-18",
+          "evidence": "",
+          "weight": 6.4,
+          "quote": ""
+        }
+      ],
+      "hook": "web enquiries on stock decay in minutes; after-hours buyer interest never gets a reply",
+      "avatar": "PP",
+      "avatarBg": "#FDECEC",
+      "avatarCol": "#C0392B",
+      "suggested_action": "Parkway Prestige Cars (18 staff) is missing calls, slow on dms/forms, broken/no website. Lead with AI Receptionist + Speed-to-Lead. Angle: web enquiries on stock decay in minutes; after-hours buyer interest never gets a reply."
+    },
+    {
+      "id": "glenway-motors",
+      "name": "Glenway Motors",
+      "vertical": "car_dealer",
+      "vertical_label": "Independent car dealers",
+      "country": "IE",
+      "region": "Galway",
+      "employees": 12,
+      "locations": 2,
+      "website": "https://glenwaymotors.ie",
+      "website_status": "not_mobile",
+      "facebook": "glenwaymotors",
+      "phone": "+35391000000",
+      "advertising": true,
+      "rating": 4.4,
+      "reviews_now": 150,
+      "intent_score": 78,
+      "tier": "Hot",
+      "primary_offer": "AI Receptionist + Speed-to-Lead",
+      "offers": [
+        "AI Receptionist + Speed-to-Lead",
+        "Website rebuild + Speed-to-Lead",
+        "New-location launch"
+      ],
+      "leak_tags": [
+        "Opening a new site",
+        "Missing calls",
+        "Slow on DMs/forms",
+        "Broken/no website",
+        "No out-of-hours cover",
+        "Paying for ads",
+        "High throughput"
+      ],
+      "signal_types": [
+        "new_location",
+        "missed_call_review",
+        "slow_response",
+        "website_leak",
+        "out_of_hours_gap",
+        "ads_active",
+        "review_velocity"
+      ],
+      "top_triggers": [
+        "Expanding — New site opening in Athlone",
+        "3 reviews mention unanswered calls / no callback",
+        "Facebook shows a slow DM reply time ('days')"
+      ],
+      "signals": [
+        {
+          "type": "new_location",
+          "headline": "Expanding — New site opening in Athlone",
+          "detected_at": "2026-06-18",
+          "evidence": "",
+          "weight": 30.0,
+          "quote": ""
+        },
+        {
+          "type": "missed_call_review",
+          "headline": "3 reviews mention unanswered calls / no callback",
+          "detected_at": "2026-06-18",
+          "evidence": "https://glenwaymotors.ie",
+          "weight": 28.5,
+          "quote": "DM about a car went unanswered"
+        },
+        {
+          "type": "slow_response",
+          "headline": "Facebook shows a slow DM reply time ('days')",
+          "detected_at": "2026-06-18",
+          "evidence": "https://facebook.com/glenwaymotors",
+          "weight": 25.0,
+          "quote": ""
+        },
+        {
+          "type": "website_leak",
+          "headline": "Website isn't mobile-friendly — most enquiries bounce on phones — and they're paying for ads into it",
+          "detected_at": "2026-06-18",
+          "evidence": "https://glenwaymotors.ie",
+          "weight": 24.0,
+          "quote": ""
+        },
+        {
+          "type": "out_of_hours_gap",
+          "headline": "Urgent enquiries arrive out-of-hours but the line isn't covered",
+          "detected_at": "2026-06-18",
+          "evidence": "",
+          "weight": 16.0,
+          "quote": ""
+        },
+        {
+          "type": "ads_active",
+          "headline": "Currently running paid ads — has budget and is buying inbound",
+          "detected_at": "2026-06-18",
+          "evidence": "https://www.facebook.com/ads/library/",
+          "weight": 15.0,
+          "quote": ""
+        },
+        {
+          "type": "review_velocity",
+          "headline": "+8 reviews in 30 days — high throughput",
+          "detected_at": "2026-06-18",
+          "evidence": "",
+          "weight": 3.2,
+          "quote": ""
+        }
+      ],
+      "hook": "web enquiries on stock decay in minutes; after-hours buyer interest never gets a reply",
+      "avatar": "GM",
+      "avatarBg": "#FDECEC",
+      "avatarCol": "#C0392B",
+      "suggested_action": "Glenway Motors (12 staff, 2 sites) is missing calls, slow on dms/forms, broken/no website. Lead with AI Receptionist + Speed-to-Lead. Angle: web enquiries on stock decay in minutes; after-hours buyer interest never gets a reply."
+    },
+    {
+      "id": "lumiere-aesthetics-clinic",
+      "name": "Lumiere Aesthetics Clinic",
+      "vertical": "aesthetic_clinic",
+      "vertical_label": "Aesthetic clinics",
+      "country": "UK",
+      "region": "Cheshire",
+      "employees": 14,
+      "locations": 2,
+      "website": "https://lumiereaesthetics.co.uk",
+      "website_status": "ok",
+      "facebook": "lumiereaestheticsclinic",
+      "phone": "+441625000000",
+      "advertising": true,
+      "rating": 4.8,
+      "reviews_now": 212,
+      "intent_score": 72,
+      "tier": "Hot",
+      "primary_offer": "AI Receptionist + Speed-to-Lead",
+      "offers": [
+        "AI Receptionist + Speed-to-Lead"
+      ],
+      "leak_tags": [
+        "Missing calls",
+        "Slow on DMs/forms",
+        "Hiring to answer phones",
+        "No out-of-hours cover",
+        "Paying for ads",
+        "Scaling up",
+        "High throughput"
+      ],
+      "signal_types": [
+        "missed_call_review",
+        "slow_response",
+        "hiring_receptionist",
+        "out_of_hours_gap",
+        "ads_active",
+        "expansion_hiring",
+        "review_velocity"
+      ],
+      "top_triggers": [
+        "4 reviews mention unanswered calls / no callback",
+        "Facebook shows a slow DM reply time ('within a day')",
+        "Advertising for front-desk staff (clinic receptionist, patient coordinator) — paying to answer the phone"
+      ],
+      "signals": [
+        {
+          "type": "missed_call_review",
+          "headline": "4 reviews mention unanswered calls / no callback",
+          "detected_at": "2026-06-18",
+          "evidence": "https://lumiereaesthetics.co.uk",
+          "weight": 31.7,
+          "quote": "Tried booking for days, no one ever picks up the phone"
+        },
+        {
+          "type": "slow_response",
+          "headline": "Facebook shows a slow DM reply time ('within a day')",
+          "detected_at": "2026-06-18",
+          "evidence": "https://facebook.com/lumiereaestheticsclinic",
+          "weight": 25.0,
+          "quote": ""
+        },
+        {
+          "type": "hiring_receptionist",
+          "headline": "Advertising for front-desk staff (clinic receptionist, patient coordinator) — paying to answer the phone",
+          "detected_at": "2026-06-18",
+          "evidence": "",
+          "weight": 20.0,
+          "quote": ""
+        },
+        {
+          "type": "out_of_hours_gap",
+          "headline": "Urgent enquiries arrive out-of-hours but the line isn't covered",
+          "detected_at": "2026-06-18",
+          "evidence": "",
+          "weight": 16.0,
+          "quote": ""
+        },
+        {
+          "type": "ads_active",
+          "headline": "Currently running paid ads — has budget and is buying inbound",
+          "detected_at": "2026-06-18",
+          "evidence": "https://www.facebook.com/ads/library/",
+          "weight": 15.0,
+          "quote": ""
+        },
+        {
+          "type": "expansion_hiring",
+          "headline": "3 open roles — actively scaling",
+          "detected_at": "2026-06-18",
+          "evidence": "",
+          "weight": 14.0,
+          "quote": ""
+        },
+        {
+          "type": "review_velocity",
+          "headline": "+14 reviews in 30 days — high throughput",
+          "detected_at": "2026-06-18",
+          "evidence": "",
+          "weight": 5.6,
+          "quote": ""
+        }
+      ],
+      "hook": "high-ticket bookings lost to slow DM/phone replies; consultations no-show without instant follow-up",
+      "avatar": "LA",
+      "avatarBg": "#FDECEC",
+      "avatarCol": "#C0392B",
+      "suggested_action": "Lumiere Aesthetics Clinic (14 staff, 2 sites) is missing calls, slow on dms/forms, hiring to answer phones. Lead with AI Receptionist + Speed-to-Lead. Angle: high-ticket bookings lost to slow DM/phone replies; consultations no-show without instant follow-up."
+    },
+    {
+      "id": "thas-aesthetics",
+      "name": "Áthas Aesthetics",
+      "vertical": "aesthetic_clinic",
+      "vertical_label": "Aesthetic clinics",
+      "country": "IE",
+      "region": "Dublin",
+      "employees": 11,
+      "locations": 1,
+      "website": "https://athasaesthetics.ie",
+      "website_status": "not_mobile",
+      "facebook": "athasaesthetics",
+      "phone": "+35310000000",
+      "advertising": true,
+      "rating": 4.7,
+      "reviews_now": 96,
+      "intent_score": 67,
+      "tier": "Hot",
+      "primary_offer": "AI Receptionist + Speed-to-Lead",
+      "offers": [
+        "AI Receptionist + Speed-to-Lead",
+        "Website rebuild + Speed-to-Lead"
+      ],
+      "leak_tags": [
+        "Missing calls",
+        "Slow on DMs/forms",
+        "Broken/no website",
+        "No out-of-hours cover",
+        "Paying for ads",
+        "High throughput"
+      ],
+      "signal_types": [
+        "missed_call_review",
+        "slow_response",
+        "website_leak",
+        "out_of_hours_gap",
+        "ads_active",
+        "review_velocity"
+      ],
+      "top_triggers": [
+        "3 reviews mention unanswered calls / no callback",
+        "Facebook shows a slow DM reply time ('within a day')",
+        "Website isn't mobile-friendly — most enquiries bounce on phones — and they're paying for ads into it"
+      ],
+      "signals": [
+        {
+          "type": "missed_call_review",
+          "headline": "3 reviews mention unanswered calls / no callback",
+          "detected_at": "2026-06-18",
+          "evidence": "https://athasaesthetics.ie",
+          "weight": 28.5,
+          "quote": "Rang four times during opening hours, no answer"
+        },
+        {
+          "type": "slow_response",
+          "headline": "Facebook shows a slow DM reply time ('within a day')",
+          "detected_at": "2026-06-18",
+          "evidence": "https://facebook.com/athasaesthetics",
+          "weight": 25.0,
+          "quote": ""
+        },
+        {
+          "type": "website_leak",
+          "headline": "Website isn't mobile-friendly — most enquiries bounce on phones — and they're paying for ads into it",
+          "detected_at": "2026-06-18",
+          "evidence": "https://athasaesthetics.ie",
+          "weight": 24.0,
+          "quote": ""
+        },
+        {
+          "type": "out_of_hours_gap",
+          "headline": "Urgent enquiries arrive out-of-hours but the line isn't covered",
+          "detected_at": "2026-06-18",
+          "evidence": "",
+          "weight": 16.0,
+          "quote": ""
+        },
+        {
+          "type": "ads_active",
+          "headline": "Currently running paid ads — has budget and is buying inbound",
+          "detected_at": "2026-06-18",
+          "evidence": "https://www.facebook.com/ads/library/",
+          "weight": 15.0,
+          "quote": ""
+        },
+        {
+          "type": "review_velocity",
+          "headline": "+8 reviews in 30 days — high throughput",
+          "detected_at": "2026-06-18",
+          "evidence": "",
+          "weight": 3.2,
+          "quote": ""
+        }
+      ],
+      "hook": "high-ticket bookings lost to slow DM/phone replies; consultations no-show without instant follow-up",
+      "avatar": "ÁA",
+      "avatarBg": "#FDECEC",
+      "avatarCol": "#C0392B",
+      "suggested_action": "Áthas Aesthetics (11 staff) is missing calls, slow on dms/forms, broken/no website. Lead with AI Receptionist + Speed-to-Lead. Angle: high-ticket bookings lost to slow DM/phone replies; consultations no-show without instant follow-up."
+    },
+    {
+      "id": "castle-garage-mot-centre",
+      "name": "Castle Garage & MOT Centre",
+      "vertical": "mot_centre",
+      "vertical_label": "MOT centres",
+      "country": "UK",
+      "region": "West Midlands",
+      "employees": 11,
+      "locations": 1,
+      "website": null,
+      "website_status": "none",
+      "facebook": "castlegaragemot",
+      "phone": "+441217000000",
+      "advertising": true,
+      "rating": 4.5,
+      "reviews_now": 260,
+      "intent_score": 67,
+      "tier": "Hot",
+      "primary_offer": "AI Receptionist + Speed-to-Lead",
+      "offers": [
+        "AI Receptionist + Speed-to-Lead",
+        "Website rebuild + Speed-to-Lead"
+      ],
+      "leak_tags": [
+        "Missing calls",
+        "Slow on DMs/forms",
+        "Broken/no website",
+        "Paying for ads",
+        "High throughput"
+      ],
+      "signal_types": [
+        "missed_call_review",
+        "slow_response",
+        "website_leak",
+        "ads_active",
+        "review_velocity"
+      ],
+      "top_triggers": [
+        "4 reviews mention unanswered calls / no callback",
+        "Facebook shows a slow DM reply time ('within a day')",
+        "No website at all — established firm with zero web presence — and they're paying for ads into it"
+      ],
+      "signals": [
+        {
+          "type": "missed_call_review",
+          "headline": "4 reviews mention unanswered calls / no callback",
+          "detected_at": "2026-06-18",
+          "evidence": null,
+          "weight": 31.7,
+          "quote": "Couldn't find a website anywhere, had to message on Facebook"
+        },
+        {
+          "type": "slow_response",
+          "headline": "Facebook shows a slow DM reply time ('within a day')",
+          "detected_at": "2026-06-18",
+          "evidence": "https://facebook.com/castlegaragemot",
+          "weight": 25.0,
+          "quote": ""
+        },
+        {
+          "type": "website_leak",
+          "headline": "No website at all — established firm with zero web presence — and they're paying for ads into it",
+          "detected_at": "2026-06-18",
+          "evidence": null,
+          "weight": 24.0,
+          "quote": ""
+        },
+        {
+          "type": "ads_active",
+          "headline": "Currently running paid ads — has budget and is buying inbound",
+          "detected_at": "2026-06-18",
+          "evidence": "https://www.facebook.com/ads/library/",
+          "weight": 15.0,
+          "quote": ""
+        },
+        {
+          "type": "review_velocity",
+          "headline": "+9 reviews in 30 days — high throughput",
+          "detected_at": "2026-06-18",
+          "evidence": "",
+          "weight": 3.6,
+          "quote": ""
+        }
+      ],
+      "hook": "booking + MOT-reminder calls missed while techs are on the ramp; March/Sept surges overwhelm the phone",
+      "avatar": "CG",
+      "avatarBg": "#FDECEC",
+      "avatarCol": "#C0392B",
+      "suggested_action": "Castle Garage & MOT Centre (11 staff) is missing calls, slow on dms/forms, broken/no website. Lead with AI Receptionist + Speed-to-Lead. Angle: booking + MOT-reminder calls missed while techs are on the ramp; March/Sept surges overwhelm the phone."
+    },
+    {
+      "id": "chargepoint-installers-uk",
+      "name": "ChargePoint Installers UK",
+      "vertical": "ev_charger",
+      "vertical_label": "EV-charger installers",
+      "country": "UK",
+      "region": "North West",
+      "employees": 21,
+      "locations": 2,
+      "website": "https://chargepointinstallers.co.uk",
+      "website_status": "not_mobile",
+      "facebook": "chargepointinstallersuk",
+      "phone": "+441618000000",
+      "advertising": true,
+      "rating": 4.4,
+      "reviews_now": 140,
+      "intent_score": 67,
+      "tier": "Hot",
+      "primary_offer": "AI Receptionist + Speed-to-Lead",
+      "offers": [
+        "AI Receptionist + Speed-to-Lead",
+        "Website rebuild + Speed-to-Lead"
+      ],
+      "leak_tags": [
+        "Missing calls",
+        "Slow on DMs/forms",
+        "Broken/no website",
+        "Paying for ads",
+        "High throughput"
+      ],
+      "signal_types": [
+        "missed_call_review",
+        "slow_response",
+        "website_leak",
+        "ads_active",
+        "review_velocity"
+      ],
+      "top_triggers": [
+        "4 reviews mention unanswered calls / no callback",
+        "Facebook shows a slow DM reply time ('within a day')",
+        "Website isn't mobile-friendly — most enquiries bounce on phones — and they're paying for ads into it"
+      ],
+      "signals": [
+        {
+          "type": "missed_call_review",
+          "headline": "4 reviews mention unanswered calls / no callback",
+          "detected_at": "2026-06-18",
+          "evidence": "https://chargepointinstallers.co.uk",
+          "weight": 31.7,
+          "quote": "Online booking broken on mobile"
+        },
+        {
+          "type": "slow_response",
+          "headline": "Facebook shows a slow DM reply time ('within a day')",
+          "detected_at": "2026-06-18",
+          "evidence": "https://facebook.com/chargepointinstallersuk",
+          "weight": 25.0,
+          "quote": ""
+        },
+        {
+          "type": "website_leak",
+          "headline": "Website isn't mobile-friendly — most enquiries bounce on phones — and they're paying for ads into it",
+          "detected_at": "2026-06-18",
+          "evidence": "https://chargepointinstallers.co.uk",
+          "weight": 24.0,
+          "quote": ""
+        },
+        {
+          "type": "ads_active",
+          "headline": "Currently running paid ads — has budget and is buying inbound",
+          "detected_at": "2026-06-18",
+          "evidence": "https://www.facebook.com/ads/library/",
+          "weight": 15.0,
+          "quote": ""
+        },
+        {
+          "type": "review_velocity",
+          "headline": "+11 reviews in 30 days — high throughput",
+          "detected_at": "2026-06-18",
+          "evidence": "",
+          "weight": 4.4,
+          "quote": ""
+        }
+      ],
+      "hook": "grant-funded install enquiries arrive by form and sit unanswered",
+      "avatar": "CI",
+      "avatarBg": "#FDECEC",
+      "avatarCol": "#C0392B",
+      "suggested_action": "ChargePoint Installers UK (21 staff, 2 sites) is missing calls, slow on dms/forms, broken/no website. Lead with AI Receptionist + Speed-to-Lead. Angle: grant-funded install enquiries arrive by form and sit unanswered."
+    },
+    {
+      "id": "emerald-solar-renewables",
+      "name": "Emerald Solar & Renewables",
+      "vertical": "solar",
+      "vertical_label": "Solar installers",
+      "country": "IE",
+      "region": "Leinster",
+      "employees": 17,
+      "locations": 1,
+      "website": "https://emeraldsolar.ie",
+      "website_status": "no_ssl",
+      "facebook": "emeraldsolarie",
+      "phone": "+35315000000",
+      "advertising": true,
+      "rating": 4.6,
+      "reviews_now": 120,
+      "intent_score": 64,
+      "tier": "Hot",
+      "primary_offer": "AI Receptionist + Speed-to-Lead",
+      "offers": [
+        "AI Receptionist + Speed-to-Lead",
+        "Website rebuild + Speed-to-Lead"
+      ],
+      "leak_tags": [
+        "Missing calls",
+        "Slow on DMs/forms",
+        "Broken/no website",
+        "Paying for ads",
+        "High throughput"
+      ],
+      "signal_types": [
+        "missed_call_review",
+        "slow_response",
+        "website_leak",
+        "ads_active",
+        "review_velocity"
+      ],
+      "top_triggers": [
+        "3 reviews mention unanswered calls / no callback",
+        "Facebook shows a slow DM reply time ('days')",
+        "No HTTPS / 'not secure' warning — Google demotes it, buyers distrust it — and they're paying for ads into it"
+      ],
+      "signals": [
+        {
+          "type": "missed_call_review",
+          "headline": "3 reviews mention unanswered calls / no callback",
+          "detected_at": "2026-06-18",
+          "evidence": "https://emeraldsolar.ie",
+          "weight": 28.5,
+          "quote": "Site says not secure"
+        },
+        {
+          "type": "slow_response",
+          "headline": "Facebook shows a slow DM reply time ('days')",
+          "detected_at": "2026-06-18",
+          "evidence": "https://facebook.com/emeraldsolarie",
+          "weight": 25.0,
+          "quote": ""
+        },
+        {
+          "type": "website_leak",
+          "headline": "No HTTPS / 'not secure' warning — Google demotes it, buyers distrust it — and they're paying for ads into it",
+          "detected_at": "2026-06-18",
+          "evidence": "https://emeraldsolar.ie",
+          "weight": 24.0,
+          "quote": ""
+        },
+        {
+          "type": "ads_active",
+          "headline": "Currently running paid ads — has budget and is buying inbound",
+          "detected_at": "2026-06-18",
+          "evidence": "https://www.facebook.com/ads/library/",
+          "weight": 15.0,
+          "quote": ""
+        },
+        {
+          "type": "review_velocity",
+          "headline": "+10 reviews in 30 days — high throughput",
+          "detected_at": "2026-06-18",
+          "evidence": "",
+          "weight": 4.0,
+          "quote": ""
+        }
+      ],
+      "hook": "paying for solar leads (brutal CPCs) then dropping the call while on a roof",
+      "avatar": "ES",
+      "avatarBg": "#FDECEC",
+      "avatarCol": "#C0392B",
+      "suggested_action": "Emerald Solar & Renewables (17 staff) is missing calls, slow on dms/forms, broken/no website. Lead with AI Receptionist + Speed-to-Lead. Angle: paying for solar leads (brutal CPCs) then dropping the call while on a roof."
+    },
+    {
+      "id": "belle-reve-skin-laser",
+      "name": "Belle Reve Skin & Laser",
+      "vertical": "aesthetic_clinic",
+      "vertical_label": "Aesthetic clinics",
+      "country": "UK",
+      "region": "Surrey",
+      "employees": 22,
+      "locations": 3,
+      "website": "https://bellereveskin.co.uk",
+      "website_status": "ok",
+      "facebook": "bellereveskinlaser",
+      "phone": "+441483000000",
+      "advertising": true,
+      "rating": 4.9,
+      "reviews_now": 340,
+      "intent_score": 63,
+      "tier": "Hot",
+      "primary_offer": "AI Receptionist + Speed-to-Lead",
+      "offers": [
+        "AI Receptionist + Speed-to-Lead",
+        "New-location launch"
+      ],
+      "leak_tags": [
+        "Opening a new site",
+        "Missing calls",
+        "No out-of-hours cover",
+        "Paying for ads",
+        "High throughput"
+      ],
+      "signal_types": [
+        "new_location",
+        "missed_call_review",
+        "out_of_hours_gap",
+        "ads_active",
+        "review_velocity"
+      ],
+      "top_triggers": [
+        "Expanding — Now open in Reading",
+        "2 reviews mention unanswered calls / no callback",
+        "Urgent enquiries arrive out-of-hours but the line isn't covered"
+      ],
+      "signals": [
+        {
+          "type": "new_location",
+          "headline": "Expanding — Now open in Reading",
+          "detected_at": "2026-06-18",
+          "evidence": "",
+          "weight": 30.0,
+          "quote": ""
+        },
+        {
+          "type": "missed_call_review",
+          "headline": "2 reviews mention unanswered calls / no callback",
+          "detected_at": "2026-06-18",
+          "evidence": "https://bellereveskin.co.uk",
+          "weight": 25.3,
+          "quote": "Phone just rings out at the Guildford branch"
+        },
+        {
+          "type": "out_of_hours_gap",
+          "headline": "Urgent enquiries arrive out-of-hours but the line isn't covered",
+          "detected_at": "2026-06-18",
+          "evidence": "",
+          "weight": 16.0,
+          "quote": ""
+        },
+        {
+          "type": "ads_active",
+          "headline": "Currently running paid ads — has budget and is buying inbound",
+          "detected_at": "2026-06-18",
+          "evidence": "https://www.facebook.com/ads/library/",
+          "weight": 15.0,
+          "quote": ""
+        },
+        {
+          "type": "review_velocity",
+          "headline": "+29 reviews in 30 days — high throughput",
+          "detected_at": "2026-06-18",
+          "evidence": "",
+          "weight": 8.0,
+          "quote": ""
+        }
+      ],
+      "hook": "high-ticket bookings lost to slow DM/phone replies; consultations no-show without instant follow-up",
+      "avatar": "BR",
+      "avatarBg": "#FDECEC",
+      "avatarCol": "#C0392B",
+      "suggested_action": "Belle Reve Skin & Laser (22 staff, 3 sites) is missing calls, no out-of-hours cover. Lead with AI Receptionist + Speed-to-Lead. Angle: high-ticket bookings lost to slow DM/phone replies; consultations no-show without instant follow-up."
+    },
+    {
+      "id": "cosy-homes-heat-pumps-ltd",
+      "name": "Cosy Homes Heat Pumps Ltd",
+      "vertical": "heat_pump",
+      "vertical_label": "Heat-pump installers",
+      "country": "UK",
+      "region": "South West",
+      "employees": 24,
+      "locations": 1,
+      "website": "https://cosyhomesheatpumps.co.uk",
+      "website_status": "ok",
+      "facebook": "cosyhomesheatpumps",
+      "phone": "+441392000000",
+      "advertising": true,
+      "rating": 4.9,
+      "reviews_now": 96,
+      "intent_score": 63,
+      "tier": "Hot",
+      "primary_offer": "AI Receptionist + Speed-to-Lead",
+      "offers": [
+        "AI Receptionist + Speed-to-Lead"
+      ],
+      "leak_tags": [
+        "Missing calls",
+        "Slow on DMs/forms",
+        "Paying for ads",
+        "Scaling up",
+        "High throughput"
+      ],
+      "signal_types": [
+        "missed_call_review",
+        "slow_response",
+        "ads_active",
+        "expansion_hiring",
+        "review_velocity"
+      ],
+      "top_triggers": [
+        "4 reviews mention unanswered calls / no callback",
+        "Facebook shows a slow DM reply time ('within a day')",
+        "Currently running paid ads — has budget and is buying inbound"
+      ],
+      "signals": [
+        {
+          "type": "missed_call_review",
+          "headline": "4 reviews mention unanswered calls / no callback",
+          "detected_at": "2026-06-18",
+          "evidence": "https://cosyhomesheatpumps.co.uk",
+          "weight": 31.7,
+          "quote": "Booked a survey via the website form, took a week to hear anything"
+        },
+        {
+          "type": "slow_response",
+          "headline": "Facebook shows a slow DM reply time ('within a day')",
+          "detected_at": "2026-06-18",
+          "evidence": "https://facebook.com/cosyhomesheatpumps",
+          "weight": 25.0,
+          "quote": ""
+        },
+        {
+          "type": "ads_active",
+          "headline": "Currently running paid ads — has budget and is buying inbound",
+          "detected_at": "2026-06-18",
+          "evidence": "https://www.facebook.com/ads/library/",
+          "weight": 15.0,
+          "quote": ""
+        },
+        {
+          "type": "expansion_hiring",
+          "headline": "3 open roles — actively scaling",
+          "detected_at": "2026-06-18",
+          "evidence": "",
+          "weight": 14.0,
+          "quote": ""
+        },
+        {
+          "type": "review_velocity",
+          "headline": "+15 reviews in 30 days — high throughput",
+          "detected_at": "2026-06-18",
+          "evidence": "",
+          "weight": 6.0,
+          "quote": ""
+        }
+      ],
+      "hook": "grant-driven enquiry surge swamps a field-based team; quotes requested faster than they can answer",
+      "avatar": "CH",
+      "avatarBg": "#FDECEC",
+      "avatarCol": "#C0392B",
+      "suggested_action": "Cosy Homes Heat Pumps Ltd (24 staff) is missing calls, slow on dms/forms. Lead with AI Receptionist + Speed-to-Lead. Angle: grant-driven enquiry surge swamps a field-based team; quotes requested faster than they can answer."
+    },
+    {
+      "id": "northgate-renewables",
+      "name": "Northgate Renewables",
+      "vertical": "heat_pump",
+      "vertical_label": "Heat-pump installers",
+      "country": "UK",
+      "region": "Yorkshire",
+      "employees": 15,
+      "locations": 1,
+      "website": "https://northgaterenewables.co.uk",
+      "website_status": "slow",
+      "facebook": "northgaterenewables",
+      "phone": "+441132345678",
+      "advertising": true,
+      "rating": 4.7,
+      "reviews_now": 64,
+      "intent_score": 60,
+      "tier": "Hot",
+      "primary_offer": "AI Receptionist + Speed-to-Lead",
+      "offers": [
+        "AI Receptionist + Speed-to-Lead",
+        "Website rebuild + Speed-to-Lead"
+      ],
+      "leak_tags": [
+        "Missing calls",
+        "Slow on DMs/forms",
+        "Broken/no website",
+        "Paying for ads"
+      ],
+      "signal_types": [
+        "missed_call_review",
+        "slow_response",
+        "website_leak",
+        "ads_active"
+      ],
+      "top_triggers": [
+        "2 reviews mention unanswered calls / no callback",
+        "Facebook shows a slow DM reply time ('within a day')",
+        "Very slow site (PageSpeed < 50) — losing enquiries to load time — and they're paying for ads into it"
+      ],
+      "signals": [
+        {
+          "type": "missed_call_review",
+          "headline": "2 reviews mention unanswered calls / no callback",
+          "detected_at": "2026-06-18",
+          "evidence": "https://northgaterenewables.co.uk",
+          "weight": 25.3,
+          "quote": "Slow to respond to my online enquiry"
+        },
+        {
+          "type": "slow_response",
+          "headline": "Facebook shows a slow DM reply time ('within a day')",
+          "detected_at": "2026-06-18",
+          "evidence": "https://facebook.com/northgaterenewables",
+          "weight": 25.0,
+          "quote": ""
+        },
+        {
+          "type": "website_leak",
+          "headline": "Very slow site (PageSpeed < 50) — losing enquiries to load time — and they're paying for ads into it",
+          "detected_at": "2026-06-18",
+          "evidence": "https://northgaterenewables.co.uk",
+          "weight": 24.0,
+          "quote": ""
+        },
+        {
+          "type": "ads_active",
+          "headline": "Currently running paid ads — has budget and is buying inbound",
+          "detected_at": "2026-06-18",
+          "evidence": "https://www.facebook.com/ads/library/",
+          "weight": 15.0,
+          "quote": ""
+        }
+      ],
+      "hook": "grant-driven enquiry surge swamps a field-based team; quotes requested faster than they can answer",
+      "avatar": "NR",
+      "avatarBg": "#FDECEC",
+      "avatarCol": "#C0392B",
+      "suggested_action": "Northgate Renewables (15 staff) is missing calls, slow on dms/forms, broken/no website. Lead with AI Receptionist + Speed-to-Lead. Angle: grant-driven enquiry surge swamps a field-based team; quotes requested faster than they can answer."
+    },
+    {
+      "id": "shamrock-staffing-solutions",
+      "name": "Shamrock Staffing Solutions",
+      "vertical": "recruitment",
+      "vertical_label": "Recruitment agencies",
+      "country": "IE",
+      "region": "Dublin",
+      "employees": 14,
+      "locations": 1,
+      "website": "https://shamrockstaffing.ie",
+      "website_status": "slow",
+      "facebook": "shamrockstaffing",
+      "phone": "+35316000000",
+      "advertising": false,
+      "rating": 4.2,
+      "reviews_now": 60,
+      "intent_score": 59,
+      "tier": "Warm",
+      "primary_offer": "AI Receptionist + Speed-to-Lead",
+      "offers": [
+        "AI Receptionist + Speed-to-Lead",
+        "Website rebuild + Speed-to-Lead"
+      ],
+      "leak_tags": [
+        "Missing calls",
+        "Slow on DMs/forms",
+        "Broken/no website",
+        "Scaling up"
+      ],
+      "signal_types": [
+        "missed_call_review",
+        "slow_response",
+        "website_leak",
+        "expansion_hiring"
+      ],
+      "top_triggers": [
+        "3 reviews mention unanswered calls / no callback",
+        "Facebook shows a slow DM reply time ('days')",
+        "Very slow site (PageSpeed < 50) — losing enquiries to load time"
+      ],
+      "signals": [
+        {
+          "type": "missed_call_review",
+          "headline": "3 reviews mention unanswered calls / no callback",
+          "detected_at": "2026-06-18",
+          "evidence": "https://shamrockstaffing.ie",
+          "weight": 28.5,
+          "quote": "Candidate care is non-existent, no callbacks"
+        },
+        {
+          "type": "slow_response",
+          "headline": "Facebook shows a slow DM reply time ('days')",
+          "detected_at": "2026-06-18",
+          "evidence": "https://facebook.com/shamrockstaffing",
+          "weight": 25.0,
+          "quote": ""
+        },
+        {
+          "type": "website_leak",
+          "headline": "Very slow site (PageSpeed < 50) — losing enquiries to load time",
+          "detected_at": "2026-06-18",
+          "evidence": "https://shamrockstaffing.ie",
+          "weight": 16.8,
+          "quote": ""
+        },
+        {
+          "type": "expansion_hiring",
+          "headline": "3 open roles — actively scaling",
+          "detected_at": "2026-06-18",
+          "evidence": "",
+          "weight": 14.0,
+          "quote": ""
+        }
+      ],
+      "hook": "speed-to-candidate wins placements — first agency to call the applicant fills the role; slow reply = lost fee",
+      "avatar": "SS",
+      "avatarBg": "#FBF1DF",
+      "avatarCol": "#BA7517",
+      "suggested_action": "Shamrock Staffing Solutions (14 staff) is missing calls, slow on dms/forms, broken/no website. Lead with AI Receptionist + Speed-to-Lead. Angle: speed-to-candidate wins placements — first agency to call the applicant fills the role; slow reply = lost fee."
+    },
+    {
+      "id": "harbour-vets",
+      "name": "Harbour Vets",
+      "vertical": "vet",
+      "vertical_label": "Veterinary practices",
+      "country": "IE",
+      "region": "Cork",
+      "employees": 16,
+      "locations": 2,
+      "website": "https://harbourvets.ie",
+      "website_status": "ok",
+      "facebook": "harbourvetscork",
+      "phone": "+35321000000",
+      "advertising": false,
+      "rating": 4.8,
+      "reviews_now": 240,
+      "intent_score": 41,
+      "tier": "Warm",
+      "primary_offer": "AI Receptionist + Speed-to-Lead",
+      "offers": [
+        "AI Receptionist + Speed-to-Lead"
+      ],
+      "leak_tags": [
+        "Missing calls",
+        "No out-of-hours cover",
+        "High throughput"
+      ],
+      "signal_types": [
+        "missed_call_review",
+        "out_of_hours_gap",
+        "review_velocity"
+      ],
+      "top_triggers": [
+        "3 reviews mention unanswered calls / no callback",
+        "Urgent enquiries arrive out-of-hours but the line isn't covered",
+        "+8 reviews in 30 days — high throughput"
+      ],
+      "signals": [
+        {
+          "type": "missed_call_review",
+          "headline": "3 reviews mention unanswered calls / no callback",
+          "detected_at": "2026-06-18",
+          "evidence": "https://harbourvets.ie",
+          "weight": 28.5,
+          "quote": "Phone constantly engaged"
+        },
+        {
+          "type": "out_of_hours_gap",
+          "headline": "Urgent enquiries arrive out-of-hours but the line isn't covered",
+          "detected_at": "2026-06-18",
+          "evidence": "",
+          "weight": 16.0,
+          "quote": ""
+        },
+        {
+          "type": "review_velocity",
+          "headline": "+8 reviews in 30 days — high throughput",
+          "detected_at": "2026-06-18",
+          "evidence": "",
+          "weight": 3.2,
+          "quote": ""
+        }
+      ],
+      "hook": "emergency + booking calls overflow the front desk; out-of-hours calls go to a competitor",
+      "avatar": "HV",
+      "avatarBg": "#FBF1DF",
+      "avatarCol": "#BA7517",
+      "suggested_action": "Harbour Vets (16 staff, 2 sites) is missing calls, no out-of-hours cover. Lead with AI Receptionist + Speed-to-Lead. Angle: emergency + booking calls overflow the front desk; out-of-hours calls go to a competitor."
+    },
+    {
+      "id": "coastline-tyre-auto",
+      "name": "Coastline Tyre & Auto",
+      "vertical": "tyre",
+      "vertical_label": "Tyre & fast-fit",
+      "country": "UK",
+      "region": "South West",
+      "employees": 13,
+      "locations": 2,
+      "website": "https://coastlinetyre.co.uk",
+      "website_status": "ok",
+      "facebook": "coastlinetyre",
+      "phone": "+441752000000",
+      "advertising": false,
+      "rating": 4.7,
+      "reviews_now": 180,
+      "intent_score": 28,
+      "tier": "Watch",
+      "primary_offer": "AI Receptionist + Speed-to-Lead",
+      "offers": [
+        "AI Receptionist + Speed-to-Lead"
+      ],
+      "leak_tags": [
+        "Missing calls",
+        "High throughput"
+      ],
+      "signal_types": [
+        "missed_call_review",
+        "review_velocity"
+      ],
+      "top_triggers": [
+        "2 reviews mention unanswered calls / no callback",
+        "+9 reviews in 30 days — high throughput"
+      ],
+      "signals": [
+        {
+          "type": "missed_call_review",
+          "headline": "2 reviews mention unanswered calls / no callback",
+          "detected_at": "2026-06-18",
+          "evidence": "https://coastlinetyre.co.uk",
+          "weight": 25.3,
+          "quote": "Hard to get through at busy times"
+        },
+        {
+          "type": "review_velocity",
+          "headline": "+9 reviews in 30 days — high throughput",
+          "detected_at": "2026-06-18",
+          "evidence": "",
+          "weight": 3.6,
+          "quote": ""
+        }
+      ],
+      "hook": "puncture/urgent calls go to whoever answers first; seasonal changeover spikes flood the line",
+      "avatar": "CT",
+      "avatarBg": "#EEEDE9",
+      "avatarCol": "#696860",
+      "suggested_action": "Coastline Tyre & Auto (13 staff, 2 sites) is missing calls. Lead with AI Receptionist + Speed-to-Lead. Angle: puncture/urgent calls go to whoever answers first; seasonal changeover spikes flood the line."
+    }
+  ]
+}

@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Intent Radar — Inbound-Leak Signals</title>
+<style>
+  /* ── Design tokens (shared with sibling dashboard.html) ── */
+  :root {
+    --bg-primary:   #FFFFFF;
+    --bg-secondary: #F7F6F3;
+    --bg-tertiary:  #EEEDE9;
+    --border-primary:   #C8C7C2;
+    --border-secondary: #DDDCDA;
+    --border-tertiary:  #E8E7E4;
+    --text-primary:   #1A1A18;
+    --text-secondary: #696860;
+    --text-tertiary:  #9B9A95;
+    --text-success:   #085041;
+    --bg-success:     #E1F5EE;
+    --border-success: #A8D9C8;
+    --color-hot:     #1D9E75;
+    --color-warm:    #BA7517;
+    --color-watch:   #888780;
+    --color-leak:     #B91C1C;
+    --bg-leak:        #FEE2E2;
+    --border-leak:    #FCA5A5;
+    --color-amber:    #78350F;
+    --bg-amber:       #FEF3C7;
+    --border-amber:   #FBBF24;
+    --radius-md: 6px;
+    --radius-lg: 10px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 14px;
+    color: var(--text-primary);
+    background: var(--bg-secondary);
+    min-height: 100vh;
+  }
+
+  /* ── App shell ── */
+  .app-header {
+    background: var(--bg-primary);
+    border-bottom: 0.5px solid var(--border-secondary);
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .app-title { font-size: 15px; font-weight: 600; color: var(--text-primary); }
+  .app-subtitle { font-size: 12px; color: var(--text-secondary); margin-top: 1px; }
+  .last-updated { font-size: 11px; color: var(--text-tertiary); white-space: nowrap; }
+
+  .container { max-width: 960px; margin: 0 auto; padding: 20px 20px 60px; }
+
+  /* ── Metrics row ── */
+  .metrics {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+  .metric {
+    background: var(--bg-primary);
+    border-radius: var(--radius-md);
+    padding: 12px 14px;
+    border: 0.5px solid var(--border-tertiary);
+  }
+  .metric-label { font-size: 11px; color: var(--text-secondary); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.4px; }
+  .metric-val   { font-size: 22px; font-weight: 500; color: var(--text-primary); line-height: 1; }
+  .metric-sub   { font-size: 11px; color: var(--color-hot); margin-top: 3px; }
+  .metric-sub.muted { color: var(--text-tertiary); }
+
+  /* ── Tier tabs ── */
+  .sector-tabs { display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap; }
+  .tab {
+    font-size: 12px; padding: 5px 13px;
+    border-radius: 20px;
+    border: 0.5px solid var(--border-secondary);
+    background: var(--bg-primary);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all .12s;
+    white-space: nowrap;
+  }
+  .tab:hover { border-color: var(--border-primary); color: var(--text-primary); }
+  .tab.active { border-color: var(--border-primary); color: var(--text-primary); font-weight: 500; background: var(--bg-secondary); }
+  .tab .tab-count { color: var(--text-tertiary); margin-left: 4px; font-weight: 400; }
+
+  /* ── Filter pills ── */
+  .filter-section { margin-bottom: 16px; }
+  .filter-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-tertiary); margin-bottom: 6px; }
+  .pill-row { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; margin-bottom: 10px; }
+  .pill {
+    font-size: 12px; padding: 5px 12px;
+    border-radius: 20px;
+    border: 0.5px solid var(--border-secondary);
+    background: var(--bg-primary);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all .12s;
+    white-space: nowrap;
+  }
+  .pill:hover { border-color: var(--border-primary); color: var(--text-primary); }
+  .pill.active { border-color: var(--color-hot); color: var(--text-success); background: var(--bg-success); font-weight: 500; }
+  .pill.offer.active { border-color: #85B7EB; color: #0C447C; background: #E6F1FB; }
+  .result-count { font-size: 12px; color: var(--text-tertiary); margin-left: auto; }
+
+  /* ── Company grid ── */
+  .company-grid { display: flex; flex-direction: column; gap: 10px; }
+
+  /* ── Company card ── */
+  .card {
+    background: var(--bg-primary);
+    border: 0.5px solid var(--border-tertiary);
+    border-radius: var(--radius-lg);
+    padding: 14px 16px;
+    transition: border-color .12s, box-shadow .12s;
+  }
+  .card:hover { border-color: var(--border-secondary); box-shadow: 0 1px 6px rgba(0,0,0,0.05); }
+  .card-hot {
+    border-left: 3px solid var(--color-leak);
+    border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+  }
+
+  /* Card header */
+  .card-top { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px; }
+  .avatar {
+    width: 40px; height: 40px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 600; font-size: 13px; flex-shrink: 0;
+    letter-spacing: 0.5px;
+  }
+  .card-meta { flex: 1; min-width: 0; }
+  .card-name {
+    font-size: 14px; font-weight: 500; color: var(--text-primary);
+    display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+  }
+  .card-sub { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+  .flag { font-size: 13px; }
+
+  /* Score block */
+  .score-block { text-align: right; flex-shrink: 0; }
+  .score-num { font-size: 26px; font-weight: 600; line-height: 1; }
+  .score-tier { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
+
+  /* Offer pill */
+  .offer-pill {
+    display: inline-block;
+    font-size: 12px; font-weight: 600;
+    padding: 5px 12px; border-radius: 20px;
+    background: #E6F1FB; color: #0C447C;
+    border: 0.5px solid #85B7EB;
+    margin-bottom: 10px;
+  }
+
+  /* Leak chips */
+  .leak-chips { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 12px; }
+  .leak-chip {
+    font-size: 11px; padding: 3px 9px;
+    border-radius: 20px;
+    background: var(--bg-amber); color: var(--color-amber);
+    border: 0.5px solid var(--border-amber);
+    font-weight: 500;
+  }
+  .leak-chip.loud {
+    background: var(--bg-leak); color: var(--color-leak);
+    border-color: var(--border-leak);
+    font-weight: 700;
+  }
+
+  /* Why-now expandable */
+  .why-now { margin-bottom: 12px; }
+  .why-toggle {
+    font-size: 12px; font-weight: 500;
+    color: var(--text-primary);
+    cursor: pointer;
+    display: flex; align-items: center; gap: 6px;
+    padding: 8px 10px;
+    background: var(--bg-secondary);
+    border-radius: var(--radius-md);
+    border: 0.5px solid var(--border-tertiary);
+    user-select: none;
+  }
+  .why-toggle:hover { border-color: var(--border-secondary); }
+  .why-toggle .chevron { transition: transform .15s; font-size: 10px; color: var(--text-tertiary); }
+  .why-now.open .why-toggle .chevron { transform: rotate(90deg); }
+  .why-list { display: none; padding: 10px 4px 2px; }
+  .why-now.open .why-list { display: block; }
+  .signal {
+    padding: 8px 0;
+    border-bottom: 0.5px solid var(--border-tertiary);
+  }
+  .signal:last-child { border-bottom: none; }
+  .signal-head { font-size: 12px; font-weight: 500; color: var(--text-primary); }
+  .signal-date { font-size: 11px; color: var(--text-tertiary); margin-left: 6px; font-weight: 400; }
+  .signal-quote {
+    font-size: 12px; font-style: italic;
+    color: var(--text-secondary);
+    margin-top: 5px; padding-left: 10px;
+    border-left: 2px solid var(--border-leak);
+  }
+
+  /* Suggested action callout */
+  .callout {
+    font-size: 12px;
+    color: var(--text-secondary);
+    background: var(--bg-secondary);
+    border-radius: var(--radius-md);
+    padding: 9px 12px;
+    margin-bottom: 12px;
+    line-height: 1.5;
+  }
+  .callout strong { color: var(--text-primary); font-weight: 600; }
+
+  /* Action chips */
+  .action-row {
+    display: flex; gap: 6px; flex-wrap: wrap;
+    padding-top: 10px;
+    border-top: 0.5px solid var(--border-tertiary);
+  }
+  .chip {
+    font-size: 11px; padding: 6px 12px;
+    border-radius: var(--radius-md);
+    border: 0.5px solid var(--border-secondary);
+    background: var(--bg-primary);
+    color: var(--text-secondary);
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex; align-items: center; gap: 5px;
+    transition: background .12s, border-color .12s, color .12s;
+    font-weight: 500;
+  }
+  .chip:hover { background: var(--bg-secondary); border-color: var(--border-primary); color: var(--text-primary); }
+  .chip.call {
+    border-color: var(--border-success);
+    background: var(--bg-success);
+    color: var(--text-success);
+  }
+  .chip.call:hover { filter: brightness(0.96); }
+  .chip.primary {
+    border-color: #85B7EB;
+    background: #E6F1FB;
+    color: #0C447C;
+  }
+  .chip.copied { color: var(--text-success); border-color: var(--border-success); background: var(--bg-success); }
+
+  /* ── Empty / error state ── */
+  .empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-tertiary);
+  }
+  .empty-state h3 { font-size: 15px; font-weight: 500; margin-bottom: 8px; color: var(--text-secondary); }
+  .empty-state p  { font-size: 13px; line-height: 1.6; }
+  .empty-state code {
+    background: var(--bg-tertiary);
+    padding: 2px 7px; border-radius: 4px;
+    font-size: 12px; color: var(--text-primary);
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 600px) {
+    .app-header { padding: 12px 16px; }
+    .metrics { grid-template-columns: repeat(2, 1fr); }
+    .container { padding: 16px 14px 50px; }
+    .result-count { display: none; }
+    .score-num { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="app-header">
+  <div>
+    <div class="app-title">Intent Radar — Inbound-Leak Signals</div>
+    <div class="app-subtitle">Established UK &amp; Ireland firms losing enquiries right now</div>
+  </div>
+  <div class="last-updated" id="last-updated">Loading…</div>
+</header>
+
+<div class="container">
+
+  <!-- Metrics row -->
+  <div class="metrics">
+    <div class="metric">
+      <div class="metric-label">Qualified leads</div>
+      <div class="metric-val" id="m-qualified">—</div>
+      <div class="metric-sub muted">Worth contacting</div>
+    </div>
+    <div class="metric">
+      <div class="metric-label">Hot</div>
+      <div class="metric-val" id="m-hot">—</div>
+      <div class="metric-sub">Bleeding leads now</div>
+    </div>
+    <div class="metric">
+      <div class="metric-label">Warm</div>
+      <div class="metric-val" id="m-warm">—</div>
+      <div class="metric-sub muted">Strong signals</div>
+    </div>
+    <div class="metric">
+      <div class="metric-label">Disqualified (too small / chains)</div>
+      <div class="metric-val" id="m-disqualified">—</div>
+      <div class="metric-sub muted">Filtered out</div>
+    </div>
+  </div>
+
+  <!-- Tier tabs -->
+  <div class="sector-tabs" id="tabs"></div>
+
+  <!-- Filter pills -->
+  <div class="filter-section">
+    <div class="filter-label">Vertical</div>
+    <div class="pill-row" id="vertical-pills"></div>
+    <div class="filter-label">Offer to pitch</div>
+    <div class="pill-row" id="offer-pills">
+      <span class="result-count" id="result-count"></span>
+    </div>
+  </div>
+
+  <!-- Cards -->
+  <div class="company-grid" id="grid"></div>
+</div>
+
+<script>
+/* ============================================================
+   Intent Radar dashboard
+   Loads intent_companies.json + action_queue.json at runtime.
+   Falls back to a friendly message if fetch fails (file://).
+   ============================================================ */
+
+const OFFERS = [
+  "AI Receptionist + Speed-to-Lead",
+  "Website rebuild + Speed-to-Lead",
+  "New-location launch"
+];
+
+const TIER_COLOR = { Hot: 'var(--color-hot)', Warm: 'var(--color-warm)', Watch: 'var(--color-watch)' };
+
+const state = {
+  companies: [],
+  summary: null,
+  queueById: {},
+  tier: 'Hot',
+  vertical: 'all',
+  offer: 'all'
+};
+
+function esc(s) {
+  return String(s == null ? '' : s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+function flag(country) {
+  return country === 'IE' ? '🇮🇪' : '🇬🇧';
+}
+
+async function load() {
+  try {
+    const [cRes, qRes] = await Promise.all([
+      fetch('./data/intent_companies.json'),
+      fetch('./data/action_queue.json')
+    ]);
+    if (!cRes.ok || !qRes.ok) throw new Error('fetch failed');
+    const cData = await cRes.json();
+    const qData = await qRes.json();
+
+    state.companies = cData.companies || [];
+    state.summary = cData.summary || {};
+    (qData.items || []).forEach(it => { state.queueById[it.company_id] = it; });
+
+    boot();
+  } catch (e) {
+    showError();
+  }
+}
+
+function showError() {
+  document.getElementById('last-updated').textContent = 'Offline';
+  document.getElementById('grid').innerHTML = `
+    <div class="empty-state">
+      <h3>Couldn't load the data</h3>
+      <p>Run <code>python intent/run.py</code> then serve this folder.</p>
+    </div>`;
+}
+
+function boot() {
+  const s = state.summary;
+  document.getElementById('last-updated').textContent = 'Updated ' + (s.generated || '—');
+  document.getElementById('m-qualified').textContent = s.qualified != null ? s.qualified : state.companies.length;
+  document.getElementById('m-hot').textContent = s.hot != null ? s.hot : '—';
+  document.getElementById('m-warm').textContent = s.warm != null ? s.warm : '—';
+  document.getElementById('m-disqualified').textContent = s.disqualified != null ? s.disqualified : '—';
+
+  buildTabs();
+  buildVerticalPills();
+  buildOfferPills();
+  render();
+}
+
+function tierCount(tier) {
+  if (tier === 'All') return state.companies.length;
+  return state.companies.filter(c => c.tier === tier).length;
+}
+
+function buildTabs() {
+  const tabs = ['All', 'Hot', 'Warm', 'Watch'];
+  const el = document.getElementById('tabs');
+  el.innerHTML = tabs.map(t =>
+    `<div class="tab ${state.tier === t ? 'active' : ''}" data-tier="${t}">${t}<span class="tab-count">${tierCount(t)}</span></div>`
+  ).join('');
+  el.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      state.tier = tab.dataset.tier;
+      buildTabs();
+      render();
+    });
+  });
+}
+
+function buildVerticalPills() {
+  const el = document.getElementById('vertical-pills');
+  const labels = {};
+  state.companies.forEach(c => { labels[c.vertical] = c.vertical_label || c.vertical; });
+  const verts = (state.summary.verticals || Object.keys(labels));
+
+  let html = `<div class="pill ${state.vertical === 'all' ? 'active' : ''}" data-vert="all">All verticals</div>`;
+  html += verts.map(v =>
+    `<div class="pill ${state.vertical === v ? 'active' : ''}" data-vert="${esc(v)}">${esc(labels[v] || v)}</div>`
+  ).join('');
+  el.innerHTML = html;
+  el.querySelectorAll('.pill').forEach(p => {
+    p.addEventListener('click', () => {
+      state.vertical = p.dataset.vert;
+      buildVerticalPills();
+      render();
+    });
+  });
+}
+
+function buildOfferPills() {
+  const el = document.getElementById('offer-pills');
+  const short = {
+    "AI Receptionist + Speed-to-Lead": "AI Receptionist + Speed-to-Lead",
+    "Website rebuild + Speed-to-Lead": "Website rebuild + Speed-to-Lead",
+    "New-location launch": "New-location launch"
+  };
+  let html = `<div class="pill offer ${state.offer === 'all' ? 'active' : ''}" data-offer="all">All offers</div>`;
+  html += OFFERS.map(o =>
+    `<div class="pill offer ${state.offer === o ? 'active' : ''}" data-offer="${esc(o)}">${esc(short[o] || o)}</div>`
+  ).join('');
+  html += `<span class="result-count" id="result-count"></span>`;
+  el.innerHTML = html;
+  el.querySelectorAll('.pill').forEach(p => {
+    p.addEventListener('click', () => {
+      state.offer = p.dataset.offer;
+      buildOfferPills();
+      render();
+    });
+  });
+}
+
+function filtered() {
+  return state.companies.filter(c => {
+    if (state.tier !== 'All' && c.tier !== state.tier) return false;
+    if (state.vertical !== 'all' && c.vertical !== state.vertical) return false;
+    if (state.offer !== 'all') {
+      const offers = c.offers || [];
+      if (c.primary_offer !== state.offer && !offers.includes(state.offer)) return false;
+    }
+    return true;
+  }).sort((a, b) => (b.intent_score || 0) - (a.intent_score || 0));
+}
+
+function render() {
+  const list = filtered();
+  const rc = document.getElementById('result-count');
+  if (rc) rc.textContent = list.length + (list.length === 1 ? ' company' : ' companies');
+
+  const grid = document.getElementById('grid');
+  if (!list.length) {
+    grid.innerHTML = `<div class="empty-state"><h3>No companies match</h3><p>Try a different tier, vertical, or offer.</p></div>`;
+    return;
+  }
+  grid.innerHTML = list.map(cardHTML).join('');
+  wireCard(grid);
+}
+
+function cardHTML(c) {
+  const isHot = c.tier === 'Hot';
+  const col = c.avatarCol || TIER_COLOR[c.tier] || 'var(--text-primary)';
+  const sites = (c.locations && c.locations > 1) ? ` · ${c.locations} sites` : '';
+  const staff = (c.employees != null) ? `${c.employees} staff` : '';
+  const subParts = [c.region, c.country].filter(Boolean).join(' · ');
+
+  // leak chips — "Missing calls" is the loud one
+  const leakChips = (c.leak_tags || []).map(t => {
+    const loud = t === 'Missing calls';
+    return `<span class="leak-chip ${loud ? 'loud' : ''}">${esc(t)}</span>`;
+  }).join('');
+
+  // signals (why now)
+  const signals = (c.signals || []).map(s => {
+    const date = s.detected_at ? `<span class="signal-date">${esc(s.detected_at)}</span>` : '';
+    const quote = s.quote ? `<div class="signal-quote">“${esc(s.quote)}”</div>` : '';
+    return `<div class="signal"><div class="signal-head">${esc(s.headline)}${date}</div>${quote}</div>`;
+  }).join('');
+
+  // action chips
+  const chips = [];
+  chips.push(`<span class="chip call" data-act="call" data-phone="${esc(c.phone || '')}">📞 Call</span>`);
+  if (c.facebook) {
+    const fbUrl = `https://facebook.com/${esc(c.facebook)}`;
+    chips.push(`<a class="chip" href="${fbUrl}" target="_blank" rel="noopener">Facebook</a>`);
+  }
+  if (c.website) {
+    chips.push(`<a class="chip" href="${esc(c.website)}" target="_blank" rel="noopener">Website</a>`);
+  }
+  const hasEmail = !!state.queueById[c.id];
+  if (hasEmail) {
+    chips.push(`<span class="chip primary" data-act="copy-email" data-id="${esc(c.id)}">✉️ Copy outreach email</span>`);
+  }
+  chips.push(`<span class="chip" data-act="copy-why" data-id="${esc(c.id)}">Copy why-now</span>`);
+
+  return `
+  <div class="card ${isHot ? 'card-hot' : ''}">
+    <div class="card-top">
+      <div class="avatar" style="background:${esc(c.avatarBg || 'var(--bg-tertiary)')};color:${esc(col)}">${esc(c.avatar || '?')}</div>
+      <div class="card-meta">
+        <div class="card-name">
+          <span>${esc(c.name)}</span>
+          <span class="flag" title="${esc(c.country)}">${flag(c.country)}</span>
+        </div>
+        <div class="card-sub">${esc(c.vertical_label || c.vertical)}${subParts ? ' · ' + esc(subParts) : ''}</div>
+        <div class="card-sub">${esc(staff)}${esc(sites)}</div>
+      </div>
+      <div class="score-block">
+        <div class="score-num" style="color:${esc(col)}">${esc(c.intent_score)}</div>
+        <div class="score-tier" style="color:${esc(col)}">${esc(c.tier)}</div>
+      </div>
+    </div>
+
+    <div class="offer-pill">Pitch: ${esc(c.primary_offer)}</div>
+
+    <div class="leak-chips">${leakChips}</div>
+
+    <div class="why-now" data-why>
+      <div class="why-toggle" data-act="toggle-why">
+        <span class="chevron">▶</span>
+        <span>Why now — ${(c.signals || []).length} signal${(c.signals || []).length === 1 ? '' : 's'}</span>
+      </div>
+      <div class="why-list">${signals || '<div class="signal"><div class="signal-head">No detailed signals.</div></div>'}</div>
+    </div>
+
+    ${c.suggested_action ? `<div class="callout"><strong>Suggested action:</strong> ${esc(c.suggested_action)}</div>` : ''}
+
+    <div class="action-row">${chips.join('')}</div>
+  </div>`;
+}
+
+function wireCard(scope) {
+  scope.querySelectorAll('[data-act="toggle-why"]').forEach(el => {
+    el.addEventListener('click', () => el.closest('[data-why]').classList.toggle('open'));
+  });
+  scope.querySelectorAll('[data-act="call"]').forEach(el => {
+    el.addEventListener('click', () => {
+      const ph = el.dataset.phone;
+      if (ph) window.location.href = 'tel:' + ph;
+      else flash(el, 'No phone');
+    });
+  });
+  scope.querySelectorAll('[data-act="copy-email"]').forEach(el => {
+    el.addEventListener('click', () => {
+      const it = state.queueById[el.dataset.id];
+      if (!it) return;
+      const text = `Subject: ${it.subject || ''}\n\n${it.body || ''}`;
+      copyText(text, el, 'Copied ✓');
+    });
+  });
+  scope.querySelectorAll('[data-act="copy-why"]').forEach(el => {
+    el.addEventListener('click', () => {
+      const c = state.companies.find(x => x.id === el.dataset.id);
+      if (!c) return;
+      let text;
+      const it = state.queueById[el.dataset.id];
+      if (it && it.why_now) text = it.why_now;
+      else text = (c.top_triggers || (c.signals || []).map(s => s.headline)).join('\n');
+      copyText(text, el, 'Copied ✓');
+    });
+  });
+}
+
+function copyText(text, el, label) {
+  const done = () => flash(el, label);
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(done).catch(() => fallbackCopy(text, done));
+  } else {
+    fallbackCopy(text, done);
+  }
+}
+
+function fallbackCopy(text, cb) {
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.position = 'fixed';
+  ta.style.opacity = '0';
+  document.body.appendChild(ta);
+  ta.select();
+  try { document.execCommand('copy'); } catch (e) {}
+  document.body.removeChild(ta);
+  cb();
+}
+
+function flash(el, label) {
+  const orig = el.textContent;
+  el.classList.add('copied');
+  el.textContent = label;
+  setTimeout(() => { el.classList.remove('copied'); el.textContent = orig; }, 1600);
+}
+
+load();
+</script>
+</body>
+</html>

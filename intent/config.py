@@ -1,145 +1,194 @@
 """
 Intent Engine — configuration.
 
-Central place for: which verticals we track, where their FREE public registers
-live, how each signal type is weighted into the intent score, the tier cutoffs,
-the grant/regulatory "why now" hooks per vertical, and the corporate-chain
-blocklist that keeps us pointed at sellable independent owner-operators.
+Thesis (locked with Dave, June 2026): we do NOT chase new/growing businesses.
+We find ESTABLISHED businesses (10+ staff, real budget) that are LEAKING inbound
+revenue right now — missing calls, slow to reply on any channel, sending paid
+clicks to a broken/no website, or launching a new location blind. Then we route
+each to the right offer, led by the AI voice receptionist + speed-to-lead.
 
-No paid tools. Every source below is a free public register, a free job API/board,
-a free ad library, or a free reviews surface.
+Everything here is detectable from FREE public sources. No paid tools.
 """
 
 # ──────────────────────────────────────────────────────────────────────────
-# Signal weights — how many points a *fresh* signal of each type contributes
-# to a company's intent score (0–100 scale, before recency decay + grant boost).
+# Qualification gate — "has money, big enough to have the problem"
+# ──────────────────────────────────────────────────────────────────────────
+SIZE_MIN_EMPLOYEES = 10          # hard floor — no 1–3 person sole traders
+# A business qualifies if it clears the staff floor OR runs multiple locations
+# (multi-site = budget + the jackpot expansion signal). For trades, multi-site
+# is NOT required — 10+ staff single-site trades still qualify.
+def qualifies(company) -> bool:
+    if is_chain(company.get("name", "")):
+        return False
+    emp = company.get("employees")
+    locs = company.get("locations", 1) or 1
+    if locs >= 2:
+        return True
+    if emp is not None and emp >= SIZE_MIN_EMPLOYEES:
+        return True
+    # unknown size + single site + currently advertising = give benefit of doubt
+    if emp is None and company.get("advertising"):
+        return True
+    return False
+
+# ──────────────────────────────────────────────────────────────────────────
+# Signal weights — the score measures "how much revenue are they leaking, and
+# can we plug it". Inbound-leak signals dominate; expansion is the bonus.
 # ──────────────────────────────────────────────────────────────────────────
 SIGNAL_WEIGHTS = {
-    "new_register":    35,   # just qualified / just opened — peak intent
-    "planning":        30,   # new-site application — earliest signal, 6–18mo out
-    "hiring":          25,   # per active job ad (capped) — capacity expansion
-    "advertising":     20,   # active on Meta/Google ad library — warm to marketing
-    "review_velocity": 15,   # sudden review ramp — active demand / push
+    # ── inbound leak (→ AI receptionist + speed-to-lead) ──
+    "missed_call_review": 38,   # public reviews complaining nobody answered / called back
+    "slow_response":      25,   # FB "typically replies in a day", no fast channel
+    "out_of_hours_gap":   16,   # urgent/emergency service but closed evenings/weekends
+    "hiring_receptionist":20,   # advertising a receptionist/call-handler = feels the pain
+    # ── paid-but-leaking (amplifier + budget proof) ──
+    "ads_active":         15,   # paying for inbound = every dropped lead is wasted spend
+    # ── website leak (→ website rebuild + speed-to-lead) ──
+    "website_leak":       24,   # no site / not mobile / no SSL / slow, while advertising
+    # ── expansion (→ new-location launch / jackpot) ──
+    "new_location":       30,   # established operator opening another site
+    "expansion_hiring":   14,   # hiring across multiple roles/sites
+    # ── activity / throughput proxy ──
+    "review_velocity":     8,
 }
 
-# A single company can stack at most this many job ads toward its score, so a
-# huge recruiter doesn't drown out a sharper multi-signal lead.
-HIRING_CAP = 2
+SIGNAL_TTL_DAYS = 150
 
-# Signals older than this (days) stop counting toward "live" intent.
-SIGNAL_TTL_DAYS = 120
-
-# Recency decay: a signal at age 0 counts full; at SIGNAL_TTL_DAYS it counts ~0.
 def recency_multiplier(age_days: int) -> float:
-    if age_days <= 7:
+    if age_days <= 14:
         return 1.0
     if age_days >= SIGNAL_TTL_DAYS:
         return 0.0
-    return max(0.0, 1.0 - (age_days - 7) / (SIGNAL_TTL_DAYS - 7))
+    return max(0.0, 1.0 - (age_days - 14) / (SIGNAL_TTL_DAYS - 14))
 
 # ──────────────────────────────────────────────────────────────────────────
-# Tiers — same Hot/Warm/Watch language as ad-spend-watcher so the VA workflow
-# is identical across both dashboards.
+# Tiers
 # ──────────────────────────────────────────────────────────────────────────
-TIER_HOT = 65
-TIER_WARM = 40
+TIER_HOT, TIER_WARM = 60, 35
 
 def tier_for(score: int) -> str:
-    if score >= TIER_HOT:
-        return "Hot"
-    if score >= TIER_WARM:
-        return "Warm"
-    return "Watch"
+    return "Hot" if score >= TIER_HOT else "Warm" if score >= TIER_WARM else "Watch"
 
 # ──────────────────────────────────────────────────────────────────────────
-# Verticals — the public register(s) that act as our free, qualified prospect
-# list, plus the live grant/regulatory "why now" hook the actioning agent uses
-# in outreach. Seed vertical is heat_pump; the rest are wired and ready.
+# Offers — what we sell against each detected leak. Led by the AI receptionist.
+# ──────────────────────────────────────────────────────────────────────────
+OFFER_RECEPTIONIST = "AI Receptionist + Speed-to-Lead"
+OFFER_WEBSITE = "Website rebuild + Speed-to-Lead"
+OFFER_LAUNCH = "New-location launch"
+
+INBOUND_SIGNALS = {"missed_call_review", "slow_response", "out_of_hours_gap", "hiring_receptionist"}
+
+def primary_offer(signal_types) -> str:
+    st = set(signal_types)
+    if st & INBOUND_SIGNALS:
+        return OFFER_RECEPTIONIST          # the lead offer, always wins if pain present
+    if "website_leak" in st:
+        return OFFER_WEBSITE
+    if "new_location" in st:
+        return OFFER_LAUNCH
+    return OFFER_RECEPTIONIST               # default pitch
+
+# ──────────────────────────────────────────────────────────────────────────
+# Verticals — the sectors Dave sells to, the free source list to enumerate
+# established firms, the channels customers flood them on (so we know where the
+# leak is), and a sector-specific "why now" the actioning agent can use.
 # ──────────────────────────────────────────────────────────────────────────
 VERTICALS = {
+    "aesthetic_clinic": {
+        "label": "Aesthetic clinics",
+        "channels": ["phone", "dm", "web_form"],
+        "source": "Save Face / JCCP registers + Google Maps",
+        "hook": "high-ticket bookings lost to slow DM/phone replies; consultations no-show without instant follow-up",
+        "receptionist_roles": ["clinic receptionist", "patient coordinator", "front of house"],
+    },
+    "vet": {
+        "label": "Veterinary practices",
+        "channels": ["phone", "web_form"],
+        "source": "RCVS (UK) / VCI (IE) registers + Google Maps; exclude IVC/CVS/VetPartners/Medivet",
+        "hook": "emergency + booking calls overflow the front desk; out-of-hours calls go to a competitor",
+        "receptionist_roles": ["veterinary receptionist", "client care", "front of house"],
+    },
+    "mot_centre": {
+        "label": "MOT centres",
+        "channels": ["phone"],
+        "source": "DVSA active test-station CSV (free) + Google Maps",
+        "hook": "booking + MOT-reminder calls missed while techs are on the ramp; March/Sept surges overwhelm the phone",
+        "receptionist_roles": ["service advisor", "garage receptionist", "booking coordinator"],
+    },
+    "tyre": {
+        "label": "Tyre & fast-fit",
+        "channels": ["phone"],
+        "source": "NTDA members + Google Maps",
+        "hook": "puncture/urgent calls go to whoever answers first; seasonal changeover spikes flood the line",
+        "receptionist_roles": ["service advisor", "depot receptionist"],
+    },
+    "car_dealer": {
+        "label": "Independent car dealers",
+        "channels": ["phone", "web_form", "sms"],
+        "source": "AutoTrader/Motors dealer listings + Google Maps (independents, not franchised main dealers)",
+        "hook": "web enquiries on stock decay in minutes; after-hours buyer interest never gets a reply",
+        "receptionist_roles": ["sales executive", "showroom host", "business development"],
+    },
     "heat_pump": {
         "label": "Heat-pump installers",
-        "job_roles": ["heat pump engineer", "ASHP installer", "renewables engineer"],
-        "registers": [
-            {"name": "MCS", "url": "https://mcscertified.com/find-an-installer/",
-             "tech": "Air/Ground Source Heat Pump"},
-        ],
-        "grant_hook": "Boiler Upgrade Scheme £7,500 (new £9,000 off-grid uplift from 21 Jul 2026); Ireland SEAI up to €12,500",
-        "sell_angle": "turn the grant-driven enquiry surge into booked installs before the BUS deadline",
+        "channels": ["phone", "web_form"],
+        "source": "MCS Find-an-Installer (filter to 10+ staff, established)",
+        "hook": "grant-driven enquiry surge swamps a field-based team; quotes requested faster than they can answer",
+        "receptionist_roles": ["office manager", "scheduler", "customer coordinator"],
+    },
+    "solar": {
+        "label": "Solar installers",
+        "channels": ["phone", "web_form"],
+        "source": "MCS / RECC registers (filter to 10+ staff)",
+        "hook": "paying for solar leads (brutal CPCs) then dropping the call while on a roof",
+        "receptionist_roles": ["office manager", "scheduler", "customer coordinator"],
     },
     "ev_charger": {
         "label": "EV-charger installers",
-        "job_roles": ["EV charger installer", "EVSE electrician"],
-        "registers": [
-            {"name": "OZEV authorised installers",
-             "url": "https://www.gov.uk/guidance/electric-vehicle-chargepoint-and-infrastructure-grant-installer-guidance",
-             "tech": "EV chargepoint"},
-        ],
-        "grant_hook": "OZEV grant £500/socket (raised Apr 2026); Part S mandates chargers on new builds",
-        "sell_angle": "win the grant-funded home/workplace charger work nobody is selling them",
+        "channels": ["phone", "web_form"],
+        "source": "OZEV authorised-installer list + NICEIC (filter to 10+ staff)",
+        "hook": "grant-funded install enquiries arrive by form and sit unanswered",
+        "receptionist_roles": ["office manager", "scheduler"],
     },
-    "insulation": {
-        "label": "Insulation / retrofit",
-        "job_roles": ["insulation installer", "retrofit coordinator", "EWI installer"],
-        "registers": [
-            {"name": "TrustMark", "url": "https://www.trustmark.org.uk/find-a-tradesman",
-             "tech": "Insulation / PAS 2035 retrofit"},
-        ],
-        "grant_hook": "GBIS closes Mar 2026 (deadline scramble); ECO4 to Dec 2026; Warm Homes up to £15k/home",
-        "sell_angle": "capture private-pay retrofit demand that bypasses scheme-manager margins",
-    },
-    "hvac": {
-        "label": "HVAC / air-conditioning",
-        "job_roles": ["air conditioning engineer", "HVAC installer", "F-gas engineer"],
-        "registers": [
-            {"name": "REFCOM / F-Gas", "url": "https://www.refcom.org.uk/refcom-register/",
-             "tech": "F-Gas refrigeration & AC"},
-        ],
-        "grant_hook": "New air-to-air BUS grant £2,500 (from Apr 2026); F-gas R410A phase-down forces a replacement cycle",
-        "sell_angle": "ride the summer AC demand spike and the new air-to-air grant",
+    "recruitment": {
+        "label": "Recruitment agencies",
+        "channels": ["phone", "email", "web_form"],
+        "source": "REC member directory + live-vacancy / consultant-hiring signals",
+        "hook": "speed-to-candidate wins placements — first agency to call the applicant fills the role; slow reply = lost fee",
+        "receptionist_roles": ["resourcer", "delivery consultant", "candidate manager"],
     },
 }
 
-DEFAULT_VERTICAL = "heat_pump"
-
-# Fallback metadata for any vertical not explicitly configured above (e.g. the
-# Solar/Plumbing/Alarms sectors inherited from ad-spend-watcher).
-GENERIC_VERTICAL = {
-    "label": "Local trades",
-    "job_roles": [],
-    "registers": [],
-    "grant_hook": "",
-    "sell_angle": "turn local demand into booked jobs",
-}
-
+DEFAULT_VERTICAL = "aesthetic_clinic"
 
 def vertical_meta(vertical):
-    """Vertical config, tolerant of unknown verticals."""
     if vertical in VERTICALS:
         return VERTICALS[vertical]
-    meta = dict(GENERIC_VERTICAL)
-    meta["label"] = (vertical or "other").replace("_", " ").title()
-    return meta
+    return {"label": (vertical or "other").replace("_", " ").title(),
+            "channels": ["phone"], "source": "", "hook": "win and keep more inbound enquiries",
+            "receptionist_roles": ["receptionist"]}
 
 # ──────────────────────────────────────────────────────────────────────────
-# Corporate-chain blocklist. The whole strategy is selling to INDEPENDENT
-# owner-operators; chains have in-house marketing and are not sellable leads.
-# Matched case-insensitively as a substring of the company name. Extend freely.
-# (Healthcare/childcare chains included so the engine is safe to point at those
-# verticals later without re-pitching corporates.)
+# Corporate-chain blocklist — centralised marketing, not sellable. The franchised
+# main dealers / national fast-fit chains are here so "car_dealer"/"tyre"/"mot"
+# stay on independents and regional multi-site groups.
 # ──────────────────────────────────────────────────────────────────────────
 CHAIN_BLOCKLIST = [
-    # vets
+    # vet
     "ivc", "evidensia", "cvs ", "vets4pets", "vetpartners", "medivet", "linnaeus",
-    # dental
-    "mydentist", "{my}dentist", "bupa dental", "portmandentex", "rodericks", "colosseum dental",
-    # childcare
-    "busy bees", "bright horizons", "kids planet", "monkey puzzle", "n family",
-    # national trade franchises (in-house marketing)
-    "british gas", "octopus energy", "eon ", "e.on", "ovo ",
+    # tyre / fast-fit / MOT national
+    "kwik fit", "kwik-fit", "halfords", "ats euromaster", "national tyres", "formula one autocentres",
+    "f1 autocentres", "protyre", "hometyre",
+    # car franchised / supermarkets
+    "arnold clark", "evans halshaw", "sytner", "lookers", "marshall motor", "cazoo", "motorpoint", "cinch",
+    # aesthetic chains
+    "sk:n", "sk-n", "the harley medical", "transform hospital",
+    # energy nationals
+    "british gas", "octopus energy", "eon", "e.on", "ovo",
+    # recruitment nationals (in-house marketing)
+    "hays", "reed.co.uk", "adecco", "randstad", "pagegroup", "michael page", "robert walters",
 ]
-
 
 def is_chain(name: str) -> bool:
     n = (name or "").lower()
-    return any(token in n for token in CHAIN_BLOCKLIST)
+    return any(tok in n for tok in CHAIN_BLOCKLIST)

@@ -168,3 +168,18 @@ Worker-backed `status.json`.
   for cross-device sync in v2.
 - VA idiot-proofing: tel:/mailto: chips, sector-specific Copy-template buttons,
   "today" view filter, Sunday morning email summary, tooltips.
+
+## Sibling project: `intent/` — Intent Radar (inbound-leak engine)
+
+A separate, free, signal-driven lead engine living in `intent/` (see
+`intent/README.md`). Where ad-spend-watcher finds *advertisers*, Intent Radar
+finds **established (10+ staff) UK & Ireland firms leaking inbound revenue now**
+— missed-call reviews, slow replies, broken sites they pay ads into, new-location
+launches — and routes each to an offer led by the **CaillteAI AI voice
+receptionist + speed-to-lead**. Same stack/principles: free public sources only
+(review text, FB reply-speed, Google listings, PageSpeed, registers), flat-file
+JSON, static GitHub Pages dashboard, and a Claude actioning sub-agent
+(`intent/action_agent/AGENT.md`) that drafts Gmail outreach for the VA. ICP
+explicitly excludes 1–3 person shops, brand-new registrations, corporate chains,
+and dentists. `intent/data/roster.json` is sample data pending live roster pulls.
+Run: `python intent/run.py --include-warm`.
