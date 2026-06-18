@@ -1,0 +1,9 @@
+{
+  "_note": "SAMPLE Meta Ad Library / Google Ads Transparency hits for heat-pump installers. Live version reuses scripts/scraper_meta.py.",
+  "vertical": "heat_pump",
+  "advertisers": [
+    {"company": "Cosy Homes Heat Pumps Ltd", "headline": "Running Meta lead ads — 4 active creatives", "platform": "meta", "country": "UK", "url": "https://www.facebook.com/ads/library/"},
+    {"company": "Coastline Renewables", "headline": "Active on Meta + Google Ads (BUS grant angle)", "platform": "meta+google", "country": "UK", "url": "https://www.facebook.com/ads/library/"},
+    {"company": "Northgate Renewables", "headline": "Running Meta awareness ads", "platform": "meta", "country": "UK", "url": "https://www.facebook.com/ads/library/"}
+  ]
+}

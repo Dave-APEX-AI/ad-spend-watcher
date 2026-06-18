@@ -1,0 +1,11 @@
+{
+  "_note": "SAMPLE Google review counts (now vs 30 days ago). Live counts captured via Chrome MCP land in review_counts_heat_pump.json and take priority.",
+  "vertical": "heat_pump",
+  "companies": [
+    {"company": "Cosy Homes Heat Pumps Ltd", "reviews_now": 47, "reviews_prev": 39, "rating": 4.9, "country": "UK", "url": "https://www.google.com/search?q=Cosy+Homes+Heat+Pumps+reviews"},
+    {"company": "Coastline Renewables", "reviews_now": 31, "reviews_prev": 19, "rating": 4.8, "country": "UK", "url": "https://www.google.com/search?q=Coastline+Renewables+reviews"},
+    {"company": "Brightspark Renewables", "reviews_now": 22, "reviews_prev": 15, "rating": 4.7, "country": "UK", "url": "https://www.google.com/search?q=Brightspark+Renewables+reviews"},
+    {"company": "Severn Valley Heat Pumps", "reviews_now": 12, "reviews_prev": 10, "rating": 5.0, "country": "UK", "url": "https://www.google.com/search?q=Severn+Valley+Heat+Pumps+reviews"},
+    {"company": "Liffey Green Energy", "reviews_now": 28, "reviews_prev": 21, "rating": 4.6, "country": "IE", "url": "https://www.google.com/search?q=Liffey+Green+Energy+reviews"}
+  ]
+}

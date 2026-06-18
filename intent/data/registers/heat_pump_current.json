@@ -1,0 +1,22 @@
+{
+  "_note": "SAMPLE heat-pump installer register snapshot (MCS-shaped). On Dave's Mac, collect_registers.py overwrites this with a live MCS postcode sweep. Field shape mirrors mcscertified.com find-an-installer results.",
+  "vertical": "heat_pump",
+  "source": "MCS",
+  "fetched": "2026-06-18",
+  "installers": [
+    {"name": "Cosy Homes Heat Pumps Ltd", "country": "UK", "region": "South West", "town": "Exeter", "website": "https://cosyhomesheatpumps.co.uk", "tech": "Air Source Heat Pump"},
+    {"name": "Northgate Renewables", "country": "UK", "region": "Yorkshire", "town": "Leeds", "website": "https://northgaterenewables.co.uk", "tech": "Air Source Heat Pump"},
+    {"name": "GreenWarm Energy Solutions", "country": "UK", "region": "South East", "town": "Maidstone", "website": "https://greenwarmenergy.co.uk", "tech": "Ground Source Heat Pump"},
+    {"name": "EcoHeat Installations", "country": "UK", "region": "North West", "town": "Preston", "website": "https://ecoheatinstall.co.uk", "tech": "Air Source Heat Pump"},
+    {"name": "Shannon Renewable Heat", "country": "IE", "region": "Munster", "town": "Limerick", "website": "https://shannonrenewableheat.ie", "tech": "Air Source Heat Pump"},
+    {"name": "Pennine Heat Pump Co", "country": "UK", "region": "Yorkshire", "town": "Huddersfield", "website": "https://pennineheatpump.co.uk", "tech": "Air Source Heat Pump"},
+    {"name": "Brightspark Renewables", "country": "UK", "region": "Scotland", "town": "Stirling", "website": "https://brightsparkrenewables.co.uk", "tech": "Air Source Heat Pump"},
+    {"name": "Atlantic Eco Heating", "country": "IE", "region": "Connacht", "town": "Galway", "website": "https://atlanticecoheating.ie", "tech": "Ground Source Heat Pump"},
+    {"name": "Hadrian Heat & Power", "country": "UK", "region": "North East", "town": "Newcastle", "website": "https://hadrianheat.co.uk", "tech": "Air Source Heat Pump"},
+    {"name": "Severn Valley Heat Pumps", "country": "UK", "region": "West Midlands", "town": "Worcester", "website": "https://severnvalleyheatpumps.co.uk", "tech": "Air Source Heat Pump"},
+    {"name": "Coastline Renewables", "country": "UK", "region": "South West", "town": "Plymouth", "website": "https://coastlinerenewables.co.uk", "tech": "Air Source Heat Pump"},
+    {"name": "Liffey Green Energy", "country": "IE", "region": "Leinster", "town": "Dublin", "website": "https://liffeygreenenergy.ie", "tech": "Air Source Heat Pump"},
+    {"name": "Moorland Heat Solutions", "country": "UK", "region": "South West", "town": "Taunton", "website": "https://moorlandheat.co.uk", "tech": "Air Source Heat Pump"},
+    {"name": "British Gas Heat Pumps", "country": "UK", "region": "National", "town": "Windsor", "website": "https://britishgas.co.uk", "tech": "Air Source Heat Pump"}
+  ]
+}
