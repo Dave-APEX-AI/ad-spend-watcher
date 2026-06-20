@@ -69,3 +69,8 @@ Strategy: `social/STRATEGY.md`. The weekly engine: `.claude/skills/caillte-weekl
   scan-driven content; no Web3Forms; Arcads parked; email confirmations on each step/problem.
 - Verified UK stat to lean on: trades lose ~£24k/yr to 60%+ unanswered calls (digitalx, 2026).
 - Trend data: carousels win saves, reels win reach → mix ~4 reels / ~7 carousels / ~3 statics.
+- **Meta's own AI content tools (Meta AI / Vibes / Movie Gen) have NO official API** — they're
+  human-facing apps; an agent can't drive them hands-off (only a risky unofficial cookie-based
+  wrapper, which we won't use — ToS/account risk). Agent-driven generation = our free
+  Chromium+ffmpeg engine (default) or Arcads/Pletor APIs (paid, for photoreal/AI-actor). Don't
+  re-litigate "just use Meta AI".
