@@ -29,8 +29,8 @@ jobs:
           python-version: "3.12"
       - uses: browser-actions/setup-chrome@v1
         id: chrome
-      - name: Install render deps (free ffmpeg)
-        run: pip install imageio-ffmpeg
+      - name: Install render deps (free ffmpeg + Playwright for animated reels)
+        run: pip install imageio-ffmpeg playwright
 
       - name: Refill the queue
         env:
