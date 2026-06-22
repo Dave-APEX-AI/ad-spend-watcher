@@ -71,14 +71,16 @@ Strategy: `social/STRATEGY.md`. The weekly engine: `.claude/skills/caillte-weekl
 
 ## Learnings log (append dated entries)
 
-### 2026-06-22
-- **Analytics:** built `caillte-analytics.yml` + `analytics.py` (runs on Actions, ranks posts).
-  - ⚠️ **Token lacks `instagram_manage_insights`** → views/reach/saves all return 0; can only
-    read likes+comments. To get real view data, regenerate the IG token with that scope added.
-  - **Account has ~108 posts back to Nov 2025** — CaillteAI was posting (Dave / prior tool)
-    long before our system. Our automated posts are the June-2026 ones.
-  - Engagement ceiling is tiny: **max ~8 likes ever** (older posts); our June posts at 0–2
-    likes so far. Bottleneck is **reach + followers**, not post style. Measure properly first.
+### 2026-06-22 (analytics — REAL view data after adding instagram_manage_insights)
+- **Analytics:** `caillte-analytics.yml` + `analytics.py` (ranks all posts by views/reach).
+- **#1 post on the whole account = OUR £280→£24k counter REEL (`w3-counter-reel`) — 228 views**
+  in ~1 day. Other top reels: villain "I'm your missed call" (161 views/130 reach),
+  "under a sink" (89/79), plus older "Pat lost €4,200" reel (169/149).
+- **REELS win decisively on REACH:** reels reach 79–149 non-followers; feed posts only 8–57.
+  High-view feed posts are mostly Nov–Dec 2025 (months to accumulate). Normalised for age,
+  reels dominate. **→ Weight the content mix HARD toward reels.**
+- **Saves ≈ 0 everywhere** (audience too small yet). Likes still ≤8. Followers/reach is the lever.
+- Account has ~108 posts back to Nov 2025 (Dave/prior tool posted before our system).
 - **Autonomous refill** proven on the runner (caillte-refill.yml) — queue tops itself up.
 
 ### 2026-06-20
