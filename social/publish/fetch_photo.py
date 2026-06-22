@@ -39,7 +39,9 @@ def main():
         print(f"no results for '{query}'"); return 1
     # pick the first; prefer a tall/portrait source
     src = photos[0]["src"].get("portrait") or photos[0]["src"].get("large2x") or photos[0]["src"]["large"]
-    urllib.request.urlretrieve(src, out)
+    imgreq = urllib.request.Request(src, headers={"User-Agent": "CaillteAI/1.0 (+https://www.caillteai.com)"})
+    with urllib.request.urlopen(imgreq, timeout=60) as resp, open(out, "wb") as f:
+        f.write(resp.read())
     print(out)
     return 0
 
