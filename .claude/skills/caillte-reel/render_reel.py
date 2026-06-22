@@ -34,8 +34,15 @@ def find_ffmpeg():
 
 def build_html(spec):
     tpl = open(TEMPLATE, encoding="utf-8").read()
-    payload = json.dumps({"fps": int(spec.get("fps", 30)), "cards": spec["cards"]},
-                         ensure_ascii=False)
+    out = {"fps": int(spec.get("fps", 30)), "cards": spec["cards"]}
+    photo = spec.get("photo")
+    if photo and os.path.exists(photo):  # inline as data URL so the headless browser can load it
+        import base64
+        ext = os.path.splitext(photo)[1].lstrip(".").lower() or "jpeg"
+        mime = "jpeg" if ext in ("jpg", "jpeg") else ext
+        with open(photo, "rb") as f:
+            out["photo"] = f"data:image/{mime};base64," + base64.b64encode(f.read()).decode()
+    payload = json.dumps(out, ensure_ascii=False)
     return re.sub(r"/\*__SCRIPT_JSON__\*/\{.*?\};",
                   "/*__SCRIPT_JSON__*/" + payload + ";", tpl, count=1, flags=re.S)
 

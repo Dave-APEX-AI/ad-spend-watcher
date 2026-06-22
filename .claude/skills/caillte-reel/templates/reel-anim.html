@@ -7,6 +7,9 @@
     font-family:"Inter","Satoshi","Segoe UI",-apple-system,Roboto,Arial,sans-serif;
     color:var(--cream);-webkit-font-smoothing:antialiased}
   #stage{position:relative;width:1080px;height:1920px;overflow:hidden}
+  #photobg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0}
+  #photoshade{position:absolute;inset:0;opacity:0;
+    background:linear-gradient(180deg, rgba(10,15,13,.55) 0%, rgba(10,15,13,.82) 55%, rgba(10,15,13,.95) 100%)}
   #glow{position:absolute;width:1500px;height:1500px;border-radius:50%;
     background:radial-gradient(circle, rgba(15,185,126,.22), rgba(15,185,126,0) 60%);
     filter:blur(20px);left:-200px;top:-200px;will-change:transform}
@@ -59,6 +62,7 @@
 </style></head>
 <body>
 <div id="stage">
+  <div id="photobg"></div><div id="photoshade"></div>
   <div id="glow"></div><div id="grain"></div>
   <div id="prog"></div>
   <div id="brand">
@@ -74,6 +78,8 @@
   const SCRIPT = /*__SCRIPT_JSON__*/{"fps":30,"cards":[{"seconds":2.5,"type":"cover","headline":"Reel"}]};
   const cards = SCRIPT.cards;
   let total=0; const starts=[]; for(const c of cards){starts.push(total); total+=(c.seconds||2.5);}
+  if(SCRIPT.photo){ const pb=document.getElementById('photobg'); pb.style.backgroundImage='url('+SCRIPT.photo+')';
+    pb.style.opacity=.5; document.getElementById('photoshade').style.opacity=1; }
 
   // free inline-SVG icon set (stroke = emerald)
   const ICONS = {
