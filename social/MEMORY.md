@@ -71,6 +71,16 @@ Strategy: `social/STRATEGY.md`. The weekly engine: `.claude/skills/caillte-weekl
 
 ## Learnings log (append dated entries)
 
+### 2026-06-22
+- **Analytics:** built `caillte-analytics.yml` + `analytics.py` (runs on Actions, ranks posts).
+  - ⚠️ **Token lacks `instagram_manage_insights`** → views/reach/saves all return 0; can only
+    read likes+comments. To get real view data, regenerate the IG token with that scope added.
+  - **Account has ~108 posts back to Nov 2025** — CaillteAI was posting (Dave / prior tool)
+    long before our system. Our automated posts are the June-2026 ones.
+  - Engagement ceiling is tiny: **max ~8 likes ever** (older posts); our June posts at 0–2
+    likes so far. Bottleneck is **reach + followers**, not post style. Measure properly first.
+- **Autonomous refill** proven on the runner (caillte-refill.yml) — queue tops itself up.
+
 ### 2026-06-20
 - **GitHub notification gotcha:** GitHub never emails you about your own actions, and it
   delivers to the **GitHub-account email (dave@apexemeraldai.com)**, not hello@caillteai.com.
