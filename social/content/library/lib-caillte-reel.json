@@ -1,0 +1,7 @@
+{"name":"lib-caillte-reel","kind":"reel","pillar":"other","fps":30,"photo_query":"ireland street business",
+"caption":"In Irish, caillte means 'lost'. ☘️\n\nEvery missed call is a lost job. We named the company after the thing we kill. Free missed-call audit in bio.\n\n#trades #plumber #electrician #ukandireland #aireceptionist",
+"cards":[
+{"seconds":2.4,"type":"cover","headline":"In Irish, <span class='hl'>caillte</span> means 'lost'.","theme":"dark"},
+{"seconds":2.0,"type":"quote","headline":"Every missed call is a <span class='hl-amber'>lost job</span>."},
+{"seconds":2.0,"type":"mascot","headline":"So we built the one who never misses."},
+{"seconds":2.2,"type":"cta","headline":"Caillte = lost. CaillteAI = found.","body":"Free audit in bio."}]}

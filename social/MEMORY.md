@@ -71,6 +71,13 @@ Strategy: `social/STRATEGY.md`. The weekly engine: `.claude/skills/caillte-weekl
 
 ## Learnings log (append dated entries)
 
+### 2026-06-22 (reel-first + visual upgrades)
+- Reel engine v2: animated (no black screens), CAL mascot, inline icons, music bed, and
+  real Pexels photo backgrounds (PEXELS_API_KEY secret). Renders via Playwright on the runner.
+- **Reel-first:** library is now reel-heavy (8 reels); refill.py weaves reels:others ~2:1 and
+  fetches a photo per reel (photo_query field). Reels win reach (counter reel = #1 post).
+- Re-rendered the 2 pending queued reels with the new engine (no more black-screen reels).
+
 ### 2026-06-22 (analytics — REAL view data after adding instagram_manage_insights)
 - **Analytics:** `caillte-analytics.yml` + `analytics.py` (ranks all posts by views/reach).
 - **#1 post on the whole account = OUR £280→£24k counter REEL (`w3-counter-reel`) — 228 views**

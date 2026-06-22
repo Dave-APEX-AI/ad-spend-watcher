@@ -1,0 +1,7 @@
+{"name":"lib-competitor-reel","kind":"reel","pillar":"other","fps":30,"photo_query":"two tradesmen vans",
+"caption":"Your busiest competitor isn't better than you. 👀\n\nHe just answers the phone. 78% of customers book the first trade who picks up. Free audit in bio.\n\n#plumber #electrician #tradesbusiness #ukandireland #missedcalls",
+"cards":[
+{"seconds":2.2,"type":"cover","headline":"Your busiest competitor isn't <span class='hl'>better</span> than you.","theme":"dark"},
+{"seconds":1.8,"type":"quote","headline":"He's just <span class='hl'>awake</span> when his phone rings."},
+{"seconds":2.0,"type":"stat","value":"78%","label":"book the first trade who answers","win":true},
+{"seconds":2.2,"type":"cta","headline":"Answer first. Win the job.","body":"Free audit in bio."}]}

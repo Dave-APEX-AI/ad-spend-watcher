@@ -53,9 +53,30 @@ def main():
         print("⚠️ library exhausted — add specs to social/content/library/ (or run a weekly drop).")
         return 0
 
+    # REEL-FIRST: weave reels and others ~2:1 so the queue leans video (reels win reach).
+    reels = [s for s in specs if s.get("kind") == "reel"]
+    others = [s for s in specs if s.get("kind") != "reel"]
+    woven, ri, oi = [], 0, 0
+    while ri < len(reels) or oi < len(others):
+        for _ in range(2):
+            if ri < len(reels): woven.append(reels[ri]); ri += 1
+        if oi < len(others): woven.append(others[oi]); oi += 1
+    specs = woven
+
+    fetch = os.path.join(ROOT, "social", "publish", "fetch_photo.py")
     added = []
     for spec in specs[:need]:
         name, kind = spec["name"], spec.get("kind", "carousel")
+        # reels get a real Pexels photo background when a key + query are present
+        if kind == "reel" and os.environ.get("PEXELS_API_KEY") and spec.get("photo_query"):
+            bg = os.path.join(OUT, f"{name}_bg.jpg")
+            try:
+                if subprocess.run([sys.executable, fetch, spec["photo_query"], bg]).returncode == 0 \
+                        and os.path.exists(bg):
+                    spec["photo"] = bg
+                    print(f"   • photo for {name}: {spec['photo_query']}")
+            except Exception as e:
+                print(f"   • photo fetch failed for {name}: {e}")
         tmp = os.path.join(LIB, f".__{name}.json")
         json.dump(spec, open(tmp, "w", encoding="utf-8"), ensure_ascii=False)
         try:
