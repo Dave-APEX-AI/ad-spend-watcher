@@ -6,7 +6,7 @@ static background. Free, no attribution required.
 Usage:  PEXELS_API_KEY=... python3 fetch_photo.py "plumber van" out.jpg
 Get a free key (30 sec): https://www.pexels.com/api/  → it's instant.
 """
-import os, sys, json, urllib.request, urllib.parse
+import os, sys, json, urllib.request, urllib.parse, urllib.error
 
 KEY = os.environ.get("PEXELS_API_KEY", "").strip()
 
@@ -19,9 +19,21 @@ def main():
     query, out = sys.argv[1], sys.argv[2]
     url = "https://api.pexels.com/v1/search?" + urllib.parse.urlencode(
         {"query": query, "orientation": "portrait", "per_page": 15, "size": "large"})
-    req = urllib.request.Request(url, headers={"Authorization": KEY})
-    with urllib.request.urlopen(req, timeout=30) as r:
-        data = json.loads(r.read().decode())
+    req = urllib.request.Request(url, headers={
+        "Authorization": KEY,
+        "User-Agent": "CaillteAI/1.0 (+https://www.caillteai.com)",
+        "Accept": "application/json",
+    })
+    try:
+        with urllib.request.urlopen(req, timeout=30) as r:
+            data = json.loads(r.read().decode())
+    except urllib.error.HTTPError as e:
+        if e.code in (401, 403):
+            print(f"ERROR: Pexels returned {e.code} — the PEXELS_API_KEY looks invalid. "
+                  f"Check/regenerate it at https://www.pexels.com/api/ and update the secret.")
+        else:
+            print(f"ERROR: Pexels HTTP {e.code}")
+        return 1
     photos = data.get("photos", [])
     if not photos:
         print(f"no results for '{query}'"); return 1
