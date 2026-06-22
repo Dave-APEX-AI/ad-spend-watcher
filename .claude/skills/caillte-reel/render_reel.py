@@ -77,13 +77,26 @@ def main():
             browser.close()
         print(f"  captured {N} frames ({total:.1f}s @ {fps}fps)")
 
-        # stitch frames + silent stereo AAC (IG Reels API wants an audio stream)
-        r = subprocess.run([ff, "-y", "-framerate", str(fps),
-                            "-i", os.path.join(frames_dir, "f%05d.png"),
-                            "-f", "lavfi", "-t", f"{total}",
-                            "-i", "anullsrc=channel_layout=stereo:sample_rate=44100",
-                            "-c:v", "libx264", "-pix_fmt", "yuv420p", "-r", str(fps),
-                            "-c:a", "aac", "-shortest", "-movflags", "+faststart", mp4],
+        # ── audio bed ────────────────────────────────────────────────────
+        # spec "music": a file path → use it; "none" → silent; else a subtle
+        # generated ambient pad (royalty-free, since it's synthesized).
+        music = spec.get("music", "auto")
+        common = [ff, "-y", "-framerate", str(fps), "-i", os.path.join(frames_dir, "f%05d.png")]
+        if music and music not in ("auto", "none") and os.path.exists(music):
+            audio_in = ["-stream_loop", "-1", "-i", music]
+            amap = ["-filter:a", f"volume=0.55,afade=in:st=0:d=0.6,afade=out:st={max(0,total-1):.2f}:d=1"]
+        elif music == "none":
+            audio_in = ["-f", "lavfi", "-t", f"{total}",
+                        "-i", "anullsrc=channel_layout=stereo:sample_rate=44100"]
+            amap = []
+        else:  # generated subtle ambient bed (A2+E3 pad, gentle tremolo, low-passed, quiet)
+            expr = "0.06*sin(2*PI*110*t)+0.045*sin(2*PI*164.81*t)+0.03*sin(2*PI*220*t)"
+            audio_in = ["-f", "lavfi", "-t", f"{total}", "-i", f"aevalsrc={expr}:s=44100:c=stereo"]
+            amap = ["-filter:a",
+                    f"tremolo=f=4:d=0.35,lowpass=f=700,volume=0.9,afade=in:st=0:d=1,afade=out:st={max(0,total-1.2):.2f}:d=1.2"]
+        r = subprocess.run(common + audio_in + amap +
+                           ["-c:v", "libx264", "-pix_fmt", "yuv420p", "-r", str(fps),
+                            "-c:a", "aac", "-b:a", "128k", "-shortest", "-movflags", "+faststart", mp4],
                            capture_output=True, text=True)
         if not os.path.exists(mp4):
             die("ffmpeg failed:\n" + r.stderr[-800:])
