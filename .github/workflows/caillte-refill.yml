@@ -37,6 +37,7 @@ jobs:
           CHROME_BIN: ${{ steps.chrome.outputs.chrome-path }}
           PUBLIC_BASE_URL: https://raw.githubusercontent.com/Dave-APEX-AI/ad-spend-watcher/main
           TARGET_BUFFER: ${{ github.event.inputs.target_buffer || '14' }}
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
         run: python3 social/publish/refill.py
 
       - name: Commit any new queued posts
