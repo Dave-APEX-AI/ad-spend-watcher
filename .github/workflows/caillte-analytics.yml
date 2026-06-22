@@ -1,0 +1,23 @@
+# On-demand performance report — pulls IG insights for published posts and prints a
+# ranked table to the run log (read it in the Actions tab).
+name: caillte-analytics
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Pull post performance
+        env:
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+        run: python3 social/publish/analytics.py | tee "$GITHUB_STEP_SUMMARY"
