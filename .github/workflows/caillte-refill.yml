@@ -1,0 +1,63 @@
+# Autonomous queue refill — keeps the channel from ever going dark, no human.
+# Daily it checks the buffer; if low, it renders unused library content and queues it.
+name: caillte-refill
+
+on:
+  workflow_dispatch:
+    inputs:
+      target_buffer:
+        description: "Top the queue up to this many unposted posts"
+        default: "14"
+  schedule:
+    - cron: "0 6 * * *"   # daily 06:00 UTC — refill if the buffer is low
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: caillte-queue
+  cancel-in-progress: false
+
+jobs:
+  refill:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: browser-actions/setup-chrome@v1
+        id: chrome
+      - name: Install render deps (free ffmpeg)
+        run: pip install imageio-ffmpeg
+
+      - name: Refill the queue
+        env:
+          CHROME_BIN: ${{ steps.chrome.outputs.chrome-path }}
+          PUBLIC_BASE_URL: https://raw.githubusercontent.com/Dave-APEX-AI/ad-spend-watcher/main
+          TARGET_BUFFER: ${{ github.event.inputs.target_buffer || '14' }}
+        run: python3 social/publish/refill.py
+
+      - name: Commit any new queued posts
+        if: ${{ success() }}
+        run: |
+          if [ -n "$(git status --porcelain social/publish/queue)" ]; then
+            git config user.name  "caillte-bot"
+            git config user.email "actions@users.noreply.github.com"
+            git add social/publish/queue
+            git commit -m "refill: top up the publish queue [skip ci]"
+            git push
+          else
+            echo "queue healthy — nothing added"
+          fi
+
+      - name: Alert on failure (opens a GitHub issue → emails you)
+        if: ${{ failure() }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh issue create \
+            --title "🚨 CaillteAI queue refill FAILED ($(date -u +%F))" \
+            --assignee Dave-APEX-AI \
+            --body "The autonomous queue refill failed. Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}. The queue may run low — check the library (social/content/library) and the run log. cc @Dave-APEX-AI"
