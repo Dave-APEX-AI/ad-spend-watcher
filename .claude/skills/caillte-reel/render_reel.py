@@ -1,51 +1,27 @@
 #!/usr/bin/env python3
 """
-render_reel.py — free CaillteAI reel/video generator.
+render_reel.py — free, GOOD CaillteAI reels.
 
-Renders each "card" of a reel spec to a 1080x1920 PNG (bundled Chromium, same brand
-template as carousels), then stitches them into an MP4 with ffmpeg: per-card fade
-in/out, a subtle slow zoom for life, and a silent AAC track (so Instagram's Reels API
-accepts it). No paid tools — ffmpeg comes from the free imageio-ffmpeg package.
+True frame-by-frame animation (no fade-to-black, no static slideshow): an animated HTML
+scene (kinetic text + live soundwave + drifting glow + progress bar) is rendered one frame
+at a time with Playwright, then stitched to MP4 with ffmpeg (+ a silent AAC track so the
+Instagram Reels API accepts it). All free.
 
-Usage:
-  python3 render_reel.py spec.json [--out OUTDIR]
-
-spec.json:
-{
-  "name": "im-your-missed-call-reel",
-  "fps": 30,
-  "cards": [
-    {"seconds": 2.6, "type":"cover", "headline":"I'm your <span class='hl-amber'>missed call</span>.", "theme":"dark"},
-    {"seconds": 2.2, "type":"quote", "headline":"You've never heard me. That's the point."},
-    {"seconds": 2.6, "type":"stat",  "value":"£1,400", "label":"gone this week", "amberDot":true},
-    {"seconds": 2.6, "type":"cta",   "headline":"The receptionist that never sleeps.", "body":"CaillteAI"}
-  ]
-}
-Card fields are the carousel slide fields (cover/point/stat/quote/cta) + "seconds".
+Usage:  python3 render_reel.py spec.json [--out OUTDIR]
+Spec: { "name":"...", "fps":30, "cards":[ {"seconds":2.4,"type":"cover","headline":"…"}, … ] }
+Card types reuse the carousel set: cover / point / stat / quote / cta (+ amberDot, win, hl).
 """
-import json, os, re, sys, shutil, subprocess, tempfile
+import os, re, sys, json, shutil, subprocess, tempfile, math
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-TEMPLATE = os.path.join(HERE, "templates", "reel.html")
+TEMPLATE = os.path.join(HERE, "templates", "reel-anim.html")
 W, H = 1080, 1920
 
-CHROME_CANDIDATES = [
-    os.environ.get("CHROME_BIN", ""),
-    "/opt/pw-browsers/chromium-1194/chrome-linux/chrome",
-    "google-chrome", "google-chrome-stable", "chromium", "chromium-browser",
-]
+CHROME = (os.environ.get("CHROME_BIN")
+          or "/opt/pw-browsers/chromium-1194/chrome-linux/chrome")
 
 
 def die(m): print("ERROR:", m, file=sys.stderr); sys.exit(1)
-
-
-def find_chrome():
-    for c in CHROME_CANDIDATES:
-        if c and (os.path.isfile(c) and os.access(c, os.X_OK)):
-            return c
-        if c and shutil.which(c):
-            return shutil.which(c)
-    return None
 
 
 def find_ffmpeg():
@@ -53,35 +29,15 @@ def find_ffmpeg():
         import imageio_ffmpeg
         return imageio_ffmpeg.get_ffmpeg_exe()
     except Exception:
-        return shutil.which("ffmpeg")
+        return shutil.which("ffmpeg") or die("no ffmpeg (pip install imageio-ffmpeg)")
 
 
-def build_card_html(template, card):
-    payload = json.dumps(card, ensure_ascii=False)
-    return re.sub(r"/\*__SLIDE_JSON__\*/\{.*?\};",
-                  "/*__SLIDE_JSON__*/" + payload + ";",
-                  template, count=1, flags=re.S)
-
-
-def shot(chrome, html_path, png_path):
-    cmd = [chrome, "--headless=new", "--no-sandbox", "--hide-scrollbars",
-           "--force-device-scale-factor=1", "--default-background-color=00000000",
-           f"--window-size={W},{H}", f"--screenshot={png_path}", "file://" + html_path]
-    subprocess.run(cmd, capture_output=True, text=True)
-    return os.path.exists(png_path)
-
-
-def make_clip(ff, png, seconds, fps, clip_path):
-    """Still PNG -> mp4 clip with slow zoom + fade in/out."""
-    d = max(1, int(round(seconds * fps)))
-    fade = min(0.4, seconds / 4)
-    vf = (f"scale={W}:{H},zoompan=z='min(zoom+0.0006,1.07)':d={d}:s={W}x{H}:fps={fps},"
-          f"fade=t=in:st=0:d={fade:.2f},fade=t=out:st={seconds - fade:.2f}:d={fade:.2f},"
-          f"format=yuv420p")
-    subprocess.run([ff, "-y", "-loop", "1", "-t", f"{seconds}", "-i", png,
-                    "-vf", vf, "-r", str(fps), "-c:v", "libx264", "-preset", "veryfast",
-                    clip_path], capture_output=True, text=True)
-    return os.path.exists(clip_path)
+def build_html(spec):
+    tpl = open(TEMPLATE, encoding="utf-8").read()
+    payload = json.dumps({"fps": int(spec.get("fps", 30)), "cards": spec["cards"]},
+                         ensure_ascii=False)
+    return re.sub(r"/\*__SCRIPT_JSON__\*/\{.*?\};",
+                  "/*__SCRIPT_JSON__*/" + payload + ";", tpl, count=1, flags=re.S)
 
 
 def main():
@@ -91,48 +47,48 @@ def main():
     out = sys.argv[sys.argv.index("--out") + 1] if "--out" in sys.argv else "reel-out"
     name = spec.get("name", "reel")
     fps = int(spec.get("fps", 30))
-    cards = spec.get("cards", [])
-    if not cards:
-        die("no cards in spec")
+    if not spec.get("cards"):
+        die("spec has no cards")
 
-    chrome = find_chrome() or die("no Chromium found (set CHROME_BIN)")
-    ff = find_ffmpeg() or die("no ffmpeg (pip install imageio-ffmpeg)")
-    template = open(TEMPLATE, encoding="utf-8").read()
+    ff = find_ffmpeg()
+    try:
+        from playwright.sync_api import sync_playwright
+    except Exception:
+        die("Playwright not installed (pip install playwright). It drives the animation capture.")
 
-    out_dir = os.path.join(out, name)
-    os.makedirs(out_dir, exist_ok=True)
+    out_dir = os.path.join(out, name); os.makedirs(out_dir, exist_ok=True)
     mp4 = os.path.join(out_dir, f"{name}.mp4")
+    html = build_html(spec)
 
     with tempfile.TemporaryDirectory() as td:
-        clips = []
-        for i, card in enumerate(cards, 1):
-            card.setdefault("page", "")
-            secs = float(card.get("seconds", 2.5))
-            hp = os.path.join(td, f"c{i}.html"); open(hp, "w", encoding="utf-8").write(build_card_html(template, card))
-            pp = os.path.join(td, f"c{i}.png")
-            if not shot(chrome, hp, pp):
-                die(f"failed to render card {i}")
-            cp = os.path.join(td, f"c{i}.mp4")
-            if not make_clip(ff, pp, secs, fps, cp):
-                die(f"failed to build clip {i}")
-            clips.append(cp)
-            print(f"  ✓ card {i}/{len(cards)} ({secs}s)")
+        hp = os.path.join(td, "reel.html"); open(hp, "w", encoding="utf-8").write(html)
+        frames_dir = os.path.join(td, "frames"); os.makedirs(frames_dir)
 
-        concat = os.path.join(td, "list.txt")
-        open(concat, "w").write("".join(f"file '{c}'\n" for c in clips))
-        # concat + add a silent stereo AAC track (Instagram Reels API needs an audio stream)
-        total = sum(float(c.get("seconds", 2.5)) for c in cards)
-        r = subprocess.run([ff, "-y", "-f", "concat", "-safe", "0", "-i", concat,
-                            "-f", "lavfi", "-t", f"{total}", "-i",
-                            "anullsrc=channel_layout=stereo:sample_rate=44100",
+        with sync_playwright() as p:
+            browser = p.chromium.launch(executable_path=CHROME, args=["--no-sandbox"])
+            page = browser.new_page(viewport={"width": W, "height": H}, device_scale_factor=1)
+            page.goto("file://" + hp)
+            total = page.evaluate("window.__TOTAL__")
+            N = max(1, int(math.ceil(total * fps)))
+            for f in range(N):
+                t = f / fps
+                page.evaluate(f"window.renderAt({t})")
+                page.screenshot(path=os.path.join(frames_dir, f"f{f:05d}.png"))
+            browser.close()
+        print(f"  captured {N} frames ({total:.1f}s @ {fps}fps)")
+
+        # stitch frames + silent stereo AAC (IG Reels API wants an audio stream)
+        r = subprocess.run([ff, "-y", "-framerate", str(fps),
+                            "-i", os.path.join(frames_dir, "f%05d.png"),
+                            "-f", "lavfi", "-t", f"{total}",
+                            "-i", "anullsrc=channel_layout=stereo:sample_rate=44100",
                             "-c:v", "libx264", "-pix_fmt", "yuv420p", "-r", str(fps),
                             "-c:a", "aac", "-shortest", "-movflags", "+faststart", mp4],
                            capture_output=True, text=True)
         if not os.path.exists(mp4):
-            die("ffmpeg concat failed:\n" + r.stderr[-800:])
+            die("ffmpeg failed:\n" + r.stderr[-800:])
 
-    size = os.path.getsize(mp4) // 1024
-    print(f"\n✅ reel → {mp4}  ({size} KB, {total:.1f}s, {W}x{H})")
+    print(f"✅ reel → {mp4}  ({os.path.getsize(mp4)//1024} KB, {W}x{H})")
     print(mp4)
 
 
