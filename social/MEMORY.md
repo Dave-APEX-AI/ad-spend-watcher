@@ -47,6 +47,18 @@ Strategy: `social/STRATEGY.md`. The weekly engine: `.claude/skills/caillte-weekl
   lead capture (separate from notifications; Dave's call whether to wire its key).
 - Notifications: GitHub-issue based → dave@apexemeraldai.com. Working (confirmed 2026-06-20).
 
+## Autonomous vs triggered (IMPORTANT — set 2026-06-22)
+- **Fully autonomous (no human):** (1) posting 2/day via `caillte-publish.yml`; (2) **queue
+  auto-refill** via `caillte-refill.yml` (daily 06:00 UTC) — `refill.py` renders unused
+  `social/content/library/` specs on the runner (setup-chrome + imageio-ffmpeg) and tops the
+  queue to TARGET_BUFFER (14). **The channel will not go dark.** Proven on the runner 2026-06-22.
+- **Still triggered (needs a human/agent):** scan-driven *freshness* (reacting to this week's
+  trends) + new customer stories. GitHub Actions can't run live web research / LLM reasoning
+  without an API key (cost). So: the library rotates evergreen content autonomously; refresh
+  it periodically (weekly drop / new stories) so it never repeats for long.
+- **To keep it hands-off for months:** keep `social/content/library/` well stocked. When it
+  empties, refill no-ops and (eventually) the queue drains — so top the library up.
+
 ## Open / next
 - **Proof reel** — "listen to it book a job at 9pm": needs a consented real call recording.
   Highest-trust post in the niche; nobody does it. Build when Dave sends audio.
