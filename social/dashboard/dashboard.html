@@ -278,6 +278,7 @@ function sparkline(points, w = 96, h = 34) {
 }
 const fmt = (n, d) => d ? Number(n).toFixed(d) : Math.round(n).toLocaleString('en-GB');
 function countUp(el, target, decimals) {
+  if (new URLSearchParams(location.search).get('still')) { el.firstChild.nodeValue = fmt(target, decimals); return; }
   const dur = 1100, t0 = performance.now();
   (function tick(t) {
     const p = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - p, 3);
