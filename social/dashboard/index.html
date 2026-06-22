@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>CaillteAI — Growth Command Centre</title>
+<link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+<div id="app">
+  <!-- Header -->
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo"><span class="logo-dot"></span></span>
+      <div>
+        <div class="brand-name">CaillteAI</div>
+        <div class="brand-sub">Growth Command Centre</div>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <span class="live-pill"><span class="live-dot"></span>Autonomous · live</span>
+      <span class="muted" id="updated">updated just now</span>
+    </div>
+  </header>
+
+  <!-- Hero stats -->
+  <section class="stats" id="stats"></section>
+
+  <!-- Agents -->
+  <div class="section-head">
+    <h2>Your agents</h2>
+    <span class="muted">5 working · click any to drill in</span>
+  </div>
+  <section class="agents" id="agents"></section>
+
+  <footer class="footer">
+    <span>Posting 2×/day · queue self-refilling · reel-first</span>
+    <span class="muted">CaillteAI · faceless growth system</span>
+  </footer>
+</div>
+
+<!-- Drill-in modal -->
+<div class="overlay" id="overlay">
+  <div class="modal" id="modal">
+    <button class="modal-close" id="modalClose" aria-label="Close">×</button>
+    <div id="modalBody"></div>
+  </div>
+</div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

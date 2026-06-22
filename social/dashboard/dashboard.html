@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>CaillteAI — Growth Command Centre</title>
+<style>
+:root{
+  --accent:#0FB97E; --accent-deep:#0a8f5f; --accent-soft:#e8f8f1;
+  --ink:#0f1a16; --muted:#6b7b73; --line:#eef2f0; --bg:#f6f8f7; --card:#ffffff;
+  --shadow:0 10px 30px rgba(16,40,30,.07), 0 2px 8px rgba(16,40,30,.05);
+  --shadow-lg:0 24px 60px rgba(16,40,30,.14);
+  --radius:22px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:
+    radial-gradient(1200px 500px at 80% -10%, #eaf7f1 0%, rgba(234,247,241,0) 60%),
+    radial-gradient(900px 500px at -5% 10%, #eef6ff 0%, rgba(238,246,255,0) 55%),
+    var(--bg);
+  color:var(--ink);font-family:"Inter","Segoe UI",-apple-system,Roboto,Helvetica,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;min-height:100vh}
+#app{max-width:1480px;margin:0 auto;padding:34px 40px 28px}
+
+/* header */
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:30px}
+.brand{display:flex;align-items:center;gap:16px}
+.logo{width:52px;height:52px;border-radius:16px;background:var(--ink);display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow)}
+.logo-dot{width:18px;height:18px;border-radius:50%;background:var(--accent);box-shadow:0 0 18px var(--accent)}
+.brand-name{font-weight:800;font-size:22px;letter-spacing:-.4px}
+.brand-sub{font-size:14px;color:var(--muted);font-weight:600;margin-top:-2px}
+.topbar-right{display:flex;align-items:center;gap:18px}
+.live-pill{display:inline-flex;align-items:center;gap:9px;background:var(--accent-soft);color:var(--accent-deep);
+  font-weight:700;font-size:14px;padding:9px 16px;border-radius:999px}
+.live-dot{width:9px;height:9px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 0 rgba(15,185,126,.5);animation:pulse 2s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(15,185,126,.5)}70%{box-shadow:0 0 0 10px rgba(15,185,126,0)}100%{box-shadow:0 0 0 0 rgba(15,185,126,0)}}
+.muted{color:var(--muted);font-size:14px;font-weight:500}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin-bottom:38px}
+.stat{background:var(--card);border-radius:var(--radius);padding:26px 26px 24px;box-shadow:var(--shadow);
+  cursor:pointer;transition:transform .18s ease, box-shadow .18s ease;position:relative;overflow:hidden}
+.stat:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.stat .ico{width:46px;height:46px;border-radius:13px;background:var(--accent-soft);color:var(--accent-deep);
+  display:flex;align-items:center;justify-content:center;margin-bottom:18px}
+.stat .ico svg{width:24px;height:24px}
+.stat .label{font-size:14px;color:var(--muted);font-weight:600}
+.stat .value{font-size:42px;font-weight:850;letter-spacing:-1.5px;margin-top:4px;line-height:1}
+.stat .value small{font-size:24px;font-weight:800;color:var(--muted)}
+.stat .delta{margin-top:12px;font-size:13px;font-weight:700;color:var(--accent-deep);display:inline-flex;align-items:center;gap:5px}
+.stat .delta.flat{color:var(--muted)}
+.stat .spark{position:absolute;right:18px;bottom:16px;width:96px;height:34px;opacity:.9}
+
+/* section head */
+.section-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:18px}
+.section-head h2{font-size:20px;font-weight:800;letter-spacing:-.4px}
+
+/* agents */
+.agents{display:grid;grid-template-columns:repeat(5,1fr);gap:20px}
+.agent{background:var(--card);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow);
+  cursor:pointer;transition:transform .18s ease, box-shadow .18s ease;display:flex;flex-direction:column;min-height:300px}
+.agent:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.agent .viz{height:96px;border-radius:16px;background:linear-gradient(160deg,#fafdfb,#f0f7f3);
+  border:1px solid var(--line);margin-bottom:18px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.agent .a-name{font-weight:800;font-size:17px;letter-spacing:-.3px}
+.agent .a-role{font-size:13px;color:var(--muted);font-weight:500;margin-top:2px;line-height:1.35;min-height:34px}
+.agent .a-metrics{margin-top:14px;display:flex;flex-direction:column;gap:9px}
+.agent .a-row{display:flex;align-items:center;justify-content:space-between;font-size:13px}
+.agent .a-row .k{color:var(--muted);font-weight:500}
+.agent .a-row .v{font-weight:800}
+.agent .open{margin-top:auto;padding-top:16px;font-size:13px;font-weight:700;color:var(--accent-deep);display:flex;align-items:center;gap:6px}
+.agent .status{position:absolute;top:14px;right:14px;display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;color:var(--accent-deep);background:var(--accent-soft);padding:5px 9px;border-radius:999px;z-index:2}
+.agent .status .d{width:7px;height:7px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite}
+
+/* agent viz animations */
+.dots span{position:absolute;width:14px;height:14px;border-radius:50%;background:var(--accent);opacity:.85}
+.dots span:nth-child(1){left:30%;animation:float 2.6s ease-in-out infinite}
+.dots span:nth-child(2){left:50%;background:var(--accent-deep);animation:float 2.6s ease-in-out .5s infinite}
+.dots span:nth-child(3){left:68%;background:#7fd9b8;animation:float 2.6s ease-in-out 1s infinite}
+@keyframes float{0%,100%{transform:translateY(14px);opacity:.5}50%{transform:translateY(-14px);opacity:1}}
+.type{font-family:ui-monospace,Menlo,monospace;font-size:14px;color:var(--ink);font-weight:600;white-space:nowrap}
+.caret{display:inline-block;width:2px;height:16px;background:var(--accent);margin-left:3px;vertical-align:-2px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.cal{display:grid;grid-template-columns:repeat(7,12px);gap:5px}
+.cal i{width:12px;height:12px;border-radius:3px;background:#dfeee8}
+.cal i.on{background:var(--accent);animation:fillin .5s ease both}
+@keyframes fillin{from{transform:scale(.4);opacity:0}to{transform:scale(1);opacity:1}}
+.bars{display:flex;align-items:flex-end;gap:8px;height:60px}
+.bars i{width:12px;border-radius:5px;background:var(--accent);animation:grow 1.8s ease-in-out infinite alternate}
+.bars i:nth-child(2){background:var(--accent-deep);animation-delay:.2s}
+.bars i:nth-child(3){animation-delay:.4s}.bars i:nth-child(4){background:#7fd9b8;animation-delay:.6s}
+.bars i:nth-child(5){animation-delay:.8s}
+@keyframes grow{from{height:14px}to{height:58px}}
+.chat{display:flex;flex-direction:column;gap:7px;width:78%}
+.chat b{height:13px;border-radius:8px;background:#dfeee8;width:70%;animation:slidein .5s ease both}
+.chat b.me{align-self:flex-end;background:var(--accent);width:55%;animation-delay:.5s}
+.chat b.t{width:40%;animation-delay:1s}
+@keyframes slidein{from{transform:translateY(8px);opacity:0}to{transform:translateY(0);opacity:1}}
+
+/* footer */
+.footer{display:flex;align-items:center;justify-content:space-between;margin-top:30px;padding-top:18px;border-top:1px solid var(--line);font-size:13px;font-weight:600;color:var(--muted)}
+
+/* modal */
+.overlay{position:fixed;inset:0;background:rgba(15,26,22,.42);backdrop-filter:blur(4px);
+  display:none;align-items:center;justify-content:center;padding:40px;z-index:50}
+.overlay.show{display:flex}
+.modal{background:#fff;border-radius:26px;max-width:760px;width:100%;max-height:84vh;overflow:auto;
+  box-shadow:var(--shadow-lg);padding:34px 38px;position:relative;animation:rise .25s ease}
+@keyframes rise{from{transform:translateY(18px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-close{position:absolute;top:20px;right:22px;width:38px;height:38px;border:none;border-radius:50%;
+  background:var(--bg);font-size:22px;color:var(--muted);cursor:pointer;line-height:1}
+.modal-close:hover{background:var(--line)}
+.m-eyebrow{font-size:13px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent-deep)}
+.modal h3{font-size:28px;font-weight:850;letter-spacing:-.6px;margin:6px 0 4px}
+.modal .m-sub{color:var(--muted);font-size:15px;margin-bottom:24px}
+.m-kpis{display:flex;gap:14px;margin-bottom:24px;flex-wrap:wrap}
+.m-kpi{background:var(--bg);border-radius:16px;padding:16px 20px;flex:1;min-width:120px}
+.m-kpi .v{font-size:26px;font-weight:850;letter-spacing:-.5px}
+.m-kpi .k{font-size:12.5px;color:var(--muted);font-weight:600;margin-top:2px}
+.m-list{display:flex;flex-direction:column;gap:10px}
+.m-item{border:1px solid var(--line);border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:14px}
+.m-item .tag{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:var(--accent-deep);
+  background:var(--accent-soft);padding:5px 9px;border-radius:8px;white-space:nowrap}
+.m-item .txt{font-size:15px;font-weight:600;line-height:1.35}
+.m-item .meta{margin-left:auto;font-size:13px;color:var(--muted);font-weight:700;white-space:nowrap}
+
+</style>
+</head>
+<body>
+<div id="app">
+  <!-- Header -->
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo"><span class="logo-dot"></span></span>
+      <div>
+        <div class="brand-name">CaillteAI</div>
+        <div class="brand-sub">Growth Command Centre</div>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <span class="live-pill"><span class="live-dot"></span>Autonomous · live</span>
+      <span class="muted" id="updated">updated just now</span>
+    </div>
+  </header>
+
+  <!-- Hero stats -->
+  <section class="stats" id="stats"></section>
+
+  <!-- Agents -->
+  <div class="section-head">
+    <h2>Your agents</h2>
+    <span class="muted">5 working · click any to drill in</span>
+  </div>
+  <section class="agents" id="agents"></section>
+
+  <footer class="footer">
+    <span>Posting 2×/day · queue self-refilling · reel-first</span>
+    <span class="muted">CaillteAI · faceless growth system</span>
+  </footer>
+</div>
+
+<!-- Drill-in modal -->
+<div class="overlay" id="overlay">
+  <div class="modal" id="modal">
+    <button class="modal-close" id="modalClose" aria-label="Close">×</button>
+    <div id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+/* CaillteAI dashboard data.
+   REAL where we have it (top post, reels-win, queue depth, format mix from the 2026-06-22
+   analytics run). Items marked (sample) are representative until the live feeds are wired —
+   this is the pre-wiring visual. */
+
+const ICONS = {
+  followers:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18v-1a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v1"/><circle cx="9.5" cy="7" r="3.5"/><path d="M19 18v-1a4 4 0 0 0-3-3.8M16 3.5a3.5 3.5 0 0 1 0 7"/></svg>',
+  views:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>',
+  top:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 2.5 5.5L20 9l-4 4 1 6-5-3-5 3 1-6-4-4 5.5-.5L12 3Z"/></svg>',
+  eng:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 5.6a5 5 0 0 0-7.1 0l-1.7 1.7-1.7-1.7a5 5 0 1 0-7.1 7.1l8.8 8.8 8.8-8.8a5 5 0 0 0 0-7.1Z"/></svg>',
+};
+
+const STATS = [
+  {key:'followers', icon:ICONS.followers, label:'Followers', value:218, suffix:'',
+   delta:'+14 this week', flat:false, spark:[6,7,7,8,9,11,13,14], note:'(sample — pending live wiring)'},
+  {key:'views', icon:ICONS.views, label:'Total views (all-time)', value:4920, suffix:'',
+   delta:'+228 top reel', flat:false, spark:[20,28,33,30,45,52,79,130]},
+  {key:'top', icon:ICONS.top, label:'Top post', value:228, suffix:' views',
+   delta:'£24k counter reel', flat:false, spark:[8,40,90,150,200,228,228,228]},
+  {key:'eng', icon:ICONS.eng, label:'Engagement rate', value:3.1, suffix:'%', decimals:1,
+   delta:'reels lead reach', flat:true, spark:[2,2,3,3,3,4,3,3]},
+];
+
+const AGENTS = [
+  {
+    key:'ideator', name:'Ideator', role:'Scans competitors & trends, generates the week’s ideas',
+    viz:'<div class="dots"><span></span><span></span><span></span></div>',
+    metrics:[['Ideas this week','18'],['Trend signals','3'],['Reactive posts','3']],
+    modal:{eyebrow:'Agent 01', title:'Ideator', sub:'Turns this week’s scan into fresh, on-brand ideas.',
+      kpis:[['18','Ideas generated'],['3','Trend signals'],['£24k','UK stat surfaced']],
+      items:[
+        ['idea','The £24,000 you can’t see — UK missed-call maths','carousel'],
+        ['idea','POV: you’re under a sink — you didn’t ignore them','reel'],
+        ['idea','Your job software can’t answer the phone','static'],
+        ['scan','Verified: UK trades lose ~£24k/yr to unanswered calls','digitalx 2026'],
+        ['scan','Reels win reach; carousels win saves — lean reels','trend'],
+      ]},
+  },
+  {
+    key:'hook', name:'Hook & Script', role:'Writes scroll-stopping hooks & captions in brand voice',
+    viz:'<div class="type">"You didn’t ignore them<span class="caret"></span></div>',
+    metrics:[['Hooks written','42'],['Avg score','8.6/10'],['Shipped','11']],
+    modal:{eyebrow:'Agent 02', title:'Hook & Script', sub:'Every post opens on a scroll-stopper, graded before it ships.',
+      kpis:[['42','Hooks written'],['8.6','Avg /10'],['11','Shipped live']],
+      items:[
+        ['hook','"9:42pm. Burst pipe. She’s panicking. You’re asleep."','9.2'],
+        ['hook','"Your phone rang 11 times today. You answered 4."','9.0'],
+        ['hook','"First to answer wins the job. Always has."','8.8'],
+        ['hook','"Voicemail is where leads go to die."','8.6'],
+        ['hook','"Turn the sound on — this isn’t a person."','8.5'],
+      ]},
+  },
+  {
+    key:'planner', name:'Planner', role:'Schedules & auto-refills the queue, 2 posts a day',
+    viz:'<div class="cal" id="calviz"></div>',
+    metrics:[['Queued','37'],['Days buffered','9'],['Cadence','2/day']],
+    modal:{eyebrow:'Agent 03', title:'Planner', sub:'Keeps the channel posting 2×/day and never lets it run dry.',
+      kpis:[['37','Posts queued'],['9 days','Buffered'],['2/day','Cadence']],
+      items:[
+        ['next','£24k counter reel','today 18:00'],
+        ['next','A glazier we work with — after-hours story','tomorrow 09:00'],
+        ['next','5 calls you’re losing every week','tomorrow 18:00'],
+        ['next','I’m your missed call (villain reel)','day 3'],
+        ['auto','Auto-refill renders reel-first content nightly','hands-off'],
+      ]},
+  },
+  {
+    key:'analyst', name:'Analyst', role:'Tracks views & reach, finds what actually works',
+    viz:'<div class="bars"><i></i><i></i><i></i><i></i><i></i></div>',
+    metrics:[['Posts tracked','108'],['Top format','Reels'],['Best post','228']],
+    modal:{eyebrow:'Agent 04', title:'Analyst', sub:'Ranks every post by views & reach to steer next week.',
+      kpis:[['108','Posts tracked'],['228','Top views'],['Reels','Best format']],
+      items:[
+        ['#1','£280→£24k counter reel','228 views'],
+        ['#2','I’m your missed call (villain reel)','161 views'],
+        ['#3','POV: under a sink (reel)','89 views'],
+        ['insight','Reels reach 79–149 non-followers; statics only 8–57','reels win'],
+        ['insight','Saves ≈ 0 — audience small; reach is the lever','focus'],
+      ]},
+  },
+  {
+    key:'dm', name:'DM Manager', role:'Speed-to-lead: instantly replies & qualifies DMs',
+    viz:'<div class="chat"><b></b><b class="me"></b><b class="t"></b></div>',
+    metrics:[['Reply time','<30s'],['DMs handled','—'],['Leads qualified','—']],
+    modal:{eyebrow:'Agent 05', title:'DM Manager', sub:'The product itself — replies to every DM in seconds and books the real ones.',
+      kpis:[['<30s','Reply time'],['24/7','Always on'],['Soon','Live wiring']],
+      items:[
+        ['ready','Instant auto-reply to every Instagram DM','speed-to-lead'],
+        ['ready','Qualifies the job, filters tyre-kickers','automation'],
+        ['ready','Books the serious ones — no inbox backlog','receptionist'],
+        ['sample','DMs handled / leads qualified populate once connected','(sample)'],
+      ]},
+  },
+];
+
+</script>
+<script>
+/* CaillteAI dashboard — fetch live data.json (fallback to embedded), then render + drill in. */
+
+function sparkline(points, w = 96, h = 34) {
+  const max = Math.max(...points), min = Math.min(...points);
+  const span = (max - min) || 1, step = w / (points.length - 1);
+  const pts = points.map((p, i) => [i * step, h - ((p - min) / span) * (h - 4) - 2]);
+  const d = pts.map((p, i) => (i ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1)).join(' ');
+  return `<svg class="spark" viewBox="0 0 ${w} ${h}" fill="none">
+    <path d="${d} L ${w} ${h} L 0 ${h} Z" fill="rgba(15,185,126,.10)"/>
+    <path d="${d}" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="${pts[pts.length-1][0].toFixed(1)}" cy="${pts[pts.length-1][1].toFixed(1)}" r="3.2" fill="var(--accent)"/></svg>`;
+}
+const fmt = (n, d) => d ? Number(n).toFixed(d) : Math.round(n).toLocaleString('en-GB');
+function countUp(el, target, decimals) {
+  const dur = 1100, t0 = performance.now();
+  (function tick(t) {
+    const p = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - p, 3);
+    el.firstChild.nodeValue = fmt(target * e, decimals);
+    if (p < 1) requestAnimationFrame(tick);
+  })(t0);
+}
+
+/* merge live data.json over the embedded defaults */
+function applyLive(d) {
+  if (!d) return;
+  const S = Object.fromEntries(STATS.map(s => [s.key, s]));
+  const A = Object.fromEntries(AGENTS.map(a => [a.key, a]));
+  if (d.stats) {
+    if (d.stats.followers != null) { S.followers.value = d.stats.followers; S.followers.note = ''; S.followers.delta = 'live'; }
+    if (d.stats.views != null) S.views.value = d.stats.views;
+    if (d.stats.topViews != null) { S.top.value = d.stats.topViews; if (d.stats.topLabel) S.top.delta = d.stats.topLabel; }
+    if (d.stats.engagement != null) S.eng.value = d.stats.engagement;
+  }
+  if (d.analyst) {
+    const an = d.analyst;
+    A.analyst.metrics = [['Posts tracked', an.postsTracked], ['Top format', an.topFormat], ['Best post', an.best]];
+    A.analyst.modal.kpis = [[String(an.postsTracked), 'Posts tracked'], [String(an.best), 'Top views'], [an.topFormat, 'Best format']];
+    A.analyst.modal.items = [...(an.top || []), ['insight', an.insight1, 'reels win'], ['insight', an.insight2, 'focus']];
+  }
+  if (d.planner) {
+    A.planner.metrics = [['Queued', d.planner.queued], ['Days buffered', d.planner.days], ['Cadence', '2/day']];
+    A.planner.modal.kpis = [[String(d.planner.queued), 'Posts queued'], [d.planner.days + ' days', 'Buffered'], ['2/day', 'Cadence']];
+  }
+  if (d.updated) document.getElementById('updated').textContent = 'updated ' + d.updated;
+}
+
+function renderStats() {
+  const el = document.getElementById('stats'); el.innerHTML = '';
+  STATS.forEach(s => {
+    const card = document.createElement('div');
+    card.className = 'stat'; card.dataset.key = s.key;
+    card.innerHTML = `<div class="ico">${s.icon}</div>
+      <div class="label">${s.label}</div>
+      <div class="value"><span class="num">0</span>${s.suffix ? `<small>${s.suffix}</small>` : ''}</div>
+      <div class="delta ${s.flat ? 'flat' : ''}">${s.flat ? '◦' : '▲'} ${s.delta}</div>
+      ${sparkline(s.spark)}`;
+    el.appendChild(card);
+    countUp(card.querySelector('.num'), s.value, s.decimals);
+    card.addEventListener('click', () => openAgentByStat(s.key));
+  });
+}
+
+function renderAgents() {
+  const el = document.getElementById('agents'); el.innerHTML = '';
+  AGENTS.forEach(a => {
+    const card = document.createElement('div');
+    card.className = 'agent'; card.dataset.key = a.key;
+    card.innerHTML = `<span class="status"><span class="d"></span>working</span>
+      <div class="viz">${a.viz}</div>
+      <div class="a-name">${a.name}</div><div class="a-role">${a.role}</div>
+      <div class="a-metrics">${a.metrics.map(m => `<div class="a-row"><span class="k">${m[0]}</span><span class="v">${m[1]}</span></div>`).join('')}</div>
+      <div class="open">Open ${a.name} →</div>`;
+    el.appendChild(card);
+    card.addEventListener('click', () => openModal(a));
+  });
+  const cal = document.getElementById('calviz');
+  if (cal) for (let i = 0; i < 21; i++) {
+    const c = document.createElement('i');
+    if ([1,2,4,5,7,9,10,12,14,15,17,19,20].includes(i)) { c.className = 'on'; c.style.animationDelay = (i * 0.06) + 's'; }
+    cal.appendChild(c);
+  }
+  document.querySelectorAll('.bars i').forEach((b, i) => b.style.height = (16 + i * 8) + 'px');
+}
+
+const overlay = document.getElementById('overlay'), modalBody = document.getElementById('modalBody');
+function openModal(a) {
+  const m = a.modal;
+  modalBody.innerHTML = `<div class="m-eyebrow">${m.eyebrow}</div><h3>${m.title}</h3>
+    <div class="m-sub">${m.sub}</div>
+    <div class="m-kpis">${m.kpis.map(k => `<div class="m-kpi"><div class="v">${k[0]}</div><div class="k">${k[1]}</div></div>`).join('')}</div>
+    <div class="m-list">${m.items.map(it => `<div class="m-item"><span class="tag">${it[0]}</span><span class="txt">${it[1]}</span><span class="meta">${it[2]}</span></div>`).join('')}</div>`;
+  overlay.classList.add('show');
+}
+function openAgentByStat(k) {
+  const map = { followers: 'dm', views: 'analyst', top: 'analyst', eng: 'analyst' };
+  const a = AGENTS.find(x => x.key === (map[k] || 'analyst')); if (a) openModal(a);
+}
+document.getElementById('modalClose').addEventListener('click', () => overlay.classList.remove('show'));
+overlay.addEventListener('click', e => { if (e.target === overlay) overlay.classList.remove('show'); });
+
+async function init() {
+  try {
+    const r = await fetch('data.json', { cache: 'no-store' });
+    if (r.ok) applyLive(await r.json());
+  } catch (e) { /* fall back to embedded data */ }
+  if (!document.getElementById('updated').textContent.startsWith('updated 2'))
+    document.getElementById('updated').textContent = 'updated ' + new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+  renderStats(); renderAgents();
+  const q = new URLSearchParams(location.search).get('open');
+  if (q) { const a = AGENTS.find(x => x.key === q); if (a) openModal(a); }
+}
+init();
+
+</script>
+</body>
+</html>
