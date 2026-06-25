@@ -1,21 +1,21 @@
 {
-  "updated": "24 Jun 09:57 UTC",
+  "updated": "25 Jun 09:52 UTC",
   "stats": {
     "followers": 1282,
-    "views": 6977,
-    "topViews": 236,
+    "views": 7051,
+    "topViews": 238,
     "topLabel": "Watch what one missed \u2026",
-    "engagement": 3.8
+    "engagement": 3.7
   },
   "analyst": {
-    "postsTracked": 112,
+    "postsTracked": 114,
     "topFormat": "Reels",
-    "best": 236,
+    "best": 238,
     "top": [
       [
         "#1",
         "Watch what one missed call a day adds up\u2026",
-        "236 views"
+        "238 views"
       ],
       [
         "#2",
@@ -28,11 +28,11 @@
         "202 views"
       ]
     ],
-    "insight1": "Reels avg 159 views vs 58 for statics \u2014 reels win reach",
+    "insight1": "Reels avg 137 views vs 58 for statics \u2014 reels win reach",
     "insight2": "Saves \u2248 0 \u2014 audience small; reach is the lever"
   },
   "planner": {
-    "queued": 18,
-    "days": 9
+    "queued": 16,
+    "days": 8
   }
 }
