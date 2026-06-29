@@ -1,14 +1,14 @@
 {
-  "updated": "28 Jun 09:41 UTC",
+  "updated": "29 Jun 11:31 UTC",
   "stats": {
     "followers": 1296,
-    "views": 7206,
+    "views": 7243,
     "topViews": 240,
     "topLabel": "Watch what one missed \u2026",
-    "engagement": 3.7
+    "engagement": 3.6
   },
   "analyst": {
-    "postsTracked": 120,
+    "postsTracked": 122,
     "topFormat": "Reels",
     "best": 240,
     "top": [
@@ -28,11 +28,11 @@
         "202 views"
       ]
     ],
-    "insight1": "Reels avg 139 views vs 56 for statics \u2014 reels win reach",
+    "insight1": "Reels avg 139 views vs 55 for statics \u2014 reels win reach",
     "insight2": "Saves \u2248 0 \u2014 audience small; reach is the lever"
   },
   "planner": {
-    "queued": 10,
-    "days": 5
+    "queued": 8,
+    "days": 4
   }
 }
