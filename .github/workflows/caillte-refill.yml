@@ -8,6 +8,10 @@ on:
       target_buffer:
         description: "Top the queue up to this many unposted posts"
         default: "14"
+      force_rerender_reels:
+        description: "Re-render ALL library reels with fetched Pexels photos (overwrites queued mp4s)"
+        type: boolean
+        default: false
   schedule:
     - cron: "0 6 * * *"   # daily 06:00 UTC — refill if the buffer is low
 
@@ -37,6 +41,7 @@ jobs:
           CHROME_BIN: ${{ steps.chrome.outputs.chrome-path }}
           PUBLIC_BASE_URL: https://raw.githubusercontent.com/Dave-APEX-AI/ad-spend-watcher/main
           TARGET_BUFFER: ${{ github.event.inputs.target_buffer || '14' }}
+          FORCE_RERENDER_REELS: ${{ github.event.inputs.force_rerender_reels == 'true' && '1' || '' }}
           PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
         run: python3 social/publish/refill.py
 
@@ -47,10 +52,10 @@ jobs:
             git config user.name  "caillte-bot"
             git config user.email "actions@users.noreply.github.com"
             git add social/publish/queue
-            git commit -m "refill: top up the publish queue [skip ci]"
-            git push
+            git commit -m "refill: update publish queue [skip ci]"
+            git push origin HEAD:${{ github.ref_name }}
           else
-            echo "queue healthy — nothing added"
+            echo "queue unchanged — nothing to commit"
           fi
 
       - name: Alert on failure (opens a GitHub issue → emails you)
