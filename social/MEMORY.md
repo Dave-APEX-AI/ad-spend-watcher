@@ -71,6 +71,22 @@ Strategy: `social/STRATEGY.md`. The weekly engine: `.claude/skills/caillte-weekl
 
 ## Learnings log (append dated entries)
 
+### 2026-07-05 (weekly scan — UK stat + audio caveat)
+- **Better UK stat found:** "47% of UK inbound trade calls go unanswered" (Paperclip 2025,
+  142 UK businesses) + "85% who can't reach a tradesman ring a competitor" + "34% of UK
+  businesses already use AI to answer the phone." Prefer these UK numbers over the US "62%".
+- **New competitor lane: UK "missed-call text-back" flood** (Down To Earth AI, TradesBooked,
+  Clara/heyitsclara, SoftSync-AI, SMB Booster, Automate Agency, Vexlo). They sell an auto-SMS
+  *after* the miss ("sorry we missed you"), SEO/landing-page heavy, still reel-light.
+  **Our wedge:** answered LIVE + booked > a consolation text. That contrast is a reel.
+- **⚠️ Audio caveat (operational):** business/creator IG accounts have a RESTRICTED music
+  library — trending songs are often personal-account-only and will MUTE the reel or cap
+  reach. Use "Original audio"-labelled tracks or our own bed. Validates our silent/own-audio
+  default — keep shipping reels with our own track, don't chase licensed trending songs.
+- Algorithm confirmation (Mosseri): signals = watch time, sends-per-reach, likes-per-reach;
+  sends 3–5× likes, saves ~3× likes; original content +40–60% reach; 10+ reposts/30d =
+  excluded from recommendations. Full report: content/competitor-reports/2026-07-05.md.
+
 ### 2026-06-22 (reel-first + visual upgrades)
 - Reel engine v2: animated (no black screens), CAL mascot, inline icons, music bed, and
   real Pexels photo backgrounds (PEXELS_API_KEY secret). Renders via Playwright on the runner.
