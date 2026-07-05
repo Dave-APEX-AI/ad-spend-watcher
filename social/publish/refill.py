@@ -28,7 +28,73 @@ def load(p, default):
     return json.load(open(p, encoding="utf-8")) if os.path.exists(p) else default
 
 
+def fetch_photo_for(spec):
+    """Fetch a Pexels bg for a reel spec → set spec['photo']. Returns True on success."""
+    name = spec["name"]
+    query = spec.get("photo_query")
+    if not (os.environ.get("PEXELS_API_KEY") and query):
+        return False
+    fetch = os.path.join(ROOT, "social", "publish", "fetch_photo.py")
+    bg = os.path.join(OUT, f"{name}_bg.jpg")
+    os.makedirs(OUT, exist_ok=True)
+    try:
+        r = subprocess.run([sys.executable, fetch, query, bg], capture_output=True, text=True)
+        if r.returncode == 0 and os.path.exists(bg) and os.path.getsize(bg) > 1000:
+            spec["photo"] = bg
+            print(f"   • photo ✓ {name}: '{query}'")
+            return True
+        print(f"   • photo ✗ {name}: {r.stdout.strip() or r.stderr.strip()[-160:]}")
+    except Exception as e:
+        print(f"   • photo ✗ {name}: {e}")
+    return False
+
+
+def force_rerender_reels():
+    """Re-render EVERY library reel with the current engine + a fetched Pexels photo,
+    overwriting the queued mp4s in place. Bypasses the buffer check. Env FORCE_RERENDER_REELS=1."""
+    key = "set" if os.environ.get("PEXELS_API_KEY") else "MISSING"
+    print(f"FORCE re-render of all library reels. PEXELS_API_KEY: {key}")
+    sched = load(SCHED, {"jobs": []}); jobs = sched["jobs"]
+    reel_files = sorted(glob.glob(os.path.join(LIB, "*.json")))
+    done, with_photo = [], 0
+    for f in reel_files:
+        try:
+            spec = json.load(open(f, encoding="utf-8"))
+        except Exception as e:
+            print(f"⚠️ bad spec {os.path.basename(f)}: {e}"); continue
+        if spec.get("kind") != "reel":
+            continue
+        name = spec["name"]
+        if fetch_photo_for(spec):
+            with_photo += 1
+        tmp = os.path.join(LIB, f".__{name}.json")
+        json.dump(spec, open(tmp, "w", encoding="utf-8"), ensure_ascii=False)
+        try:
+            subprocess.run([sys.executable, REEL, tmp, "--out", OUT], check=True)
+        finally:
+            os.path.exists(tmp) and os.remove(tmp)
+        src = os.path.join(OUT, name, f"{name}.mp4")
+        dst_dir = os.path.join(QUEUE, name); os.makedirs(dst_dir, exist_ok=True)
+        shutil.copy2(src, os.path.join(dst_dir, f"{name}.mp4"))
+        job = {"type": "reel", "caption": spec.get("caption", ""),
+               "video_url": f"{BASE}/social/publish/queue/{name}/{name}.mp4",
+               "cross_post_facebook": False}
+        json.dump(job, open(os.path.join(QUEUE, f"{name}.json"), "w", encoding="utf-8"),
+                  ensure_ascii=False, indent=2)
+        if f"{name}.json" not in jobs:
+            jobs.append(f"{name}.json")
+        done.append(name)
+        print(f"  ✓ re-rendered {name}")
+    json.dump(sched, open(SCHED, "w", encoding="utf-8"), indent=2)
+    print(f"\nRe-rendered {len(done)} reels, {with_photo} with a Pexels photo.")
+    if with_photo == 0:
+        print("⚠️ NO photos landed — PEXELS_API_KEY is missing/invalid or Pexels blocked the request.")
+    return 0
+
+
 def main():
+    if os.environ.get("FORCE_RERENDER_REELS"):
+        return force_rerender_reels()
     sched = load(SCHED, {"jobs": []})
     jobs = sched["jobs"]
     posted = set(l.strip() for l in open(POSTED) if l.strip()) if os.path.exists(POSTED) else set()
