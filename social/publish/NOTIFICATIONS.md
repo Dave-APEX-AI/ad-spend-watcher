@@ -12,8 +12,11 @@ emails you** through its own notification system. No external service, no key.
 | ✅ **Done & good** — weekly drop / a step finished | I open a `✅ ...` issue (cc you) | @mention emails you |
 | ❓ **Needs your input** — blocked on you | I open a `❓ ...` issue (cc you) | @mention emails you |
 
-Each issue @mentions **@Dave-APEX-AI**, and a mention always triggers a GitHub email — so
-these land in your inbox regardless of watch settings. Close the issue once you've read it.
+Each issue is opened **by the GitHub Actions bot** (not by you) and **assigns + @mentions
+@Dave-APEX-AI** — both trigger a GitHub email. (Important: GitHub never emails you about
+issues *you* open yourself, so notifications must be bot-opened — that's why the
+`caillte-notify` workflow exists rather than me opening them directly.) Close the issue
+once you've read it.
 
 ## One-time check (≈1 min, no account, no key)
 Make sure GitHub emails you:

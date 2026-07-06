@@ -3,6 +3,17 @@
 This file is loaded by Claude Code / Cowork mode when working in this repo.
 Read it first before making any changes.
 
+> ## 📣 CaillteAI Social System (separate workstream in this repo)
+> This repo also hosts CaillteAI's **social media growth system** (faceless IG/FB content,
+> auto-publishing, customer-story pillar, weekly scan-driven content loop). It's isolated
+> under `social/` + `.claude/skills/caillte-*` and does NOT touch the lead-gen pipeline below.
+> **If the task is about CaillteAI social/content/posting, read `social/MEMORY.md` FIRST**
+> (decisions, preferences, state, learnings log), then `social/README.md`.
+> Key standing rules: free engines only (Arcads parked), no Web3Forms, GitHub-issue
+> notifications → dave@apexemeraldai.com, anonymised + qualitative customer stories,
+> 2 posts/day, weekly drop triggered by "weekly drop". Develop on the social feature branch,
+> merge to `main`.
+
 ## What this project is
 
 Weekly lead-gen automation for Dave's digital-marketing agency. Scans the Meta

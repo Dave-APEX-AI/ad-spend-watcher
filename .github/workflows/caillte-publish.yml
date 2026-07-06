@@ -89,6 +89,7 @@ jobs:
         run: |
           gh issue create \
             --title "🚨 CaillteAI auto-post FAILED ($(date -u +%F))" \
+            --assignee Dave-APEX-AI \
             --body "A scheduled CaillteAI post did not publish.
 
           Run log: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}

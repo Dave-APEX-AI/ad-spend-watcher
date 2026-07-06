@@ -1,0 +1,8 @@
+{"name":"lib-counter-reel","kind":"reel","pillar":"other","fps":30,"photo_query":"tradesman van uk street",
+"caption":"What one missed call a day actually adds up to. 👇\n\n£280 a job → £24,000 a year, gone to whoever answered. Stop the leak — free missed-call audit in bio.\n\n#plumber #electrician #tradesbusiness #missedcalls #ukandireland",
+"cards":[
+{"seconds":2.0,"type":"cover","headline":"What one missed call a day <span class='hl-amber'>adds up to</span>.","theme":"dark","amberDot":true},
+{"seconds":1.6,"type":"stat","value":"£280","label":"one missed job","amberDot":true},
+{"seconds":1.6,"type":"stat","value":"£1,400","label":"one week","amberDot":true},
+{"seconds":2.0,"type":"stat","value":"£24,000","label":"one year. Gone.","amberDot":true},
+{"seconds":2.4,"type":"cta","headline":"Stop the leak.","body":"Free missed-call audit in bio."}]}

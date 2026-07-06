@@ -1,0 +1,8 @@
+{"name":"lib-villain-reel","kind":"reel","pillar":"other","fps":30,"photo_query":"phone night dark desk",
+"caption":"Signed, your missed call. 📞\n\nEvery call that rings out is a customer ringing your competitor next. Find out what it's costing you — free audit in bio.\n\n#plumber #electrician #tradesbusiness #missedcalls #ukandireland",
+"cards":[
+{"seconds":2.2,"type":"cover","headline":"Hi. I'm your <span class='hl-amber'>missed call</span>.","body":"You've never heard me. That's the point.","theme":"dark","amberDot":true},
+{"seconds":2.0,"type":"point","icon":"phone","headline":"This week I took 3 jobs.","body":"A boiler quote, a call-out, a rewire."},
+{"seconds":1.8,"type":"stat","value":"£1,400","label":"gone to the next trade","amberDot":true},
+{"seconds":2.0,"type":"quote","headline":"I fear one thing: someone who always <span class='hl'>picks up</span>."},
+{"seconds":2.4,"type":"cta","headline":"CAL never sleeps.","body":"Free missed-call audit in bio."}]}

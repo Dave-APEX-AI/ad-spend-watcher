@@ -1,0 +1,35 @@
+# Notifier — opens a GitHub issue AS THE ACTIONS BOT so GitHub emails Dave.
+# (GitHub never emails you about issues you open yourself — so these must be bot-opened.)
+# Assigns + @mentions Dave-APEX-AI → reliable email. No third party, no key.
+
+name: caillte-notify
+
+on:
+  workflow_dispatch:
+    inputs:
+      subject:
+        description: "Issue title (the email subject)"
+        required: true
+        default: "CaillteAI — update"
+      body:
+        description: "Issue body (the email content)"
+        required: true
+        default: ""
+
+permissions:
+  issues: write
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Open notification issue
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh issue create --repo "${{ github.repository }}" \
+            --title "${{ github.event.inputs.subject }}" \
+            --body "${{ github.event.inputs.body }}
+
+          cc @Dave-APEX-AI" \
+            --assignee Dave-APEX-AI

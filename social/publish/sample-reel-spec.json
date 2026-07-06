@@ -1,0 +1,6 @@
+{"name":"sample-photo-reel","fps":30,"cards":[
+{"seconds":2.2,"type":"cover","kicker":"9:42pm","headline":"The phone rings. You're <span class='hl-amber'>up a ladder</span>.","amberDot":true},
+{"seconds":2.0,"type":"cover","icon":"phone","headline":"You can't answer it.","body":"So they ring the next trade."},
+{"seconds":2.0,"type":"stat","value":"£680","label":"gone — you'll never know it happened.","amberDot":true},
+{"seconds":2.0,"type":"quote","headline":"Something should <span class='hl'>pick up</span>."},
+{"seconds":2.4,"type":"cta","headline":"CAL never sleeps.","body":"Free missed-call audit in bio."}]}

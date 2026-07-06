@@ -1,0 +1,47 @@
+# One-off: fetch a real Pexels photo, render a sample reel over it, commit it so it can be
+# reviewed. Proves the photo-background pipeline end to end.
+name: caillte-sample
+
+on:
+  workflow_dispatch:
+    inputs:
+      query:
+        description: "Pexels photo search"
+        default: "tradesman van uk"
+
+permissions:
+  contents: write
+
+jobs:
+  sample:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: browser-actions/setup-chrome@v1
+        id: chrome
+      - run: pip install imageio-ffmpeg playwright
+
+      - name: Fetch photo + render sample reel
+        env:
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+          CHROME_BIN: ${{ steps.chrome.outputs.chrome-path }}
+        run: |
+          python3 social/publish/fetch_photo.py "${{ github.event.inputs.query || 'tradesman van uk' }}" /tmp/bg.jpg
+          python3 - <<'PY'
+          import json
+          s = json.load(open("social/publish/sample-reel-spec.json"))
+          s["photo"] = "/tmp/bg.jpg"
+          json.dump(s, open("/tmp/spec.json","w"))
+          PY
+          python3 .claude/skills/caillte-reel/render_reel.py /tmp/spec.json --out social/publish/samples
+
+      - name: Commit the sample
+        run: |
+          git config user.name  "caillte-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add -f social/publish/samples
+          git commit -m "sample: photo-background reel [skip ci]" || echo "no change"
+          git push
